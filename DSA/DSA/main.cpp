@@ -2256,6 +2256,8 @@ int main()
 //    std::fill(tempArray,tempArray+n,0);
     string s = "geeksforgeeks";
     string g = "forgeeksgeeks";
+    string k = "checkThePush";
+    
     sort(s.begin(), s.end());
     sort(g.begin(), g.end());
     cout<<s<<endl;
