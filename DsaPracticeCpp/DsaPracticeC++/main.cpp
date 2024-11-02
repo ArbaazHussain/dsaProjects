@@ -9,6 +9,10 @@
 #include <cstdlib>
 #include <cmath>
 #include <vector>
+#include <iomanip>
+#include <set>
+#include <unordered_set>
+#include <stack>
 
 using namespace std;
 long long int M = pow(10,9)+7;
@@ -81,23 +85,34 @@ bool isSparse(int n)
     return true;
 }
 
-int main(){
-    //    for (int i=1; i<=20; i++) {
-    //
-    //    }
-   
-    cout<<isSparse(0);
-    
-    int myArray[3] = {1,2,3};
-    int arrayZize = sizeof(myArray)/sizeof(myArray[0]); //length calculation
-    
+bool isPrimeEfficientMore(int n){
+    if(n<=1){
+        //cout<<n<<" is neither a prime number nor a composite number."<<"\n";
+        return false;
+    }
+    if (n==2 || n==3){
+        return true;
+    }
+    if(n%2==0 || n%3==0){
+        return false;
+    }
+    for (int i=5; i<=sqrt(n); i=i+6) {
+        if(n%i==0 || n%(i+2)==0){
+            return false;
+        }
+    }
+    return true;
+}
 
-    //    vector<string> currentArray{};
-    //    string s = "abc";
-    //    vector<string> res = powerSet(currentArray, s, "", 0);
-    //    for(int i=0;i<res.size(); i++){
-    //        cout<<res[i]<<"\n";
-    //    }
+long long sumUnderModulo(long long a,long long b)
+{
+    int M = pow(10,9)+7;
+    return ((a%M) * (b%M)) % M;
+}
+
+int main() {
+    cout<<sumUnderModulo(1000000007, 1000000007);
+    cout<<endl;
     return 0;
 }
 
