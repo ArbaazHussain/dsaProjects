@@ -104,15 +104,21 @@ bool isPrimeEfficientMore(int n){
     return true;
 }
 
-long long sumUnderModulo(long long a,long long b)
-{
-    int M = pow(10,9)+7;
-    return ((a%M) * (b%M)) % M;
+void powerSet(int arr[], int n){
+    for (int i=0; i<(1<<n); i++) {
+        for (int j=0; j<n; j++) {
+            if((i&(1<<j)) != 0){
+                cout<<arr[j];
+            }
+        }
+        cout<<endl;
+    }
 }
 
 int main() {
-    cout<<sumUnderModulo(1000000007, 1000000007);
-    cout<<endl;
+    int array1[3] = {1,2,3};
+    powerSet(array1, 3);
+    //cout<<endl;
     return 0;
 }
 

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A77D61D42B0BC7B70090AA9E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A77D61D32B0BC7B70090AA9E /* main.cpp */; };
-		F147A4632CD52B8E00EC774B /* Mathematics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F147A4622CD52B8E00EC774B /* Mathematics.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,7 +25,6 @@
 /* Begin PBXFileReference section */
 		A77D61D02B0BC7B70090AA9E /* DsaPracticeC++ */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "DsaPracticeC++"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A77D61D32B0BC7B70090AA9E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		F147A4622CD52B8E00EC774B /* Mathematics.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mathematics.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +58,6 @@
 			isa = PBXGroup;
 			children = (
 				A77D61D32B0BC7B70090AA9E /* main.cpp */,
-				F147A4622CD52B8E00EC774B /* Mathematics.cpp */,
 			);
 			path = "DsaPracticeC++";
 			sourceTree = "<group>";
@@ -122,7 +119,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F147A4632CD52B8E00EC774B /* Mathematics.cpp in Sources */,
 				A77D61D42B0BC7B70090AA9E /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

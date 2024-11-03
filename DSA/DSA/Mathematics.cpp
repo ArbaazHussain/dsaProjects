@@ -6,13 +6,8 @@
 //
 
 #include <iostream>
-#include <cstdlib>
-#include <cmath>
 #include <vector>
 #include <iomanip>
-#include <set>
-#include <unordered_set>
-#include <stack>
 
 using namespace std;
 using std::cout;
@@ -557,11 +552,11 @@ void primeFactorGFGNaivePrintMultiples(int n){
 
 //MARK: primeFactorGfgEfficient-printMultiples
 /*
- Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n.
- 1.Divisors appear in pair
+ 1.Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n -> (Smallest diviosor(divisor except 1) of a number is always prime number.)
+ 2.Divisors appear in pair
  30: (1,30) (2,15) (3,10) (5,6)
  
- 2.A number can be written as multiplications of power of prime factors
+ 3.A number can be written as multiplications of power of prime factors
  12 = 12^2 * 3
  450= 2 * 3^2 * 5^2
  13 = 13^1
