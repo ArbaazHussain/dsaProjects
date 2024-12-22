@@ -14,7 +14,10 @@ using std::cout;
 using std::endl;
 
 
-//MARK: ----Maths-------------------------------
+
+//MARK: ---------Maths----------
+
+
 
 //MARK: CalculationOrderInDataType,Precision,overFlow
 /*
@@ -301,11 +304,7 @@ int gcdEuclidRecursive(int a, int b){
 //MARK: lcmNaive
 int lcmNaive(int a, int b){
     if (a == 0 || b == 0){
-        if (a==0){
-            return b;
-        }else{
-            return a;
-        }
+        return -1;
     }
     
     int maxNo = max(a,b);
@@ -321,9 +320,9 @@ int lcmNaive(int a, int b){
 //A.S = BigO  1
 
 
+// a*b / gcd(a,b) = lcm(a,b)
 //MARK: lcmEfficient
 int lcmEfficient(int a, int b){
-    // a*b / gcd(a,b) = lcm(a,b)
     return (a*b) / gcdEuclidRecursive(a, b);
 }
 //T.C = BigO log(min(a,b))
@@ -403,10 +402,6 @@ bool isPrimeEfficientMore(int n){
 
 //MARK: primeFactorStNaiveOne-UniqueElements
 void primeFactorStNaiveOne(int n){
-    if(n<=1){
-        cout<<" is neither a prime number nor a composite number."<<"\n";
-        return;
-    }
     for (int i = 2; i<=n; i++) {
         if(n%i==0){
             if(isPrimeEfficientMore(i)){
@@ -416,47 +411,37 @@ void primeFactorStNaiveOne(int n){
     }
 }
 //T.C = BigO (n*sqrt(n))
-//A.S = -
-
+//A.S = BigO 1
 
 
 //MARK: primeFactorStNaiveTwo-UniqueElements
 // Divisors always apear in pair
 void primeFactorStNaiveTwo(int n){
-    if(n<=1){
-        cout<<" is neither a prime number nor a composite number."<<"\n";
-        return;
-    }
-    for (int i = 2; i*i<=n; i++) {
+    for (int i = 1; i*i<=n; i++) {
         if(n%i==0){
             if(isPrimeEfficientMore(i)){
                 cout<<i<<" ";
             }
             if(n/i != i){
-                if(isPrimeEfficientMore(i)){
-                    cout<<i<<" ";
+                if(isPrimeEfficientMore(n/i)){
+                    cout<<n/i<<" ";
                 }
             }
         }
     }
-    //if (n is primeNo) or (becomes prime no at last) then there will be no divisors <=sqrt(n). So, adding this check.
-    if (n!=1) {
-        cout<<n<<" ";
-    }
 }
 //T.C = BigO (sqrt(n)*(2*sqrt(n)))
-//A.S = -
+//A.S = BigO 1
 
 
 //MARK: primeFactorStNaiveThree-UniqueElements
 /*
  Prime factorization school method
-1.Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n -> (Smallest diviosor(divisor except 1) of a number is always prime number.)
+1.Smallest diviosor(divisor except 1) of a number is always prime number -> Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n
 2.This solution will iterate less time for some numbers:(n=780 -- 13 iteration).But it will iterate n times for prime numbers,So this is not efficient.
  */
 void primeFactorStNaiveThree(int n){
     if(n<=1){
-        cout<<" is neither a prime number nor a composite number."<<"\n";
         return;
     }
     for (int i = 2; i<=n; i++) {
@@ -469,18 +454,17 @@ void primeFactorStNaiveThree(int n){
     }
 }
 //T.C = BigO (n*logn)
-//A.S = -
+//A.S = BigO 1
 
 
 //MARK: primeFactorStEfficient-UniqueElements
 /*
  Prime factorization school method
- 1.Divisors appear in pair
- 2.Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n -> (Smallest diviosor(divisor except 1) of a number is always prime number.)
+ 1.Divisors appear in pair = 30: (1,30) (2,15) (3,10) (5,6)
+ 2.Smallest diviosor(divisor except 1) of a number is always prime number. -> Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n.
  */
 void primeFactorStEfficient(int n){
     if(n<=1){
-        cout<<" is neither a prime number nor a composite number."<<"\n";
         return;
     }
     for (int i = 2; i*i<=n; i++) {
@@ -497,10 +481,10 @@ void primeFactorStEfficient(int n){
     }
 }
 //T.C = BigO (sqrtN*logn)
-//A.S = -
+//A.S = BigO 1
 
 
-//MARK: primeFactorMyNaive-printMultiples
+//MARK: primeFactorMyNaive-NonUniqueElements
 void primeFactorMyNaive(int n){
     if(n<=1){
         cout<<n<<" is neither a prime number nor a composite number."<<"\n";
@@ -527,13 +511,8 @@ void primeFactorMyNaive(int n){
 
 
 //MARK: primeFactorGFGNaive-printMultiples
-/*
- This return multiples of prime numbers also
-
- */
 void primeFactorGFGNaivePrintMultiples(int n){
     if(n<=1){
-        cout<<" is neither a prime number nor a composite number."<<"\n";
         return;
     }
     for (int i=2; i<=n; i++) { //theta n
@@ -552,20 +531,16 @@ void primeFactorGFGNaivePrintMultiples(int n){
 
 //MARK: primeFactorGfgEfficient-printMultiples
 /*
- 1.Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n -> (Smallest diviosor(divisor except 1) of a number is always prime number.)
- 2.Divisors appear in pair
- 30: (1,30) (2,15) (3,10) (5,6)
- 
+ Prime factorization school method
+ 1.Divisors appear in pair = 30: (1,30) (2,15) (3,10) (5,6)
+ 2.Smallest diviosor(divisor except 1) of a number is always prime number. -> Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n.
  3.A number can be written as multiplications of power of prime factors
- 12 = 12^2 * 3
+ 12 = 2^2 * 3
  450= 2 * 3^2 * 5^2
  13 = 13^1
- 
- 3.Smallest diviosor(divisor except 1) of a number is always prime number.
  */
 void primeFactorGfgEfficientPrintMultiples(int n){
     if(n<=1){
-        cout<<" is neither a prime number nor a composite number."<<"\n";
         return;
     }
     for (int i=2; i*i<=n; i++) {
@@ -574,7 +549,7 @@ void primeFactorGfgEfficientPrintMultiples(int n){
             n = n/i;
         }
     }
-    //if we get any primeNo at last and there will be no divisors <=sqrt(n)
+    //if (n is primeNo) or (becomes prime no at last) then there will be no divisors <=sqrt(n). So, adding this check.
     if (n>1){
         cout<<n<<"\n";
     }
@@ -668,8 +643,8 @@ void seive(int n){
 
 
 //MARK: powerNaive
-int powerNaive(int a, int n){
-    int res = 1;
+long long int powerNaive(int a, int n){
+    long long int res = 1;
     for (int i=0; i<n; i++) {
         res = res*a;
     }
@@ -681,15 +656,15 @@ int powerNaive(int a, int n){
 
 //MARK: powerRecursivee
 //Youtube - luv
-int powerRecursivee(int a, int b){
+long long int powerRecursivee(int a, int b){
     if(b==0){
         return 1;
     }
-    int recCall = powerRecursivee(a, b/2);
+    long long int recCall = powerRecursivee(a, b/2);
     if(b%2==0){
-        return recCall * 1ll * recCall;
+        return recCall * recCall;
     }else{
-        return a * recCall * 1ll * recCall;
+        return a * recCall * recCall;
     }
 }
 //T.C = theta log b
@@ -697,15 +672,27 @@ int powerRecursivee(int a, int b){
 
 
 //MARK: powerIterative
-//Youtube - st
-void powerIterative(int x, int n){
-    
+//Youtube - luv
+long long powerIterative(long long a,long long b){
+    long long ans = 1;
+    while (b) {
+        if (b&1) {
+            ans = ans * a;
+        }
+        a *= a;
+        b >>= 1;
+    }
+    return ans;
 }
 //T.C =
 //A.S =
 
 
-//MARK: ***GFGProblems***
+
+//MARK: ------GFGProblems------
+
+
+
 //MARK: absoluteValue
 int absoluteValue(int I) {
     if(I>=0){
@@ -714,6 +701,7 @@ int absoluteValue(int I) {
         return I*(-1);
     }
 }
+
 
 //MARK: cToF
 //cToF = (C * 9.0) / 5.0 + 32
@@ -753,10 +741,10 @@ vector<int> quadraticEq(int a,int b, int c)
 
 //MARK: digitsInFactorial
 /*
- n!       = 1*2*3*4*5...*n
- log(a*b) = log(a)+log(b)
- log(n!)  = log(1)+log(2)+log(3)+log(4)+log(5)...+log(n)
- No of Digits  => floor(log(n!)) + 1
+ n!                = 1*2*3*4*5...*n
+ log base 10 (a*b) = log(a)+log(b)
+ log base 10 (n!)  = log(1)+log(2)+log(3)+log(4)+log(5)...+log(n)
+ No of Digits     = floor(log(n!)) + 1
  */
 int digitsInFactorial(int N)
 {
@@ -834,18 +822,24 @@ int multiplicationUnderModulo(long long a,long long b)
 //MARK: modInverse
 int modInverse(int a, int m)
 {
-    //Your code here
-    return 0;
+    for (int i=1; i<m; i++) {
+        if(((a%m)*(i%m)%m)==1){
+            return i;
+        }
+    }
+    return -1;
 }
 
 
 
 
+//MARK: ---------MainFunction----------
 
-//MARK: Main Function--------------------------
+
+
 //int main()
 //{
-//    cout<<multiplicationUnderModulo(793279, 340032);
+//    cout<<"Mathematics"<<endl;
 //    cout<<endl;
 //    return 0;
 //}

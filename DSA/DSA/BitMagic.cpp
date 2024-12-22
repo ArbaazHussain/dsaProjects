@@ -12,7 +12,7 @@ using std::cout;
 using std::endl;
 
 
-//MARK: ----BIT Magic--------------------------------------
+//MARK: --------BIT Magic----------
 
 //MARK: decimalToBinaryMy
 /*
@@ -142,6 +142,14 @@ int CounTotalSetBitsNaive(int n){
 //A.S = BigO 1
 
 
+//MARK: CounTotalSetBitTableMethodMostEfficient
+int CounTotalSetBitTableMethodMostEfficient(int n){
+    return 0;
+}
+//T.C =
+//A.S =
+
+
 //MARK: BrainKerningams - CounTotalSetBitsEfficient
 //When we subtract 1 from a number the all trailing zero becomes one and last set bit becomes zero.
 int brainKerningams(int n){
@@ -243,7 +251,7 @@ int oneOddOccurringNaive(int arr[], int n){
  x^x^x.....(odd  times) = x
  x^x^x.....(even times) = 0
  
- Doubt-:Not working fine for {1,7,2,3,3,1}
+ This only works when given array has only one Odd Occurring element.
  */
 int oneOddOccurringEfficient(int arr[], int n){
     int res= arr[0];
@@ -373,7 +381,7 @@ int bitwiseOfTwoNumber(int a, int b){
 //A.S = BigO 1
 
 
-//MARK: ***GFGProblems***
+//MARK: -------GFGProblems-------
 
 //MARK: findFirstSetBit
 //Function to find position of first set bit in the given number.
@@ -465,3 +473,13 @@ int grayToBinary(int n)
 //    }
     return inv;
 }
+
+
+//MARK: ----------MainFunction-----------
+
+//int main()
+//{
+//    cout<<multiplicationUnderModulo(793279, 340032);
+//    cout<<endl;
+//    return 0;
+//}
