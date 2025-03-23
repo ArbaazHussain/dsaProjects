@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		A78CEB102A8371DF00881600 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A78CEB0F2A8371DF00881600 /* main.cpp */; };
 		F10A53122CDA02CD00F00B95 /* Recursion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F10A53112CDA02CD00F00B95 /* Recursion.cpp */; };
+		F135FC442D6B7B4C003C4AE5 /* Hashing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F135FC432D6B7B4C003C4AE5 /* Hashing.cpp */; };
+		F1494E662D18245300AF539F /* Array.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F1494E642D18245300AF539F /* Array.cpp */; };
 		F1D0CCB22CD7CB810049307A /* BitMagic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F1D0CCB12CD7CB810049307A /* BitMagic.cpp */; };
 		F1D923F02CD660EF0006C272 /* Mathematics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F1D923EF2CD660EF0006C272 /* Mathematics.cpp */; };
 /* End PBXBuildFile section */
@@ -29,6 +31,8 @@
 		A78CEB0C2A8371DF00881600 /* DSA */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DSA; sourceTree = BUILT_PRODUCTS_DIR; };
 		A78CEB0F2A8371DF00881600 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		F10A53112CDA02CD00F00B95 /* Recursion.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Recursion.cpp; sourceTree = "<group>"; };
+		F135FC432D6B7B4C003C4AE5 /* Hashing.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Hashing.cpp; sourceTree = "<group>"; };
+		F1494E642D18245300AF539F /* Array.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Array.cpp; sourceTree = "<group>"; };
 		F1D0CCB12CD7CB810049307A /* BitMagic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BitMagic.cpp; sourceTree = "<group>"; };
 		F1D923EF2CD660EF0006C272 /* Mathematics.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mathematics.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,6 +71,8 @@
 				F1D923EF2CD660EF0006C272 /* Mathematics.cpp */,
 				F1D0CCB12CD7CB810049307A /* BitMagic.cpp */,
 				F10A53112CDA02CD00F00B95 /* Recursion.cpp */,
+				F1494E642D18245300AF539F /* Array.cpp */,
+				F135FC432D6B7B4C003C4AE5 /* Hashing.cpp */,
 			);
 			path = DSA;
 			sourceTree = "<group>";
@@ -130,8 +136,10 @@
 			files = (
 				F10A53122CDA02CD00F00B95 /* Recursion.cpp in Sources */,
 				F1D923F02CD660EF0006C272 /* Mathematics.cpp in Sources */,
+				F135FC442D6B7B4C003C4AE5 /* Hashing.cpp in Sources */,
 				A78CEB102A8371DF00881600 /* main.cpp in Sources */,
 				F1D0CCB22CD7CB810049307A /* BitMagic.cpp in Sources */,
+				F1494E662D18245300AF539F /* Array.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

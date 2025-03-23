@@ -19,10 +19,19 @@ using std::endl;
 
 
 
-//MARK: CalculationOrderInDataType,Precision,overFlow
+//MARK: CalculationOrderInDataType, Precision, overFlow
 /*
  Precision Datatype => double>float>longLongInt>longInt>int>char
- Operator Precision => left to right
+ 
+ Operator Precision =>
+ C++ does not strictly follow BODMAS but instead relies on operator precedence and associativity
+ Operators        | Precedence   | Associativity
+ ---------------------------------------------------
+ () (parentheses) | Highest      | Left  to right
+ * / %            | High         | Left  to right
+ + -              | Medium       | Left  to right
+ =                | Low          | Right to left
+ 
  overFlow           =>
  int           -> -10^9  to 10^9
  long int      -> -10^12 to 10^12
@@ -76,6 +85,7 @@ void overFlowAndPrecision(){
 
 //MARK: Modulo
 /*
+ M = pow(10,9)+7
  ( a + b) % M = ( ( a % M ) + ( b % M ) ) % M
  ( a * b) % M = ( ( a % M ) * ( b % M ) ) % M
  ( a – b) % M = ( ( a % M ) – ( b % M ) ) % M
@@ -182,6 +192,9 @@ bool checkForPalindromeInteger(int n){
 //MARK: checkForPalindromeString
 bool checkForPalindromeString(string S)
 {
+    //Solution-1 -> continuously pop first and last element
+    
+    //Solution-2
     unsigned long int length = S.length();
     // Iterate over the range [0, N/2]
     for (int i = 0; i < length / 2; i++)
@@ -193,6 +206,19 @@ bool checkForPalindromeString(string S)
         }
     }
     return true;
+    
+    //Solution-2
+    //    unsigned long int length = S.length();
+    //    int start = 0;
+    //    int end = length-1;
+    //    while (start<=end) {
+    //        if(S[start] != S[end]){
+    //            return false;
+    //        }
+    //        start++;
+    //        end--;
+    //    }
+    //    return true;
 }
 //T.C = Big O(l)(letters of n)
 //A.C = Big O(1)
@@ -225,6 +251,9 @@ long long int factorialIterative(int n){
 }
 //T.C = theta n
 //A.S = BigO  1
+
+
+//MARK: factorialRecursive
 
  
 //MARK: trailingZeroInFactorial
@@ -399,8 +428,31 @@ bool isPrimeEfficientMore(int n){
 //T.C = BigO sqrt(n)
 //A.S = BigO 1
 
+//MARK: primeFactorApproach summary
+/*
+ primeFactorStNaiveOne-UniqueElements
+ // factors which are prime
+ 
+ primeFactorStNaiveTwo-UniqueElements
+ // Divisors always apear in pair
+ // Divisors which are prime
+ 
+ primeFactorStNaiveThree-UniqueElements
+ Prime factorization school method
+ 1.Smallest diviosor(divisor except 1) of a number is always prime number -> Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n
+ 2.This solution will iterate less time for some numbers:(n=780 -- 13 iteration).But it will iterate n times for prime numbers,So this is not efficient.
+ 
+ primeFactorStEfficient-UniqueElements
+ Prime factorization school method
+ 1.Divisors appear in pair = 30: (1,30) (2,15) (3,10) (5,6)
+ 2.Smallest diviosor(divisor except 1) of a number is always prime number. -> Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n.
+ 
+ * In order to print Multiples elements same above logic can be used with minor changes
+ */
+
 
 //MARK: primeFactorStNaiveOne-UniqueElements
+//factors which are prime
 void primeFactorStNaiveOne(int n){
     for (int i = 2; i<=n; i++) {
         if(n%i==0){
@@ -416,6 +468,7 @@ void primeFactorStNaiveOne(int n){
 
 //MARK: primeFactorStNaiveTwo-UniqueElements
 // Divisors always apear in pair
+// Divisors which are prime
 void primeFactorStNaiveTwo(int n){
     for (int i = 1; i*i<=n; i++) {
         if(n%i==0){
@@ -510,25 +563,6 @@ void primeFactorMyNaive(int n){
 //A.S =
 
 
-//MARK: primeFactorGFGNaive-printMultiples
-void primeFactorGFGNaivePrintMultiples(int n){
-    if(n<=1){
-        return;
-    }
-    for (int i=2; i<=n; i++) { //theta n
-        if(isPrimeEfficientMore(i)){ //BigO sqrt(n)
-            int x=i;
-            while (n%x==0) { //BigO log n
-                cout<<i<<"\n";
-                x = x*i;
-            }
-        }
-    }
-}
-//T.C = BigO (n Logn)   i.e n*sqrt(n)*log(n)
-//A.S = BigO 1
-
-
 //MARK: primeFactorGfgEfficient-printMultiples
 /*
  Prime factorization school method
@@ -538,6 +572,7 @@ void primeFactorGFGNaivePrintMultiples(int n){
  12 = 2^2 * 3
  450= 2 * 3^2 * 5^2
  13 = 13^1
+ 4.If there is a prime factor other than number itself then first prime factor of n would be in range from 2 to square(n)
  */
 void primeFactorGfgEfficientPrintMultiples(int n){
     if(n<=1){
@@ -619,9 +654,7 @@ void seive(int n){
         if(isPrime[i]){
             cout<<i<<" ";
             for (int j=i*2; j<=n; j=j+i){
-                if(j%i==0){
-                    isPrime[j] = false;
-                }
+                isPrime[j] = false;
             }
         }
     }
@@ -757,6 +790,7 @@ int digitsInFactorial(int N)
 
 
 //MARK: exactly3Divisors
+//A number has exactly three divisors if it is the square of a prime number.
 int exactly3DivisorMyNaive(int N)
 {
     int numberOfThreeDivisors = 0;
@@ -774,6 +808,9 @@ int exactly3DivisorMyNaive(int N)
 
 
 //MARK: exactly3DivisorsEfficient
+//A number has exactly three divisors if it is the square of a prime number.
+//This [i<= sqrt(n)] check is added bcz any number x > sqrt(n), its square x*x will exceed n.
+//https://chatgpt.com/share/67a8c18c-9c40-8009-8abd-042f97e6922d
 int exactly3DivisorsEfficient(int n)
 {
     int count = 0;
@@ -788,9 +825,9 @@ int exactly3DivisorsEfficient(int n)
 }
 
 
-//MARK: termOfGP
-//termOfGP = a*(r^n-1) ... where a = first term and r = common ratio,n=term position
-double termOfGP(int A,int B,int N)
+//MARK: nthTermOfGP
+//nthTermOfGP = a*(r^n-1) ... where a = first term and r = common ratio,n=term position
+double nthTermOfGP(int A,int B,int N)
 {
     double r = (double)B/(double)A;
     return floor(A*(pow(r,N-1)));
@@ -839,7 +876,7 @@ int modInverse(int a, int m)
 
 //int main()
 //{
-//    cout<<"Mathematics"<<endl;
-//    cout<<endl;
+//    bool res = checkForPalindromeString("adr");
+//    cout<<res<<endl;
 //    return 0;
 //}
