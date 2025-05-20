@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		A78CEB102A8371DF00881600 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A78CEB0F2A8371DF00881600 /* main.cpp */; };
 		F10A53122CDA02CD00F00B95 /* Recursion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F10A53112CDA02CD00F00B95 /* Recursion.cpp */; };
+		F10D6BE12D9277AC00286439 /* Sorting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F10D6BE02D9277AC00286439 /* Sorting.cpp */; };
 		F135FC442D6B7B4C003C4AE5 /* Hashing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F135FC432D6B7B4C003C4AE5 /* Hashing.cpp */; };
 		F1494E662D18245300AF539F /* Array.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F1494E642D18245300AF539F /* Array.cpp */; };
+		F1A001CC2DB18F5300A65C08 /* Pattern.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F1A001CB2DB18F5300A65C08 /* Pattern.cpp */; };
 		F1D0CCB22CD7CB810049307A /* BitMagic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F1D0CCB12CD7CB810049307A /* BitMagic.cpp */; };
 		F1D923F02CD660EF0006C272 /* Mathematics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F1D923EF2CD660EF0006C272 /* Mathematics.cpp */; };
 /* End PBXBuildFile section */
@@ -28,11 +30,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A78CEB0C2A8371DF00881600 /* DSA */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DSA; sourceTree = BUILT_PRODUCTS_DIR; };
 		A78CEB0F2A8371DF00881600 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		F10A53112CDA02CD00F00B95 /* Recursion.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Recursion.cpp; sourceTree = "<group>"; };
+		F10D6BE02D9277AC00286439 /* Sorting.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Sorting.cpp; sourceTree = "<group>"; };
+		F13314FF2DA168E90048D602 /* DSA */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DSA; sourceTree = BUILT_PRODUCTS_DIR; };
 		F135FC432D6B7B4C003C4AE5 /* Hashing.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Hashing.cpp; sourceTree = "<group>"; };
 		F1494E642D18245300AF539F /* Array.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Array.cpp; sourceTree = "<group>"; };
+		F1A001CB2DB18F5300A65C08 /* Pattern.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Pattern.cpp; sourceTree = "<group>"; };
 		F1D0CCB12CD7CB810049307A /* BitMagic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BitMagic.cpp; sourceTree = "<group>"; };
 		F1D923EF2CD660EF0006C272 /* Mathematics.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mathematics.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -52,27 +56,21 @@
 			isa = PBXGroup;
 			children = (
 				A78CEB0E2A8371DF00881600 /* DSA */,
-				A78CEB0D2A8371DF00881600 /* Products */,
+				F13314FF2DA168E90048D602 /* DSA */,
 			);
-			sourceTree = "<group>";
-		};
-		A78CEB0D2A8371DF00881600 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A78CEB0C2A8371DF00881600 /* DSA */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		A78CEB0E2A8371DF00881600 /* DSA */ = {
 			isa = PBXGroup;
 			children = (
 				A78CEB0F2A8371DF00881600 /* main.cpp */,
+				F1A001CB2DB18F5300A65C08 /* Pattern.cpp */,
 				F1D923EF2CD660EF0006C272 /* Mathematics.cpp */,
 				F1D0CCB12CD7CB810049307A /* BitMagic.cpp */,
 				F10A53112CDA02CD00F00B95 /* Recursion.cpp */,
-				F1494E642D18245300AF539F /* Array.cpp */,
 				F135FC432D6B7B4C003C4AE5 /* Hashing.cpp */,
+				F10D6BE02D9277AC00286439 /* Sorting.cpp */,
+				F1494E642D18245300AF539F /* Array.cpp */,
 			);
 			path = DSA;
 			sourceTree = "<group>";
@@ -94,7 +92,7 @@
 			);
 			name = DSA;
 			productName = DSA;
-			productReference = A78CEB0C2A8371DF00881600 /* DSA */;
+			productReference = F13314FF2DA168E90048D602 /* DSA */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -120,7 +118,7 @@
 				Base,
 			);
 			mainGroup = A78CEB032A8371DF00881600;
-			productRefGroup = A78CEB0D2A8371DF00881600 /* Products */;
+			productRefGroup = A78CEB032A8371DF00881600;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -136,8 +134,10 @@
 			files = (
 				F10A53122CDA02CD00F00B95 /* Recursion.cpp in Sources */,
 				F1D923F02CD660EF0006C272 /* Mathematics.cpp in Sources */,
+				F1A001CC2DB18F5300A65C08 /* Pattern.cpp in Sources */,
 				F135FC442D6B7B4C003C4AE5 /* Hashing.cpp in Sources */,
 				A78CEB102A8371DF00881600 /* main.cpp in Sources */,
+				F10D6BE12D9277AC00286439 /* Sorting.cpp in Sources */,
 				F1D0CCB22CD7CB810049307A /* BitMagic.cpp in Sources */,
 				F1494E662D18245300AF539F /* Array.cpp in Sources */,
 			);

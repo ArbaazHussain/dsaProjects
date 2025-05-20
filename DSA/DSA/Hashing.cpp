@@ -53,11 +53,12 @@ void basicHashingIntegersWithMaps(long long givenArray[],int givenArraySize, int
     for (int i=0; i<givenArraySize; i++) {
         mpp[givenArray[i]]++;
         /*
+         storing
          if ordered map:
-         O(givenArraySize * log(givenArraySize))
+         O(givenArraySize * log(mppSize))
          
          if unOrdered map:
-         worst case        - givenArraySize * givenArraySize
+         worst case        - givenArraySize * mppSize
          Best,Average case - givenArraySize * O(1)
          */
     }
@@ -74,26 +75,27 @@ void basicHashingIntegersWithMaps(long long givenArray[],int givenArraySize, int
         cin >> number;
         cout<<"Output-> "<<mpp[number]<<endl;
         /*
+         fetching
          if ordered map:
-         O(noOfQuery * log(givenArraySize))
+         O(noOfQuery * log(mppSize))
          
          if unOrdered map:
-         worst case        - noOfQuery * givenArraySize
+         worst case        - noOfQuery * mppSize
          Best,Average case - noOfQuery * O(1)
          */
     }
 }
-//T.C = O((givenArraySize+noOfQuery)⋅log(givenArraySize))
+//T.C = O((givenArraySize+noOfQuery)⋅log(mppSize))
 /*
  We can take pair keys like <int,int> etc only in ordered map and not in UnOrdered map.
  
  Time Complexity of Maps:
  Ordered Map:
- logN for both storing and fetching (Case-:Best,Average,Worst)
+ log(mppSize) for both storing and fetching (Case-:Best,Average,Worst)
  
  UnOrdered Map:
  O(1) for both storing and fetching (Case-:Best,Average)
- O(N) for both storing and fetching (Case-:Worst)
+ O(mppSize) for both storing and fetching (Case-:Worst)
  
  Preference should be always given to unOrdered Map as worst case happens very rarely.
  */

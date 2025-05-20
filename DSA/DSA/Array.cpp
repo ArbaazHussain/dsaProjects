@@ -7,13 +7,15 @@
 
 #include <iostream>
 #include <vector>
+#include <set>
+#include <map>
 
 using namespace std;
 using std::cout;
 using std::endl;
 
 
-//MARK: ----Array--------------------
+//MARK: ----Array------
 /*
 * Array Advantages -:
  random access
@@ -25,15 +27,39 @@ using std::endl;
  
 * Vectors(Dynamic Array) Advantages as compare to Fixed Array:
  Dynamic size array
- rich library function
+ rich library function(find,erase,insert,etc)
  easy to know size
  no need to pass size
  can be returned from a function
  by default initialized by default value
- can copy one factor to another.
+ we can copy copy a vector to another.
  
 * We can store array of size 1e6 in local function, 1e7 as global variable.
  */
+
+
+
+//MARK: Helper Functions
+void deleteAtIndex(std::vector<int>& vec, int index) {
+    if (index >= 0 && index < vec.size()) {
+        vec.erase(vec.begin()+index);
+    } else {
+        std::cout << "Invalid index!" << std::endl;
+    }
+}
+
+void reverseArrayFrmIndex(vector<int> &nums, int str, int end){
+    while (str<=end) {
+        swap(nums[str], nums[end]);
+        str++;
+        end--;
+    }
+}
+
+
+//MARK: ------Gfg Basics------
+
+
 
 //MARK: arrayBasic
 void arrayBasic(){
@@ -117,65 +143,100 @@ void deleteElementInFixedArray(int arr[], int cap, int x){
 //A.S = BigO(1)
 
 
-//MARK: largestElementIndex
-int largestElementIndex(int arr[], int n){
+
+//MARK: ------Strivers------
+
+
+
+//MARK: largestElementBrute
+int largestElementBrute(vector<int>& nums) {
+    unsigned long int n = nums.size();
+    std::sort(nums.begin(), nums.end());
+    return nums[n-1];
+}
+//T.C = BigO(n logn)
+//A.S = BigO(n)
+
+
+//MARK: largestElementOptimal
+int largestElementOptimal(vector<int>& nums) {
+    long int n = nums.size();
     int largestIndex=0;
     for (int i=1; i<n; i++) {
-        if(arr[i]>arr[largestIndex]){
+        if(nums[i]>nums[largestIndex]){
             largestIndex=i;
         }
     }
-    return largestIndex;
+    return nums[largestIndex];
 }
 //T.C = BigO(n)
 //A.S = BigO(1)
 
 
-//MARK: secondlargestElementIndexNaive
-int secondlargestElementIndexNaive(int arr[], int n){
-    int largestIndex=largestElementIndex(arr, n);
-    
-    int secondLargestIndex=-1;
-    
-    for (int i=0; i<n; i++) {
-        if(arr[i]!=arr[largestIndex]){
-            if(secondLargestIndex==-1){
-                secondLargestIndex=i;
-            }
-            else if(arr[i]>arr[secondLargestIndex]){
-                secondLargestIndex=i;
-            }
+//MARK: secondLargestBrute
+int secondLargestBrute(vector<int> &nums) {
+    unsigned long int n = nums.size();
+    std::sort(nums.begin(), nums.end());
+    int secondLargestIndex = n-2;
+    for (int i=secondLargestIndex; i>=0; i--) {
+        if(nums[i] != nums[n-1]){
+            return nums[i];
         }
     }
-    return secondLargestIndex;
+    return -1;
 }
-//T.C = BigO(n^2)
+//T.C = BigO( (nLogn) + n )
+//A.S = BigO(n)
+
+
+//MARK: secondLargestBetter
+int secondLargestBetter(vector<int> &nums) {
+    int max = nums[0];
+    if(nums.size()==1){
+        return max;
+    }
+    for (int i=1; i<nums.size(); i++) {
+        if(nums[i]>max){
+            max = nums[i];
+        }
+    }
+    int secondMax = -1;
+    for (int i=0; i<nums.size(); i++) {
+        if(nums[i]>secondMax && nums[i]<max){
+            secondMax = nums[i];
+        }
+    }
+    return secondMax;
+}
+//T.C = BigO(2n)
 //A.S = BigO(1)
 
 
-//MARK: secondlargestElementIndexEfficient
-int secondlargestElementIndexEfficient(int arr[], int n){
-    int largest= 0;
-    int secondLargest = -1;
-    for (int i=1; i<n; i++) {
-        if(arr[i]>arr[largest]){
-            secondLargest=largest;
-            largest=i;
-        }else if(arr[i]<arr[largest]){
-            if(arr[i]>arr[secondLargest]){
-                secondLargest=i;
-            }
+//MARK: secondLargestOptimal
+int secondLargestOptimal(vector<int> &nums) {
+    int secondMax = -1;
+    int max = nums[0];
+    
+    for (int i=1; i<nums.size(); i++) {
+        if(nums[i]>max){
+            int tempMax = max;
+            max = nums[i];
+            secondMax = tempMax;
+        }
+        if(nums[i]<max && nums[i]>secondMax){
+            secondMax = nums[i];
         }
     }
-    return secondLargest;
-} //T.C = Theta(n)
+    return secondMax;
+}
+//T.C = BigO(n)
 //A.S = BigO(1)
 
 
 //MARK: isArraySortedInIncreasing
 int isArraySortedInIncreasing(int arr[], int n){
-    for (int i=1; i<n; i++) {
-        if(arr[i-1]>arr[i]){
+    for (int i=0; i<n-1; i++) {
+        if(arr[i]>arr[i+1]){
             return false;
         }
     }
@@ -185,358 +246,559 @@ int isArraySortedInIncreasing(int arr[], int n){
 //A.S = BigO(1)
 
 
-//MARK: reverseArray1
-void reverseArray1(int arr[], int n){
-    for (int i=0; i<n/2; i++) {
-        int j=n-i-1;
-        int temp=arr[i];
-        arr[i]=arr[j];
-        arr[j]=temp;
-    }
-    //Avoid this for T.C
-    for (int j=0; j<n; j++) {
-        cout<<arr[j]<<" ";
-    }
-}
-//T.C = BigO(n) - i.e(n/2)
-//A.S = BigO(1)
-
-
-//MARK: reverseArray2
-void reverseArray2(int arr[], int n){
-    int start=0;
-    int end=n-1;
-    while (start<end) {
-        int temp = arr[start];
-        arr[start] = arr[end];
-        arr[end] = temp;
-        
-        start++;
-        end--;
-    }
-    //Avoid this for T.C
-    for (int j=0; j<n; j++) {
-        cout<<arr[j]<<" ";
-    }
-}
-//T.C = BigO(n) - i.e(n/2)
-//A.S = BigO(1)
-
-
-//MARK: removeDuplicateeGfgNaive
-int removeDuplicateSortedArrayGfgNaive(int a[],int n){
-    int temp[n];
-    
-    temp[0]=a[0];
-    int res=1;
-    
-    for (int i=1; i<n; i++) {
-        if(temp[res-1]!=a[i]){
-            temp[res]=a[i];
-            res++;
-        }
-    }
-    
-    //Avoid this block for time complexity
-    for (int i=0; i<res; i++) {
-        a[i]=temp[i];
-    }
-    return res;
-}
-//T.C = Theta(n)
-//A.S = Theta(n)
-
-
-//MARK: removeDuplicateeEfficient
-void removeDuplicateSortedArrayEfficient(int arr[],int n){
-    int res = 1;
-    for (int i=1; i<n; i++) {
-        if(arr[i] != arr[res-1]){
-            arr[res] = arr[i];
-            res++;
-        }
-    }
-}
-//T.C = Theta(n)
-//A.S = BigO (1)
-
-
-//MARK: moveZerosToEnd
-void moveZerosToEndMyNaive(int arr[], int n) {
-    int temp[n];
-    int newN=0;
-    int zeroInsertionAtLastCount=0;
-    for (int i=0; i<n; i++) {
-        if(arr[i]!=0){
-            temp[newN]=arr[i];
-            newN++;
-        }else{
-            temp[(n-1)-zeroInsertionAtLastCount]=0;
-            zeroInsertionAtLastCount++;
-        }
-    }
-    
-    //Avoid this block for time complexity
-    for (int i=0; i<n; i++) {
-        cout<<temp[i]<<" ";
-    }
-}
-//T.C = Theta(n)
-//A.S = Theta(n)
-
-
-//MARK: moveZerosToEndGfgNaive
-void moveZerosToEndGfgNaive(int arr[], int n) {
-    for (int i=0; i<n; i++) {
-        if(arr[i]==0){
-            for (int j=i+1; j<n; j++) {
-                if(arr[j]!=0){
-                    int temp=arr[i];
-                    arr[i]=arr[j];
-                    arr[j]=temp;
-                    break;
-                }
+//MARK: removeDuplicatesInSortedArrayMy
+void removeDuplicatesMy(vector<int>& nums) {
+    unsigned long int n = nums.size();
+    for (int i=0; i<n-1; i++) {
+        while (nums[i]==nums[i+1]) {
+            deleteAtIndex(nums, i+1);
+            n = n-1;
+            if(i==(n-1)){
+                break;
             }
         }
     }
     //Avoid this block for time complexity
-    for (int i=0; i<n; i++) {
-        cout<<arr[i]<<" ";
+    for (int i=0; i<nums.size(); i++) {
+        cout<<nums[i]<<" ";
     }
 }
-//T.C = Theta(n^2)
-//A.S = BigO (1)
+// T.C - BigO(n^2)
+// A.S - BigO(1)
 
 
-//MARK: moveZerosToEndEfficient
-void moveZerosToEndEfficient(int arr[], int n) {
-    int count=0;
-    for (int i=0; i<n; i++) {
-        if(arr[i]!=0){
-            int temp=arr[i];
-            arr[i]=arr[count];
-            arr[count]=temp;
-            
-            count++;
+//MARK: removeDuplicatesInSortedArrayBrute
+int removeDuplicatesInSortedArrayBrute(vector<int>& nums){
+    set<int> st;
+    for (int i=0; i<nums.size(); i++) {
+        st.insert(nums[i]);
+    }
+    int j=0;
+    for (int val : st) {
+        nums[j] = val;
+        j++;
+    }
+    return st.size();
+}
+//T.C = BigO(n*logn + n)
+//A.S = BigO(n)
+
+
+//MARK: removeDuplicatesInSortedArrayOptimal-(TwoPointer)
+int removeDuplicatesInSortedArrayOptimal(vector<int>& nums)
+{
+    unsigned long int n = nums.size();
+    int i = 0;
+    for (int j = 1; j < n; j++) {
+        if (nums[i] != nums[j]) {
+            i++;
+            nums[i] = nums[j];
         }
     }
-    
+    return i + 1;
+}
+//T.C = BigO(n)
+//A.S = BigO(1)
+
+
+//MARK: LeftRotateByOnePlace
+void LeftRotateByOnePlace(vector<int> &nums){
+    unsigned long int n = nums.size();
+    int firstElement = nums[0];
+    for (int i=1; i<n; i++) {
+        nums[i-1] = nums[i];
+    }
+    nums[n-1] = firstElement;
     //Avoid this block for time complexity
     for (int i=0; i<n; i++) {
-        cout<<arr[i]<<" ";
+        cout<<nums[i]<<" ";
     }
 }
-//T.C = Theta(n)
-//A.S = BigO (1)
+// T.C - BigO(n)
+// A.S - BigO(1)
 
 
-//MARK: leftRotateArrayByOne
-void leftRotateArrayByOne(int arr[], int n) {
-    int firstElement=arr[0];
-    for (int i=0; i<n-1; i++) {
-        arr[i]=arr[i+1];
+//MARK: LeftRotateByDPlaceBrute
+void LeftRotateByDPlaceBrute(vector<int> &nums, int d){
+    int n = nums.size();
+    if(d>n){
+        d = d%n;
     }
-    arr[n-1]=firstElement;
-    for (int i=0; i<n; i++) {
-        cout<<arr[i]<<" ";
-    }
-}
-//T.C = Theta(n)
-//A.S = BigO (1)
-
-
-
-//MARK: LeftRotateArraybyDPlacesGfgEfficient
-/*
- if(d==n) { no change }
- else if(d>n) {d = d-n}
- */
-void LeftRotateArraybyDPlacesGfgEfficient(int arr[], int d, int n){
-    if(n==d){
+    if(n == d ){
         return;
     }
-    int temp[d];
-    
+    vector<int> tempArray{};
+    int z = 0;
+    for (int i=0; i<n; i++) {
+        if(i<d){
+            tempArray.push_back(nums[i]);
+        }else{
+            nums[z] = nums[i];
+            z++;
+        }
+    }
+    int x = n-d;
     for (int i=0; i<d; i++) {
-        temp[i]=arr[i];
+        nums[x] = tempArray[i];
+        x++;
     }
-    for (int i=0; i<n-d; i++) {
-        arr[i]=arr[i+d];
-    }
-
-    for (int i=0; i<d; i++) {
-        arr[n-d+i]=temp[i];
-    }
-    
     //Avoid this block for time complexity
     for (int i=0; i<n; i++) {
-        cout<<arr[i]<<" ";
+        cout<<nums[i]<<" ";
     }
 }
-//T.C = Theta(n)
-//A.S = Theta(d)
+// T.C - BigO(n+d)
+// A.S - BigO(d)
 
 
-//MARK: LeftRotateArraybyDPlacesGfgEfficient(Reversal Algorithm)
-void LeftRotateArrayReverse(int arr[], int low, int high)
-{
-    while(low < high)
-    {
-        swap(arr[high], arr[low]);
-        low++;
-        high--;
+//MARK: rightRotateByDPlaceBrute
+void rightRotateByDPlaceBrute(vector<int> &nums, int d){
+    int n = nums.size();
+    if(d>n){
+        d = d%n;
     }
-}
-void LeftRotateArraybyDPlacesGfgReversal(int arr[], int d, int n){
-    LeftRotateArrayReverse(arr, 0, d - 1);
-    LeftRotateArrayReverse(arr, d, n - 1);
-    LeftRotateArrayReverse(arr, 0, n - 1);
-    
+    if(n == d ){
+        return;
+    }
+    vector<int> tempArray{};
+    for (int i=0; i<d; i++) {
+        int x = nums[(n-1)-i];
+        tempArray.push_back(x);
+    }
+    int z = 0;
+    for (int i=n-1; i>=0; i--) {
+        if(i>=d){
+            nums[i] = nums[i-d];
+        }else{
+            nums[i] = tempArray[z];
+            z++;
+        }
+    }
     //Avoid this block for time complexity
     for (int i=0; i<n; i++) {
-        cout<<arr[i]<<" ";
+        cout<<nums[i]<<" ";
     }
 }
-//T.C = Theta(2n)  i.e=(d+(n-d)+n)
-//A.S = Big0 (1)
+// T.C - BigO(n+d)
+// A.S - BigO(d)
 
 
-//MARK: leadersInArrayNaive
-void leadersInArrayNaive(int arr[], int n){
+//MARK: LeftRotateByDPlaceOptimal
+void LeftRotateByDPlaceOptimal(vector<int> &nums, int d){
+    int n = nums.size();
+    if(d>n){
+        d = d%n;
+    }
+    if(n == d){
+        return;
+    }
+    reverseArrayFrmIndex(nums, 0, d-1);
+    reverseArrayFrmIndex(nums, d, n-1);
+    reverseArrayFrmIndex(nums, 0, n-1);
+    //Avoid this block for time complexity
     for (int i=0; i<n; i++) {
-        bool isLeader=true;
-        for (int j=i; j<n; j++) {
-            if(arr[j]>arr[i]){
-                isLeader=false;
-                break;
-            }
-        }
-        if(isLeader){
-            cout<<arr[i]<<" ";
-        }
+        cout<<nums[i]<<" ";
     }
 }
-//T.C = Big0 (n^2)
-//A.S = Big0 (1)
+// T.C - BigO(2n)
+// A.S - BigO(1)
 
 
-//MARK: leadersInArrayEfficient
-void leadersInArrayEfficient(int arr[], int n){
-    int currentLeader = arr[n - 1];
-    cout<<currentLeader<<" ";
-    
-    for(int i=n-2; i>=0; i--)
-    {
-        if(arr[i]>currentLeader)
-        {
-            currentLeader=arr[i];
-            cout<<currentLeader<<" ";
-        }
-    }
-}
-//T.C = Theta(n)
-//A.S = Big0 (1)
-
-
-//MARK: maximumDifferenceProblemWithOrderNaive
-int maximumDifferenceProblemWithOrderNaive(int A[], int n){
-    int max=INT_MIN;;
-    for(int i=0; i<n; i++) {
-        for (int j=0; j<n; j++) {
-            if(j>i && ((A[j]-A[i])>max)){
-                max=A[j]-A[i];
-            }
-        }
-    }
-    return max;
-}
-//T.C = Theta(n^2)
-//A.S = Big0 (1)
-
-
-//MARK: maximumDifferenceProblemWithOrderEfficient
-int maximumDifferenceProblemWithOrderEfficient(int A[], int n){
-    
-    return 0;
-}
-//T.C = Theta(n)
-//A.S = Big0 (1)
-
-
-//MARK: frequenciesInSortedArrayMy
-void frequenciesInSortedArrayMy(int arr[], int n){
+//MARK: moveZeroesToEndBrute
+void moveZeroesToEnd(vector<int>& nums) {
+    int n = nums.size();
+    vector<int> tempArray{};
     for (int i=0; i<n; i++) {
-        int count=1;
-        for (int j=i+1; i<n; j++) {
-            if(arr[j]>arr[i]){
-                cout<<arr[i]<<" "<<count<<endl;
-                i=(j-1);
-                break;
-            }
-            if(arr[i]==arr[j]){
-                count++;
+        if(nums[i]!=0){
+            tempArray.push_back(nums[i]);
+        }
+    }
+    for (int i=0; i<n; i++) {
+        if(i<tempArray.size()){
+            nums[i] = tempArray[i];
+        }else{
+            nums[i] = 0;
+        }
+    }
+    //Avoid this block for time complexity
+    for (int i=0; i<n; i++) {
+        cout<<nums[i]<<" ";
+    }
+}
+// T.C - BigO(2n)
+// A.S - BigO(n)
+
+
+//MARK: moveZeroesToEndOptimal-(TwoPointer)
+void moveZeroesToEndOptimal(vector<int>& nums) {
+    int n = nums.size();
+    int j = -1;
+    bool gotFirstZero = false;
+    for (int i=0; i<n; i++) {
+        if(nums[i]==0 && !gotFirstZero){
+            j = i;
+            gotFirstZero = true;
+            continue;
+        }
+        if(gotFirstZero){
+            if(nums[i] != 0){
+                swap(nums[j], nums[i]);
+                j++;
             }
         }
     }
+    //Avoid this block for time complexity
+    for (int i=0; i<n; i++) {
+        cout<<nums[i]<<" ";
+    }
 }
-//T.C = Theta(n^2)
-//A.S = Big0 (1)
+// T.C - BigO(n)
+// A.S - BigO(1)
 
 
-//MARK: frequenciesInSortedArrayGfg
-void frequenciesInSortedArrayGfg(int arr[], int n)
-{
-    int freq = 1, i = 1;
-    while(i < n)
-    {
-        while(i < n && arr[i] == arr[i - 1])
-        {
-            freq++;
+//MARK: linearSearch
+int linearSearch(vector<int> &nums, int target){
+    int n = nums.size();
+    for (int i=0; i<n; i++) {
+        if(nums[i] == target ){
+            return i;
+        }
+    }
+    return -1;
+}
+// T.C - BigO(n)
+// A.S - BigO(1)
+
+
+//MARK: unionOfSortedArrayBrute
+void unionOfSortedArrayBrute(vector<int>& nums1, vector<int>& nums2) {
+    set<int> st;
+    for (int i=0; i<nums1.size(); i++) {
+        st.insert(nums1[i]);
+    }
+    for (int i=0; i<nums2.size(); i++) {
+        st.insert(nums2[i]);
+    }
+    for (int val : st) {
+        cout<<val<<" ";
+    }
+}
+// T.C - BigO(n1logn + n2logn)
+// A.S - BigO(n1+n2)
+
+
+//MARK: unionOfSortedArrayOptimal-(TwoPointer)
+void unionOfSortedArrayOptimal(vector<int>& nums1, vector<int>& nums2) {
+    vector<int> unionArray{};
+    int i = 0;
+    int j = 0;
+    while (i<nums1.size() && j<nums2.size()) {
+        if(nums1[i] < nums2[j]){
+            if(unionArray.size() == 0 || (unionArray.back() != nums1[i])){
+                unionArray.push_back(nums1[i]);
+            }
             i++;
+        }else{
+            if(unionArray.size() == 0 || (unionArray.back() != nums2[j])){
+                unionArray.push_back(nums2[j]);
+            }
+            j++;
         }
-        cout<<arr[i - 1] << " " << freq << endl;
-        i++;
-        freq = 1;
     }
-    if(n==1 || arr[n-1]!=arr[n-2])
-        cout<<arr[n-1] + " " + 1;
+    while (i<nums1.size()) { // IF any element left in nums1
+        if(unionArray.size() == 0 || (unionArray.back() != nums1[i])){
+            unionArray.push_back(nums1[i]);
+        }
+        i++;
+    }
+    while (j<nums2.size()) { // If any elements left in nums2
+        if(unionArray.size() == 0 || (unionArray.back() != nums2[j])){
+            unionArray.push_back(nums2[j]);
+        }
+        j++;
+    }
+    //Avoid this block for time complexity
+    for (int i=0; i<unionArray.size(); i++) {
+        cout<<unionArray[i]<<" ";
+    }
 }
+// T.C - BigO(n1+n2)
+// A.S - BigO(n1+n2)
 
-//T.C = Theta(n)
+
+//MARK: intersectionOfSortedArrayBrute
+void intersectionOfSortedArrayBrute(vector<int>& nums1, vector<int>& nums2) {
+    vector<int> unionArray{};
+    int z = 0;
+    for (int i=0; i<nums1.size(); i++) {
+        for (int j=z; j<nums2.size(); j++) {
+            if(nums1[i] == nums2[j]){
+                unionArray.push_back(nums1[i]);
+                z++;
+                break;
+            }
+            if(nums2[j]>nums1[i]){
+                break;
+            }
+        }
+    }
+    //Avoid this block for time complexity
+    for (int i=0; i<unionArray.size(); i++) {
+        cout<<unionArray[i]<<" ";
+    }
+}
+// T.C - BigO(nums1*nums2)
+// A.S - BigO(1)
+
+
+//MARK: intersectionOfSortedArrayOptimal-(TwoPointer)
+void intersectionOfSortedArrayOptimal(vector<int>& nums1, vector<int>& nums2) {
+    vector<int> unionArray{};
+    int i = 0;
+    int j = 0;
+    while (i<nums1.size() && j<nums2.size()) {
+        if(nums1[i] < nums2[j]){
+            i++;
+        }else if(nums1[i] > nums2[j]){
+            j++;
+        }else {
+            unionArray.push_back(nums1[i]);
+            i++;
+            j++;
+        }
+    }
+    //Avoid this block for time complexity
+    for (int i=0; i<unionArray.size(); i++) {
+        cout<<unionArray[i]<<" ";
+    }
+}
+// T.C - BigO(n1+n2)
+// A.S - BigO(n1+n2)
+
+
+//MARK: missingNumberBrute(linear)
+//https://leetcode.com/problems/missing-number/description/
+int missingNumberBrute(vector<int>& nums) {
+    for (int i=0; i<=nums.size(); i++) {
+        bool isExist = false;
+        for (int j=0; j<nums.size(); j++) {
+            if(i == nums[j]){
+                isExist = true;
+                break;
+            }
+        }
+        if(!isExist){
+            return i;
+        }
+    }
+    return -1;
+}
+//T.C = BigO(n*n)
 //A.S = Big0 (1)
 
-//Swift code
-/*
- func practice(arr: inout [Int]){
-     var freq = 1
-     if(arr.count==1){
-         print("\(arr[0]) \(freq)")
-     }
-     for i in 1..<arr.count{
-         if(arr[i-1] != arr[i]){
-             print("\(arr[i-1]) \(freq)")
-             freq = 1
-         }else{
-             freq += 1
-         }
+
+//MARK: missingNumberBetter(hashing)
+int missingNumberBetter(vector<int>& nums) {
+    int n = nums.size();
+        int hashArray[n+1];
+        memset(hashArray, 0, sizeof(hashArray)); // Fast zero initialization
         
-         if(i == arr.count-1){
-             if(arr[i-1]==arr[i]){
-                 print("\(arr[i]) \(freq)")
-             }else{
-                 print("\(arr[i]) \(freq)")
-             }
-         }
-     }
- }
- //T.C = Theta(n)
- //A.S = Big0 (1)
- */
+        for (int i=0; i<nums.size(); i++) {
+            int currentItem = nums[i];
+            hashArray[currentItem]++;
+        }
+        for (int i=0; i<n+1; i++) {
+            if(hashArray[i] == 0){
+                return i;
+            }
+        }
+        return -1;
+}
+//T.C = BigO(2n)
+//A.S = Big0 (n)
+
+
+//MARK: missingNumberOptimal1(sumOfNnaturalNo)
+int missingNumberOptimal1(vector<int>& nums) {
+    int n = nums.size();
+    int sum = n*(n+1)/2;
+    int currentSum = 0;
+    for (int i=0; i<n; i++) {
+        currentSum = currentSum + nums[i];
+    }
+    return sum-currentSum;
+}
+//T.C = BigO(n)
+//A.S = Big0(1)
+
+
+//MARK: missingNumberOptimal2(xor)
+//This is slightly better than missingNumberOptimal1 bcz, array size can be big as 10^5 and sum of elements till 10^5 can be 10^10 which cannot be stored in int.
+int missingNumberOptimal2(vector<int>& nums) {
+    int n = nums.size();
+    int xor1 = 0;
+    int xor2 = 0;
+    for (int i=0; i<n; i++) {
+        xor1 = xor1^nums[i];
+        xor2 = xor2^i;
+    }
+    xor2 = xor2^n;
+    return xor1^xor2;
+}
+//T.C = BigO(n)
+//A.S = Big0(1)
+
+
+//MARK: maxConsecutiveOnesOpitimal(my)
+//https://leetcode.com/problems/max-consecutive-ones/description/
+int maxConsecutiveOnesOpitimal(vector<int>& nums) {
+    int n = nums.size();
+    int finalRes = 0;
+    int currentRes = 0;
+    for (int i=0; i<n; i++) {
+        if(nums[i] == 1){
+            currentRes++;
+        }else if(nums[i] != 1){
+            if(currentRes>finalRes){
+                finalRes = currentRes;
+            }
+            currentRes = 0;
+        }
+    }
+    if(nums[n-1] == 1){
+        if(currentRes>finalRes){
+            finalRes = currentRes;
+        }
+        currentRes = 0;
+    }
+    return finalRes;
+}
+//T.C = BigO(n)
+//A.S = Big0(1)
+
+
+//MARK: maxConsecutiveOnesOpitimal2(stv)
+int maxConsecutiveOnesOpitimal2(vector<int>& nums) {
+    int n = nums.size();
+    int cnt = 0;
+    int maxi = 0;
+    for (int i=0; i<n; i++) {
+        if(nums[i] == 1){
+            cnt++;
+            maxi = max(maxi, cnt);
+        }else {
+            cnt = 0;
+        }
+    }
+    return maxi;
+}
+//T.C = BigO(n)
+//A.S = Big0(1)
+
+
+//MARK: singleNumberBrute(linear)
+//https://leetcode.com/problems/single-number/description/
+int singleNumber(vector<int>& nums) {
+    int n = nums.size();
+    //Run a loop for selecting elements:
+    for (int i = 0; i < n; i++) {
+        int num = nums[i]; // selected element
+        int cnt = 0;
+        //find the occurrence using linear search:
+        for (int j = 0; j < n; j++) {
+            if (nums[j] ==  num)
+                cnt++;
+        }
+        // if the occurrence is 1 return ans:
+        if (cnt == 1) return num;
+    }
+    //This line will never execute
+    //if the array contains a single element.
+    return -1;
+}
+//T.C = BigO(n^2)
+//A.S = Big0(1)
+
+
+//MARK: singleNumberBetter1(hashing)
+int singleNumberBetter1(vector<int>& nums) {
+    int n = nums.size();
+    // Find the maximum element:
+    int maxi = nums[0];
+    for (int i = 0; i < n; i++) {
+        maxi = max(maxi, nums[i]);
+    }
+    // Declare hash array of size maxi+1
+    // And hash the given array:
+    vector<int> hash(maxi + 1, 0);
+    for (int i = 0; i < n; i++) {
+        hash[nums[i]]++;
+    }
+    //Find the single element and return the answer:
+    for (int i = 0; i < n; i++) {
+        if (hash[nums[i]] == 1)
+            return nums[i];
+    }
+    //This line will never execute
+    //if the array contains a single element.
+    return -1;
+}
+//T.C = BigO(3n)
+//A.S = BigO(maxElementInArray+1)
+
+
+//MARK: singleNumberBetter2(map)
+//This is better than singleNumberBetter1 bcz, in singleNumberBetter1 we use hash array and it can not be used efficiently if we have -ve or very large elements(i.e: 10^12) in array.
+int singleNumberBetter2(vector<int>& nums) {
+    int n = nums.size();
+    // Declare the hashmap.
+    // And hash the given array:
+    map<int, int> mpp;
+    for (int i = 0; i < n; i++) {
+        mpp[nums[i]]++;
+    }
+    //Find the single element and return the answer:
+    for (auto it : mpp) {
+        if (it.second == 1)
+            return it.first;
+    }
+    //This line will never execute
+    //if the array contains a single element.
+    return -1;
+}
+//M = size of the map
+//T.C = BigO(N*logM) + O(M)
+//A.S = BigO(M)
+
+
+//MARK: singleNumberOptimal(xor)
+int singleNumberOptimal(vector<int>& nums) {
+    int n = nums.size();
+    // XOR all the elements:
+    int xorr = 0;
+    for (int i = 0; i < n; i++) {
+        xorr = xorr ^ nums[i];
+    }
+    return xorr;
+}
+//T.C = BigO(3n)
+//A.S = BigO(maxElementInArray+1)
+
+
+
 
 
 //MARK: main function--------------------------
-//int main()
-//{
-//    arrayBasic();
-//    return 0;
-//}
+int main() {
+    int fixedArray[] = {101,3,8,12,5,6,0,1001};
+    int n = sizeof(fixedArray)/sizeof(fixedArray[0]);
+    vector<int> vectorArray{1,1,2,2,2,3,3,1010};
+    
+    //Avoid this block for time complexity
+//    for (int i=0; i<vectorArray.size(); i++) {
+//        cout<<vectorArray[i]<<" ";
+//    }
+    cout<<endl;
+    return 0;
+}
+

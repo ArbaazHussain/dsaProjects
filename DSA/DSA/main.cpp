@@ -201,27 +201,27 @@ void MyStackUsingSTL(){
 }
 
 //MARK: main function--------------------------
-int main()
-{
-    cout<<"main file - main function";
-    //    int n = 8;
-    
-    //    int array1[4] =  {30,10,8,2};
-    //    int sizeOfArray = sizeof(array1)/sizeof(int);
-    
-    //    vector<int> vectorArray{1,2,7,5};
-    //    vector<int> y =  leadersInArray(array2, sizeOfArray);
-    
-    //    int tempArray[n];
-    //    std::fill(tempArray,tempArray+n,0);
-    
-    //    string s = "geeksforgeeks";
-    //    string g = "forgeeksgeeks";
-    //    string k = "checkThePush";
-    
-    //    sort(g.begin(), g.end());
-    //    cout<<s<<endl;
-    //    cout<<g<<endl;
-    return 1;
-    return 0;
-}
+//int main()
+//{
+//    cout<<"main file - main function";
+//    //    int n = 8;
+//    
+//    //    int array1[4] =  {30,10,8,2};
+//    //    int sizeOfArray = sizeof(array1)/sizeof(int);
+//    
+//    //    vector<int> vectorArray{1,2,7,5};
+//    //    vector<int> y =  leadersInArray(array2, sizeOfArray);
+//    
+//    //    int tempArray[n];
+//    //    std::fill(tempArray,tempArray+n,0);
+//    
+//    //    string s = "geeksforgeeks";
+//    //    string g = "forgeeksgeeks";
+//    //    string k = "checkThePush";
+//    
+//    //    sort(g.begin(), g.end());
+//    //    cout<<s<<endl;
+//    //    cout<<g<<endl;
+//    return 1;
+//    return 0;
+//}
