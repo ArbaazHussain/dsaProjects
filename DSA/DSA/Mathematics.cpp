@@ -24,7 +24,9 @@ using std::endl;
  Precision Datatype => double>float>longLongInt>longInt>int>char
  
  Operator Precision =>
- C++ does not strictly follow BODMAS but instead relies on operator precedence and associativity
+* C++ relies on operator precedence and associativity with BODMAS.
+* BODMAS is often misinterpreted — it does not mean multiplication always comes before division, or addition before subtraction. Instead, D/M and A/S have equal priority and are evaluated left to right.
+ 
  Operators        | Precedence   | Associativity
  ---------------------------------------------------
  () (parentheses) | Highest      | Left  to right
@@ -132,17 +134,6 @@ int FibenacchiIterativeEfficent(int n){
 }
 //T.C = theta n
 //A.S = Big O 1
-
-
-//MARK: FibenacchiRecursive
-int fibenacchiRecursive(int n){
-    if(n == 0 || n==1){
-        return n;
-    }
-    return fibenacchiRecursive(n-1) + fibenacchiRecursive(n-2);
-}
-//T.C = theta n
-//A.S = theta n
 
 
 //MARK: getIntergerCount
@@ -253,7 +244,7 @@ long long int factorialIterative(int n){
 //A.S = BigO  1
 
 
-//MARK: factorialRecursive
+
 
  
 //MARK: trailingZeroInFactorial
@@ -428,7 +419,8 @@ bool isPrimeEfficientMore(int n){
 //T.C = BigO sqrt(n)
 //A.S = BigO 1
 
-//MARK: primeFactorApproach summary
+//MARK: primeFactorApproach summary(Stv)
+//https://www.youtube.com/watch?v=LT7XhVdeRyg&t=462s
 /*
  primeFactorStNaiveOne-UniqueElements
  // factors which are prime
@@ -438,14 +430,15 @@ bool isPrimeEfficientMore(int n){
  // Divisors which are prime
  
  primeFactorStNaiveThree-UniqueElements
- Prime factorization school method
- 1.Smallest diviosor(divisor except 1) of a number is always prime number -> Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n
- 2.This solution will iterate less time for some numbers:(n=780 -- 13 iteration).But it will iterate n times for prime numbers,So this is not efficient.
+ 1.Prime factorization school method
+ 2.Smallest diviosor(divisor except 1) of a number is always prime number -> Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n
+ 3.This solution will iterate less time for some numbers:(n=780 -- 13 iteration).But it will iterate n times for prime numbers,So this is not efficient.
  
  primeFactorStEfficient-UniqueElements
- Prime factorization school method
- 1.Divisors appear in pair = 30: (1,30) (2,15) (3,10) (5,6)
- 2.Smallest diviosor(divisor except 1) of a number is always prime number. -> Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n.
+ 1.Prime factorization school method
+ 2.Divisors appear in pair = 30: (1,30) (2,15) (3,10) (5,6)
+ 3.Smallest diviosor(divisor except 1) of a number is always prime number. -> Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n.
+ 4.Extra check need to be added if n does not become 1 at last.
  
  * In order to print Multiples elements same above logic can be used with minor changes
  */
@@ -490,7 +483,7 @@ void primeFactorStNaiveTwo(int n){
 //MARK: primeFactorStNaiveThree-UniqueElements
 /*
  Prime factorization school method
-1.Smallest diviosor(divisor except 1) of a number is always prime number -> Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n
+1.Smallest divisor(divisor except 1) of a number is always prime number -> Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n
 2.This solution will iterate less time for some numbers:(n=780 -- 13 iteration).But it will iterate n times for prime numbers,So this is not efficient.
  */
 void primeFactorStNaiveThree(int n){
@@ -524,12 +517,13 @@ void primeFactorStEfficient(int n){
         if (n%i==0) {
             cout<<i<<" ";
             while (n%i==0) {
+                //cout<<i<<" "; ->add this line of code here and remove /cout<<i<<" "; from above to print all Non-Unique-Elements.
                 n = n/i;
             }
         }
     }
     //if (n is primeNo) or (becomes prime no at last) then there will be no divisors <=sqrt(n). So, adding this check.
-    if (n!=1) {
+    if (n != 1) {
         cout<<n<<" ";
     }
 }
@@ -561,36 +555,6 @@ void primeFactorMyNaive(int n){
 }
 //T.C =
 //A.S =
-
-
-//MARK: primeFactorGfgEfficient-printMultiples
-/*
- Prime factorization school method
- 1.Divisors appear in pair = 30: (1,30) (2,15) (3,10) (5,6)
- 2.Smallest diviosor(divisor except 1) of a number is always prime number. -> Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n.
- 3.A number can be written as multiplications of power of prime factors
- 12 = 2^2 * 3
- 450= 2 * 3^2 * 5^2
- 13 = 13^1
- 4.If there is a prime factor other than number itself then first prime factor of n would be in range from 2 to square(n)
- */
-void primeFactorGfgEfficientPrintMultiples(int n){
-    if(n<=1){
-        return;
-    }
-    for (int i=2; i*i<=n; i++) {
-        while (n%i==0) {
-            cout<<i<<"\n";
-            n = n/i;
-        }
-    }
-    //if (n is primeNo) or (becomes prime no at last) then there will be no divisors <=sqrt(n). So, adding this check.
-    if (n>1){
-        cout<<n<<"\n";
-    }
-}
-//T.C = BigO (sqrtN*logn)
-//A.S = BigO 1
 
 
 //MARK: allDivisorsOfNumberEfficient
@@ -647,6 +611,7 @@ void allPrimeNumbersUptoGivenNumberNaive(int n){
 
 
 //MARK: seive-allPrimeNumbersLessThanGivenNumberNaive
+//https://www.youtube.com/watch?v=T8PaMnb0GPo&t=688s
 //Smallest diviosor(divisor except 1) of a number is always prime number.
 void seive(int n){
     vector<bool>isPrime(n+1,true);
@@ -676,32 +641,15 @@ void seive(int n){
 
 
 //MARK: powerNaive
-long long int powerNaive(int a, int n){
+long long int powerNaive(int a, int p){
     long long int res = 1;
-    for (int i=0; i<n; i++) {
+    for (int i=0; i<p; i++) {
         res = res*a;
     }
     return res;
 }
-//T.C = theta n
+//T.C = theta p
 //A.S = theta 1
-
-
-//MARK: powerRecursivee
-//Youtube - luv
-long long int powerRecursivee(int a, int b){
-    if(b==0){
-        return 1;
-    }
-    long long int recCall = powerRecursivee(a, b/2);
-    if(b%2==0){
-        return recCall * recCall;
-    }else{
-        return a * recCall * recCall;
-    }
-}
-//T.C = theta log b
-//A.S = theta log b
 
 
 //MARK: powerIterative

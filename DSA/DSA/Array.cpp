@@ -154,6 +154,7 @@ int largestElementBrute(vector<int>& nums) {
     std::sort(nums.begin(), nums.end());
     return nums[n-1];
 }
+//Approach = sorting
 //T.C = BigO(n logn)
 //A.S = BigO(n)
 
@@ -169,6 +170,7 @@ int largestElementOptimal(vector<int>& nums) {
     }
     return nums[largestIndex];
 }
+//Approach = linear search
 //T.C = BigO(n)
 //A.S = BigO(1)
 
@@ -185,6 +187,7 @@ int secondLargestBrute(vector<int> &nums) {
     }
     return -1;
 }
+//Approach = sorting
 //T.C = BigO( (nLogn) + n )
 //A.S = BigO(n)
 
@@ -208,6 +211,7 @@ int secondLargestBetter(vector<int> &nums) {
     }
     return secondMax;
 }
+//Approach = linear search
 //T.C = BigO(2n)
 //A.S = BigO(1)
 
@@ -229,11 +233,13 @@ int secondLargestOptimal(vector<int> &nums) {
     }
     return secondMax;
 }
+//Approach = linear search
 //T.C = BigO(n)
 //A.S = BigO(1)
 
 
 //MARK: isArraySortedInIncreasing
+//https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/description/
 int isArraySortedInIncreasing(int arr[], int n){
     for (int i=0; i<n-1; i++) {
         if(arr[i]>arr[i+1]){
@@ -242,11 +248,13 @@ int isArraySortedInIncreasing(int arr[], int n){
     }
     return true;
 }
+//Approach = linear search
 //T.C = BigO(n)
 //A.S = BigO(1)
 
 
-//MARK: removeDuplicatesInSortedArrayMy
+//MARK: removeDuplicatesInSortedArrayMyBrute
+//https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/
 void removeDuplicatesMy(vector<int>& nums) {
     unsigned long int n = nums.size();
     for (int i=0; i<n-1; i++) {
@@ -263,6 +271,7 @@ void removeDuplicatesMy(vector<int>& nums) {
         cout<<nums[i]<<" ";
     }
 }
+//Approach = my brute
 // T.C - BigO(n^2)
 // A.S - BigO(1)
 
@@ -280,11 +289,12 @@ int removeDuplicatesInSortedArrayBrute(vector<int>& nums){
     }
     return st.size();
 }
+//Approach = set
 //T.C = BigO(n*logn + n)
 //A.S = BigO(n)
 
 
-//MARK: removeDuplicatesInSortedArrayOptimal-(TwoPointer)
+//MARK: removeDuplicatesInSortedArrayOptimal
 int removeDuplicatesInSortedArrayOptimal(vector<int>& nums)
 {
     unsigned long int n = nums.size();
@@ -297,6 +307,7 @@ int removeDuplicatesInSortedArrayOptimal(vector<int>& nums)
     }
     return i + 1;
 }
+//Approach = two pointer
 //T.C = BigO(n)
 //A.S = BigO(1)
 
@@ -314,6 +325,7 @@ void LeftRotateByOnePlace(vector<int> &nums){
         cout<<nums[i]<<" ";
     }
 }
+//Approach = linear
 // T.C - BigO(n)
 // A.S - BigO(1)
 
@@ -347,11 +359,13 @@ void LeftRotateByDPlaceBrute(vector<int> &nums, int d){
         cout<<nums[i]<<" ";
     }
 }
+//Approach = linear
 // T.C - BigO(n+d)
 // A.S - BigO(d)
 
 
 //MARK: rightRotateByDPlaceBrute
+//https://leetcode.com/problems/rotate-array/description/
 void rightRotateByDPlaceBrute(vector<int> &nums, int d){
     int n = nums.size();
     if(d>n){
@@ -379,6 +393,7 @@ void rightRotateByDPlaceBrute(vector<int> &nums, int d){
         cout<<nums[i]<<" ";
     }
 }
+//Approach = linear
 // T.C - BigO(n+d)
 // A.S - BigO(d)
 
@@ -400,11 +415,13 @@ void LeftRotateByDPlaceOptimal(vector<int> &nums, int d){
         cout<<nums[i]<<" ";
     }
 }
+//Approach = swap the parts of array
 // T.C - BigO(2n)
 // A.S - BigO(1)
 
 
 //MARK: moveZeroesToEndBrute
+//https://leetcode.com/problems/move-zeroes/description/
 void moveZeroesToEnd(vector<int>& nums) {
     int n = nums.size();
     vector<int> tempArray{};
@@ -425,11 +442,12 @@ void moveZeroesToEnd(vector<int>& nums) {
         cout<<nums[i]<<" ";
     }
 }
+//Approach = linear
 // T.C - BigO(2n)
 // A.S - BigO(n)
 
 
-//MARK: moveZeroesToEndOptimal-(TwoPointer)
+//MARK: moveZeroesToEndOptimal
 void moveZeroesToEndOptimal(vector<int>& nums) {
     int n = nums.size();
     int j = -1;
@@ -452,6 +470,7 @@ void moveZeroesToEndOptimal(vector<int>& nums) {
         cout<<nums[i]<<" ";
     }
 }
+//Approach = two pointer
 // T.C - BigO(n)
 // A.S - BigO(1)
 
@@ -466,6 +485,7 @@ int linearSearch(vector<int> &nums, int target){
     }
     return -1;
 }
+//Approach = linear
 // T.C - BigO(n)
 // A.S - BigO(1)
 
@@ -483,11 +503,12 @@ void unionOfSortedArrayBrute(vector<int>& nums1, vector<int>& nums2) {
         cout<<val<<" ";
     }
 }
+//Approach = set
 // T.C - BigO(n1logn + n2logn)
 // A.S - BigO(n1+n2)
 
 
-//MARK: unionOfSortedArrayOptimal-(TwoPointer)
+//MARK: unionOfSortedArrayOptimal
 void unionOfSortedArrayOptimal(vector<int>& nums1, vector<int>& nums2) {
     vector<int> unionArray{};
     int i = 0;
@@ -522,11 +543,13 @@ void unionOfSortedArrayOptimal(vector<int>& nums1, vector<int>& nums2) {
         cout<<unionArray[i]<<" ";
     }
 }
+//Approach = two pointer
 // T.C - BigO(n1+n2)
 // A.S - BigO(n1+n2)
 
 
 //MARK: intersectionOfSortedArrayBrute
+//https://www.naukri.com/code360/problems/intersection-of-2-arrays_1082149
 void intersectionOfSortedArrayBrute(vector<int>& nums1, vector<int>& nums2) {
     vector<int> unionArray{};
     int z = 0;
@@ -547,11 +570,12 @@ void intersectionOfSortedArrayBrute(vector<int>& nums1, vector<int>& nums2) {
         cout<<unionArray[i]<<" ";
     }
 }
+//Approach = linear
 // T.C - BigO(nums1*nums2)
 // A.S - BigO(1)
 
 
-//MARK: intersectionOfSortedArrayOptimal-(TwoPointer)
+//MARK: intersectionOfSortedArrayOptimal
 void intersectionOfSortedArrayOptimal(vector<int>& nums1, vector<int>& nums2) {
     vector<int> unionArray{};
     int i = 0;
@@ -572,11 +596,12 @@ void intersectionOfSortedArrayOptimal(vector<int>& nums1, vector<int>& nums2) {
         cout<<unionArray[i]<<" ";
     }
 }
+//Approach = two pointer
 // T.C - BigO(n1+n2)
 // A.S - BigO(n1+n2)
 
 
-//MARK: missingNumberBrute(linear)
+//MARK: missingNumberBrute
 //https://leetcode.com/problems/missing-number/description/
 int missingNumberBrute(vector<int>& nums) {
     for (int i=0; i<=nums.size(); i++) {
@@ -593,11 +618,12 @@ int missingNumberBrute(vector<int>& nums) {
     }
     return -1;
 }
+//Approach = linear
 //T.C = BigO(n*n)
 //A.S = Big0 (1)
 
 
-//MARK: missingNumberBetter(hashing)
+//MARK: missingNumberBetter
 int missingNumberBetter(vector<int>& nums) {
     int n = nums.size();
         int hashArray[n+1];
@@ -614,11 +640,12 @@ int missingNumberBetter(vector<int>& nums) {
         }
         return -1;
 }
+//Approach = hashing
 //T.C = BigO(2n)
 //A.S = Big0 (n)
 
 
-//MARK: missingNumberOptimal1(sumOfNnaturalNo)
+//MARK: missingNumberOptimal1
 int missingNumberOptimal1(vector<int>& nums) {
     int n = nums.size();
     int sum = n*(n+1)/2;
@@ -628,28 +655,33 @@ int missingNumberOptimal1(vector<int>& nums) {
     }
     return sum-currentSum;
 }
+//Approach = sumOfNnaturalNo
 //T.C = BigO(n)
 //A.S = Big0(1)
 
 
-//MARK: missingNumberOptimal2(xor)
+//MARK: missingNumberOptimal2
 //This is slightly better than missingNumberOptimal1 bcz, array size can be big as 10^5 and sum of elements till 10^5 can be 10^10 which cannot be stored in int.
 int missingNumberOptimal2(vector<int>& nums) {
     int n = nums.size();
     int xor1 = 0;
     int xor2 = 0;
-    for (int i=0; i<n; i++) {
-        xor1 = xor1^nums[i];
-        xor2 = xor2^i;
+    for (int i=0; i<=n; i++) {
+        if(i<n){
+            xor1 = xor1^i;
+            xor2 = xor2^nums[i];
+        }else{
+            xor1 = xor1^i;
+        }
     }
-    xor2 = xor2^n;
     return xor1^xor2;
 }
+//Approach = xor
 //T.C = BigO(n)
 //A.S = Big0(1)
 
 
-//MARK: maxConsecutiveOnesOpitimal(my)
+//MARK: maxConsecutiveOnesOpitimal1(My)
 //https://leetcode.com/problems/max-consecutive-ones/description/
 int maxConsecutiveOnesOpitimal(vector<int>& nums) {
     int n = nums.size();
@@ -658,21 +690,18 @@ int maxConsecutiveOnesOpitimal(vector<int>& nums) {
     for (int i=0; i<n; i++) {
         if(nums[i] == 1){
             currentRes++;
-        }else if(nums[i] != 1){
-            if(currentRes>finalRes){
-                finalRes = currentRes;
+            if(i == (n-1)){
+                finalRes = max(currentRes, finalRes);
+                currentRes = 0;
             }
+        }else if(nums[i] != 1){
+            finalRes = max(currentRes, finalRes);
             currentRes = 0;
         }
     }
-    if(nums[n-1] == 1){
-        if(currentRes>finalRes){
-            finalRes = currentRes;
-        }
-        currentRes = 0;
-    }
     return finalRes;
 }
+//Approach = linear
 //T.C = BigO(n)
 //A.S = Big0(1)
 
@@ -692,11 +721,12 @@ int maxConsecutiveOnesOpitimal2(vector<int>& nums) {
     }
     return maxi;
 }
+//Approach = linear
 //T.C = BigO(n)
 //A.S = Big0(1)
 
 
-//MARK: singleNumberBrute(linear)
+//MARK: singleNumberBrute
 //https://leetcode.com/problems/single-number/description/
 int singleNumber(vector<int>& nums) {
     int n = nums.size();
@@ -716,11 +746,12 @@ int singleNumber(vector<int>& nums) {
     //if the array contains a single element.
     return -1;
 }
+//Approach = linear
 //T.C = BigO(n^2)
 //A.S = Big0(1)
 
 
-//MARK: singleNumberBetter1(hashing)
+//MARK: singleNumberBetter1
 int singleNumberBetter1(vector<int>& nums) {
     int n = nums.size();
     // Find the maximum element:
@@ -743,11 +774,12 @@ int singleNumberBetter1(vector<int>& nums) {
     //if the array contains a single element.
     return -1;
 }
+//Approach = hashing
 //T.C = BigO(3n)
 //A.S = BigO(maxElementInArray+1)
 
 
-//MARK: singleNumberBetter2(map)
+//MARK: singleNumberBetter2
 //This is better than singleNumberBetter1 bcz, in singleNumberBetter1 we use hash array and it can not be used efficiently if we have -ve or very large elements(i.e: 10^12) in array.
 int singleNumberBetter2(vector<int>& nums) {
     int n = nums.size();
@@ -766,12 +798,14 @@ int singleNumberBetter2(vector<int>& nums) {
     //if the array contains a single element.
     return -1;
 }
+//Approach = map
+
 //M = size of the map
 //T.C = BigO(N*logM) + O(M)
 //A.S = BigO(M)
 
 
-//MARK: singleNumberOptimal(xor)
+//MARK: singleNumberOptimal
 int singleNumberOptimal(vector<int>& nums) {
     int n = nums.size();
     // XOR all the elements:
@@ -781,8 +815,125 @@ int singleNumberOptimal(vector<int>& nums) {
     }
     return xorr;
 }
-//T.C = BigO(3n)
-//A.S = BigO(maxElementInArray+1)
+//Approach = xor
+//T.C = BigO(n)
+//A.S = BigO(1)
+
+
+//MARK: longestSubarraywithsumKBrute1
+//https://www.naukri.com/code360/problems/longest-subarray-with-sum-k_5713505
+//https://leetcode.com/problems/subarray-sum-equals-k/description/
+int longestSubarraywithsumKBrute1(vector<int>& nums, int k) {
+    int n = nums.size();
+    int len = 0;
+    for (int i = 0; i < n; i++) { // starting index
+        for (int j = i; j < n; j++) { // ending index
+            // add all the elements of subarray = a[i...j]:
+            long long sum = 0;
+            for (int K = i; K <= j; K++) {
+                sum += nums[K];
+            }
+            if (sum == k){
+                len = max(len, j - i + 1);
+            }
+        }
+    }
+    return len;
+}
+//Approach = linear
+//T.C = BigO(n^3)
+//A.S = BigO(1)
+
+
+//MARK: longestSubarraywithsumKBrute2
+int longestSubarraywithsumKBrute2(vector<int>& nums, int k) {
+    int n = nums.size(); // size of the array.
+    int len = 0;
+    for (int i = 0; i < n; i++) { // starting index
+        long long s = 0; // Sum variable
+        for (int j = i; j < n; j++) { // ending index
+            // add the current element to
+            // the subarray a[i...j-1]:
+            s += nums[j];
+            if (s == k) {
+                len = max(len, j - i + 1);
+            }
+        }
+    }
+    return len;
+}
+//Approach = linear
+//T.C = BigO(n^2)
+//A.S = BigO(1)
+
+
+//MARK: longestSubarraywithsumKBetter
+//This is optimal solution if array is +ve and -ve elements
+int longestSubarraywithsumKBetter(vector<int>& nums, int k) {
+    int n = nums.size(); // size of the array.
+    map<long long, int> preSumMap;
+    long long sum = 0;
+    int maxLen = 0;
+    for (int i = 0; i < n; i++) {
+        //calculate the prefix sum till index i:
+        sum += nums[i];
+        // if the sum = k, update the maxLen:
+        if (sum == k) {
+            maxLen = max(maxLen, i + 1);
+        }
+        // calculate the sum of remaining part i.e. x-k:
+        long long rem = sum - k;
+        //Calculate the length and update maxLen:
+        if (preSumMap.find(rem) != preSumMap.end()) {
+            int len = i - preSumMap[rem];
+            maxLen = max(maxLen, len);
+        }
+        //Finally, update the map checking the conditions:
+        if (preSumMap.find(sum) == preSumMap.end()) {
+            preSumMap[sum] = i;
+        }
+    }
+    return maxLen;
+}
+//Approach = linear+hashing
+/*
+ T.C -
+ mppSize = map currentSize
+ If orderedMap   : BigO(n*log(mppSize))
+ If unOrderedMap : [BigO(n)] or [BigO(n^2) in case of worst case collision of map]
+ 
+ A.S - BigO(n)
+ */
+
+
+//MARK: longestSubarraywithsumKOptimal
+//This is optimal solution if array is only +ve and 0 elements
+int longestSubarraywithsumKOptimal(vector<int>& nums, int k) {
+    int n = nums.size(); // size of the array.
+    int left = 0, right = 0; // 2 pointers
+    long long sum = nums[0];
+    int maxLen = 0;
+    while (right < n) {
+        // if sum > k, reduce the subarray from left
+        // until sum becomes less or equal to k:
+        while (left <= right && sum > k) {
+            sum -= nums[left];
+            left++;
+        }
+        // if sum = k, update the maxLen i.e. answer:
+        if (sum == k) {
+            maxLen = max(maxLen, right - left + 1);
+        }
+        // Move forward thw right pointer:
+        right++;
+        if (right < n) sum += nums[right];
+    }
+    return maxLen;
+}
+//T.C = BigO(2n)
+//A.S = BigO(1)
+
+ 
 
 
 
@@ -793,11 +944,12 @@ int main() {
     int fixedArray[] = {101,3,8,12,5,6,0,1001};
     int n = sizeof(fixedArray)/sizeof(fixedArray[0]);
     vector<int> vectorArray{1,1,2,2,2,3,3,1010};
-    
+
     //Avoid this block for time complexity
 //    for (int i=0; i<vectorArray.size(); i++) {
 //        cout<<vectorArray[i]<<" ";
 //    }
+
     cout<<endl;
     return 0;
 }

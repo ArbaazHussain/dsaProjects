@@ -18,7 +18,7 @@ using std::endl;
 //The idea of Recursion is always to use the solution of the subproblems, and then use these solutions to solve the overall solutions.
 
 
-//MARK: NtoOne
+//MARK: NtoOne-TailRecursion
 void NtoOne(int n)
 {
     if(n==0){
@@ -244,17 +244,15 @@ int FibenacchiCBRecursion(int n){
  If n is even -> F(x,n) = F(x,n/2) * F(x,n/2)
  if n is odd  -> F(x,n) = F(x,n/2) * F(x,n/2) * x
  */
-int powerRecursive(int x, int n){
-    if(n==0){
+long long int powerRecursive(int a, int b){
+    if(b==0){
         return 1;
     }
-    int temp = powerRecursive(x, n/2);
-    temp = temp*temp;
-    
-    if(n%2==0){
-        return temp;
+    long long int recCall = powerRecursive(a, b/2);
+    if(b%2==0){
+        return recCall * recCall;
     }else{
-        return temp*x;
+        return a * recCall * recCall;
     }
     /*
      //For
@@ -270,8 +268,8 @@ int powerRecursive(int x, int n){
      }
      */
 }
-//T.C = theta log n
-//A.S = theta log n
+//T.C = theta log b
+//A.S = theta log b
 
 
 
