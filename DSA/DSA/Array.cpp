@@ -30,10 +30,11 @@ using std::endl;
  rich library function(find,erase,insert,etc)
  easy to know size
  no need to pass size
- can be returned from a function
  by default initialized by default value
  we can copy copy a vector to another.
- 
+ can be returned from a function
+
+
 * We can store array of size 1e6 in local function, 1e7 as global variable.
  */
 
@@ -106,7 +107,7 @@ void insertElementInFixedArray(int arr[], int cap, int occupied, int x, int pos)
     arr[pos-1] = x;
     //Avoid this block for time complexity
     for (int i=0; i<cap; i++) {
-        cout<<arr[i]<<endl;
+        cout<<arr[i]<<" ";
     }
 }
 //T.C = BigO(n)
@@ -201,7 +202,7 @@ int secondLargestBetter(vector<int> &nums) {
             max = nums[i];
         }
     }
-    int secondMax = -1;
+    int secondMax = INT_MIN;
     for (int i=0; i<nums.size(); i++) {
         if(nums[i]>secondMax && nums[i]<max){
             secondMax = nums[i];
@@ -215,20 +216,18 @@ int secondLargestBetter(vector<int> &nums) {
 
 
 int secondLargestOptimal(vector<int> &nums) {
-    int secondMax = -1;
-    int max = nums[0];
-    
-    for (int i=1; i<nums.size(); i++) {
-        if(nums[i]>max){
-            int tempMax = max;
-            max = nums[i];
-            secondMax = tempMax;
-        }
-        if(nums[i]<max && nums[i]>secondMax){
-            secondMax = nums[i];
+    if (nums.size() < 2) return -1; // Not enough elements for second largest
+    int maxVal = INT_MIN;
+    int secondMax = INT_MIN;
+    for (int num : nums) {
+        if (num > maxVal) {
+            secondMax = maxVal;
+            maxVal = num;
+        } else if (num < maxVal && num > secondMax) {
+            secondMax = num;
         }
     }
-    return secondMax;
+    return (secondMax == INT_MIN) ? -1 : secondMax;
 }
 //Approach = linear search
 //T.C = BigO(n)
@@ -592,7 +591,7 @@ void intersectionOfSortedArrayBrute(vector<int>& nums1, vector<int>& nums2) {
 }
 //Approach = linear
 // T.C - BigO(nums1*nums2)
-// A.S - BigO(1)
+// A.S - BigO(n)
 
 
 void intersectionOfSortedArrayOptimal(vector<int>& nums1, vector<int>& nums2) {
@@ -781,8 +780,7 @@ int singleNumberBetter1(vector<int>& nums) {
     }
     //Find the single element and return the answer:
     for (int i = 0; i < n; i++) {
-        if (hash[nums[i]] == 1)
-            return nums[i];
+        if (hash[nums[i]] == 1) return nums[i];
     }
     //This line will never execute
     //if the array contains a single element.
@@ -947,8 +945,7 @@ int longestSubarraywithsumKOptimal(vector<int>& nums, int k) {
 
 ////MARK: main function--------------------------
 //int main() {
-//    int fixedArray[] = {101,3,8,12,5,6,0,1001};
-//    int n = sizeof(fixedArray)/sizeof(fixedArray[0]);
+
 //    vector<int> vectorArray{1,1,2,2,2,3,3,1010};
 //
 //    //Avoid this block for time complexity

@@ -519,17 +519,17 @@ int singleElementInSortedArrayOptimal(vector<int>& nums) {
 
 
 //MARK: main function--------------------------
-int main() {
-    int fixedArray[] = {101,3,8,12,5,6,0,1001};
-    int n = sizeof(fixedArray)/sizeof(fixedArray[0]);
-    vector<int> vectorArray{5,7,7,8,8,10};
-
-//    firstAndLastInSortedArray(vectorArray, 0);
-    //Avoid this block for time complexity
-//    for (int i=0; i<vectorArray.size(); i++) {
-//        cout<<vectorArray[i]<<" ";
-//    }
-
-    cout<<endl;
-    return 0;
-}
+//int main() {
+//    int fixedArray[] = {101,3,8,12,5,6,0,1001};
+//    int n = sizeof(fixedArray)/sizeof(fixedArray[0]);
+//    vector<int> vectorArray{5,7,7,8,8,10};
+//
+////    firstAndLastInSortedArray(vectorArray, 0);
+//    //Avoid this block for time complexity
+////    for (int i=0; i<vectorArray.size(); i++) {
+////        cout<<vectorArray[i]<<" ";
+////    }
+//
+//    cout<<endl;
+//    return 0;
+//}

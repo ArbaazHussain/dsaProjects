@@ -13,7 +13,10 @@
 		F135FC442D6B7B4C003C4AE5 /* Hashing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F135FC432D6B7B4C003C4AE5 /* Hashing.cpp */; };
 		F1494E662D18245300AF539F /* Array.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F1494E642D18245300AF539F /* Array.cpp */; };
 		F16FF1C42E0064BD003539AB /* BinarySearch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F16FF1C32E0064BD003539AB /* BinarySearch.cpp */; };
+		F1843CA92E27785600DE0CE5 /* DoublyLinkedlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F1843CA82E27785600DE0CE5 /* DoublyLinkedlist.cpp */; };
+		F19818FB2E14FDF7009D3886 /* Strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F19818FA2E14FDF7009D3886 /* Strings.cpp */; };
 		F1A001CC2DB18F5300A65C08 /* Pattern.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F1A001CB2DB18F5300A65C08 /* Pattern.cpp */; };
+		F1A2B3232E24DA30006C8E93 /* SinglyLinkedlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F1A2B3222E24DA30006C8E93 /* SinglyLinkedlist.cpp */; };
 		F1D0CCB22CD7CB810049307A /* BitMagic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F1D0CCB12CD7CB810049307A /* BitMagic.cpp */; };
 		F1D923F02CD660EF0006C272 /* Mathematics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F1D923EF2CD660EF0006C272 /* Mathematics.cpp */; };
 /* End PBXBuildFile section */
@@ -38,7 +41,10 @@
 		F135FC432D6B7B4C003C4AE5 /* Hashing.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Hashing.cpp; sourceTree = "<group>"; };
 		F1494E642D18245300AF539F /* Array.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Array.cpp; sourceTree = "<group>"; };
 		F16FF1C32E0064BD003539AB /* BinarySearch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BinarySearch.cpp; sourceTree = "<group>"; };
+		F1843CA82E27785600DE0CE5 /* DoublyLinkedlist.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DoublyLinkedlist.cpp; sourceTree = "<group>"; };
+		F19818FA2E14FDF7009D3886 /* Strings.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Strings.cpp; sourceTree = "<group>"; };
 		F1A001CB2DB18F5300A65C08 /* Pattern.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Pattern.cpp; sourceTree = "<group>"; };
+		F1A2B3222E24DA30006C8E93 /* SinglyLinkedlist.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SinglyLinkedlist.cpp; sourceTree = "<group>"; };
 		F1D0CCB12CD7CB810049307A /* BitMagic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BitMagic.cpp; sourceTree = "<group>"; };
 		F1D923EF2CD660EF0006C272 /* Mathematics.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mathematics.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,8 +80,19 @@
 				F10D6BE02D9277AC00286439 /* Sorting.cpp */,
 				F1494E642D18245300AF539F /* Array.cpp */,
 				F16FF1C32E0064BD003539AB /* BinarySearch.cpp */,
+				F19818FA2E14FDF7009D3886 /* Strings.cpp */,
+				F1843CA72E27781A00DE0CE5 /* LinkedList */,
 			);
 			path = DSA;
+			sourceTree = "<group>";
+		};
+		F1843CA72E27781A00DE0CE5 /* LinkedList */ = {
+			isa = PBXGroup;
+			children = (
+				F1A2B3222E24DA30006C8E93 /* SinglyLinkedlist.cpp */,
+				F1843CA82E27785600DE0CE5 /* DoublyLinkedlist.cpp */,
+			);
+			path = LinkedList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -109,6 +126,7 @@
 				TargetAttributes = {
 					A78CEB0B2A8371DF00881600 = {
 						CreatedOnToolsVersion = 14.2;
+						LastSwiftMigration = 1610;
 					};
 				};
 			};
@@ -135,11 +153,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F19818FB2E14FDF7009D3886 /* Strings.cpp in Sources */,
 				F10A53122CDA02CD00F00B95 /* Recursion.cpp in Sources */,
 				F16FF1C42E0064BD003539AB /* BinarySearch.cpp in Sources */,
 				F1D923F02CD660EF0006C272 /* Mathematics.cpp in Sources */,
+				F1A2B3232E24DA30006C8E93 /* SinglyLinkedlist.cpp in Sources */,
 				F1A001CC2DB18F5300A65C08 /* Pattern.cpp in Sources */,
 				F135FC442D6B7B4C003C4AE5 /* Hashing.cpp in Sources */,
+				F1843CA92E27785600DE0CE5 /* DoublyLinkedlist.cpp in Sources */,
 				A78CEB102A8371DF00881600 /* main.cpp in Sources */,
 				F10D6BE12D9277AC00286439 /* Sorting.cpp in Sources */,
 				F1D0CCB22CD7CB810049307A /* BitMagic.cpp in Sources */,
@@ -262,6 +283,7 @@
 		A78CEB142A8371DF00881600 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
@@ -270,12 +292,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.arbaaz.practice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
 		A78CEB152A8371DF00881600 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
@@ -284,6 +309,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.arbaaz.practice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
