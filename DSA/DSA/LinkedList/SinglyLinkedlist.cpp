@@ -17,7 +17,7 @@ using std::endl;
  *Where it is used?
  ->Stack, queue, browsers.
  
- *Where array is not used in stack?
+ *Why array is not used in stack?
  Although vector is dynamic, it's not ideal for queues due to slow pop_front() (O(n)) and costly resizing. For stacks, it works but frequent resizing during growth involves copying all elements to new memory, which affects performance.
  
  
@@ -285,12 +285,11 @@ Node<int>* insertionBeforeNode(Node<int>* head, int k, int val) {
 //A.S = BigO(1)
 
 
-
-
-
-////MARK: main function--------------------------
+//MARK: main function--------------------------
 //int main() {
-//    vector<int> vectorArray1{5,6,7,8,9};
-//    cout<<"arbaaz";
+//    vector<int> vectorArray1{6,7,8,9,10};
+//    Node<int>* head = arrayToLL(vectorArray1);
+//    traversalOfLL(head);
+//    cout<<endl;
 //    return 0;
 //}

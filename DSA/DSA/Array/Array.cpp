@@ -285,7 +285,7 @@ int removeDuplicatesInSortedArrayBrute(vector<int>& nums){
     return st.size();
 }
 //Approach = set
-//T.C = BigO(n*logn + n)
+//T.C = BigO(n*logk + n) //k is current no elements in the set
 //A.S = BigO(n)
 
 
@@ -325,29 +325,30 @@ void LeftRotateByOnePlace(vector<int> &nums){
 
 
 //MARK: LeftRotateByDPlace
-//https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/
 void LeftRotateByDPlaceBrute(vector<int>& nums, int k){
     int n = nums.size();
     if(k>n){
         k = k%n;
     }
     if(n == k ){
+        //Avoid this block for time complexity
+        for (int i=0; i<n; i++) {
+            cout<<nums[i]<<" ";
+        }
         return;
     }
     vector<int> tempArray{};
-    int z = 0;
-    for (int i=0; i<n; i++) {
-        if(i<k){
-            tempArray.push_back(nums[i]);
-        }else{
-            nums[z] = nums[i];
-            z++;
-        }
-    }
-    int x = n-k;
     for (int i=0; i<k; i++) {
-        nums[x] = tempArray[i];
-        x++;
+        tempArray.push_back(nums[i]);
+    }
+    int j=0;
+    for (int i=0; i<n; i++) {
+        if(i<n-k){
+            nums[i] = nums[i+k];
+        }else{
+            nums[i] = tempArray[j];
+            j++;
+        }
     }
     //Avoid this block for time complexity
     for (int i=0; i<n; i++) {
@@ -355,7 +356,7 @@ void LeftRotateByDPlaceBrute(vector<int>& nums, int k){
     }
 }
 //Approach = linear
-// T.C - BigO(n+d)
+// T.C - BigO(d+n)
 // A.S - BigO(d)
 
 
@@ -431,6 +432,7 @@ void rightRotateByDPlaceOptimal(vector<int> &nums, int d){
     reverseArrayFrmIndex(nums, 0, d - 1);
     //Reverse the remaining n-d elements
     reverseArrayFrmIndex(nums, d, n - 1);
+    //Avoid this block for time complexity
     for (int i=0; i<n; i++) {
         cout<<nums[i]<<" ";
     }
@@ -442,7 +444,7 @@ void rightRotateByDPlaceOptimal(vector<int> &nums, int d){
 
 //MARK: moveZeroesToEnd
 //https://leetcode.com/problems/move-zeroes/description/
-void moveZeroesToEnd(vector<int>& nums) {
+void moveZeroesToEndBrute(vector<int>& nums) {
     int n = nums.size();
     vector<int> tempArray{};
     for (int i=0; i<n; i++) {
@@ -523,8 +525,7 @@ void unionOfSortedArrayBrute(vector<int>& nums1, vector<int>& nums2) {
     }
 }
 //Approach = set
-//S = size of the current set
-// T.C - BigO(n1logS + n2logS)
+// T.C - BigO(n1logS + n2logS) //S = size of the current set
 // A.S - BigO(n1+n2)
 
 

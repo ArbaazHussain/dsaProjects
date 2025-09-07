@@ -269,11 +269,11 @@ Node<int>* reverseOptimal(Node<int>* head) {
 
 
 //MARK: main function--------------------------
-int main() {
-    vector<int> vectorArray1{1,2,3};
-    Node<int>* head = arrayToDll(vectorArray1);
-    Node<int>* rev = reverseOptimal(head);
-    traversalOfDll(rev);
-    cout<<endl;
-    return 0;
-}
+//int main() {
+//    vector<int> vectorArray1{1,2,3};
+//    Node<int>* head = arrayToDll(vectorArray1);
+//    Node<int>* rev = reverseOptimal(head);
+//    traversalOfDll(rev);
+//    cout<<endl;
+//    return 0;
+//}

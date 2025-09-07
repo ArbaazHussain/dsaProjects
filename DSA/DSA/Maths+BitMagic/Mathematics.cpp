@@ -103,6 +103,17 @@ int Modulo(int n){
 }
 
 
+//MARK: swapTwoNumbers
+//swapTwoNumbers without third variable
+void swapTwoNumbers(int a, int b){
+    a=a+b;
+    b=a-b;
+    a=a-b;
+}
+//T.C = BigO 1
+//A.S = BigO 1
+
+
 //MARK: FibenacchiIterativeNaive
 int fibenacchiIterativeNaive(int n){
     int f[n+1];
@@ -824,7 +835,7 @@ int modInverse(int a, int m)
 
 //int main()
 //{
-//    bool res = checkForPalindromeString("adr");
-//    cout<<res<<endl;
+//    cout<<reverseInteger(10100);
+//    cout<<endl;
 //    return 0;
 //}

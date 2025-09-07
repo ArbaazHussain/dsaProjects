@@ -203,7 +203,7 @@ void MyStackUsingSTL(){
 //MARK: main function--------------------------
 //int main()
 //{
-//    cout<<"main file - main function";
+//    cout<<"main file - main function"<<endl;
 //    //    int n = 8;
 //    
 //    //    int array1[4] =  {30,10,8,2};
@@ -222,6 +222,6 @@ void MyStackUsingSTL(){
 //    //    sort(g.begin(), g.end());
 //    //    cout<<s<<endl;
 //    //    cout<<g<<endl;
-//    return 1;
 //    return 0;
 //}
+

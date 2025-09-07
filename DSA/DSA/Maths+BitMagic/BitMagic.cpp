@@ -12,28 +12,30 @@ using std::cout;
 using std::endl;
 
 
-//MARK: --------BIT Magic----------
+//MARK: --------BIT MAGIC----------
 
-//MARK: decimalToBinaryMy
-/*
- Problems-
- 1.Getting answer in reverse
- 2.incorrect answer for input->8
- */
-int decimalToBinaryMy(int n){
-    int res=0;
-    while (n!=0) {
-        int lastDigit = n%2;
-        res = (res*10)+lastDigit;
-        n=n/2;
-    }
-    return res;
-}
-//T.C = theta(no of bits from last to msb)
-//A.S = BigO 1
 
 
 //MARK: decimalToBinary
+string decimalToBinaryStv(int n){
+    string res = "";
+    while (n!=0) {
+        int lastDigit = n%2;
+        if(lastDigit == 1){
+            res+= '1';
+        }else{
+            res+= '0';
+        }
+        n=n/2;
+    }
+    reverse(res.begin(), res.end());
+    return res;
+}
+//here we do not use integer to return as it gives incorrect answer for input -> whose (LSB) is 0
+//T.C = log n
+//A.S = log n
+
+
 //Youtube - loveBabbar
 /*
  1.
@@ -48,28 +50,17 @@ int decimalToBinaryMy(int n){
  int answer = 0
  same flow = (answer*10) + digit
  reverse flow = (10^i * digit) + answer
-
  */
-int decimalToBinary(int n){
+int decimalToBinaryLb(int n){
     int res=0;
     int i=0;
     while (n!=0) {
-        int bit = n&1;
-        res = (pow(10, i) * bit) + res;
+        int lastBit = n&1;
+        res = (pow(10, i) * lastBit) + res;
         n=n>>1;
         i++;
     }
     return res;
-    //or
-    //    int answer=0;
-    //    int i=0;
-    //    while (n!=0) {
-    //        int bit = n%2;
-    //        answer = (pow(10, i) * bit) + answer;
-    //        n=n/2;
-    //        i++;
-    //    }
-    //    return answer;
 }
 //T.C = theta(no of bits from last to msb)
 //A.S = BigO 1
@@ -80,8 +71,8 @@ int BinaryToDeciamal(int n){
     int i=0;
     int res=0;
     while (n!=0) {
-        int digit = n%10;
-        if (digit==1){
+        int lastDigit = n%10;
+        if (lastDigit==1){
             res= res + pow(2,i);
         }
         n=n/10;
@@ -93,65 +84,46 @@ int BinaryToDeciamal(int n){
 //A.S = BigO 1
 
 
-//MARK: isKthBitIsSet
-//kth starts from 1
-int isKthBitIsSet(int n,int k){
-    if(k>1){
-        n=n>>(k-1);
-    }
-    if((n&1)!=0){
+//MARK: checkIfNumberIsOdd
+bool checkIfNumberIsOdd(int n){
+    if((n&1)==1){
         return true;
     }else{
         return false;
     }
 }
-/*
- or
- //kth starts from 0
- if( (n&(1<<k)) !=0) {
-     return true;
- }else{
-     return false;
- }
- */
-//T.C =
-//A.S =
+//T.C = BigO 1
+//A.S = BigO 1
 
 
-//MARK: CounTotalSetBitsNaive
+//MARK: swapTwoNumbers
+void swapTwoNumbersBitwise(int a, int b){
+    a=a^b;
+    b=a^b;
+    a=a^b;
+}
+//swapTwoNumbers without third variable
+//T.C = BigO 1
+//A.S = BigO 1
+
+
+//MARK: CounTotalSetBit
+//https://www.geeksforgeeks.org/problems/set-bits0143/1
 int CounTotalSetBitsNaive(int n){
     int count = 0;
     while (n!=0){
-        if((n&1)!=0){
+        if((n&1)==1){
             count++;
         }
         n=n>>1;
     }
     return count;
-    //or
-    //    int count = 0;
-    //    while (n!=0){
-    //        if((n%2)!=0){
-    //            count++;
-    //        }
-    //        n=n/2;
-    //    }
-    //    return count;
 }
-//T.C = theta(no of bits from last to msb)
+//Approach - decimalToBinaryStv
+//T.C = theta(no of bits from lsb to msb)
 //A.S = BigO 1
 
 
-//MARK: CounTotalSetBitTableMethodMostEfficient
-int CounTotalSetBitTableMethodMostEfficient(int n){
-    return 0;
-}
-//T.C =
-//A.S =
-
-
-//MARK: BrainKerningams - CounTotalSetBitsEfficient
-//When we subtract 1 from a number the all trailing zero becomes one and last set bit becomes zero.
 int brainKerningams(int n){
     int res = 0;
     while (n>0) {
@@ -160,37 +132,78 @@ int brainKerningams(int n){
     }
     return res;
 }
+//When we subtract 1 from a number the all trailing zero becomes one and last set bit becomes zero.
 //T.C = theta(no of set bits)
 //A.S = BigO 1
 
 
-//MARK: checkPowerOfMyNaive
-bool powerOfTwo(int n)
-{
-    if(n==1){
+//MARK: isKthBitIsSet
+//k>=1
+int isKthBitIsSetUsingLeftShift(int n,int k){
+    if((n&(1<<k)) !=0) {
         return true;
+    }else{
+        return false;
     }
-    int currentPow = pow(2,0);
-    int i = 1;
-    while (currentPow<=n) {
-        currentPow = pow(2,i);
-        i++;
-        if(n == currentPow){
-            return true;
-        }
-    }
-    return false;
 }
-//T.C = theta log n
-//A.S = BigO 1
+//T.C = 1
+//A.S = 1
 
 
-//MARK: checkPowerOf2Naive
-/*
- 1.Explicitly handle zero
- 2.Repeatedly devide by 2 and if n does not devide by 2 then its not a power of two
- */
-int checkPowerOf2Naive(int n){
+int isKthBitIsSetUsingRightShift(int n,int k){
+    if(((n>>k)&1) != 0) {
+        return true;
+    }else{
+        return false;
+    }
+}
+//T.C = 1
+//A.S = 1
+
+
+//MARK: setIthBit
+//k>=1
+int setIthBit(int n,int k){
+    return n|(1<<k);
+}
+//or + leftShift
+//T.C = 1
+//A.S = 1
+
+
+//MARK: clearIthBit
+//k>=1
+int clearIthBit(int n,int k){
+    return n&(~(1<<k));
+}
+//AND + ~leftShift
+//T.C = 1
+//A.S = 1
+
+
+//MARK: toggleIthBit
+//k>=1
+int toggleIthBit(int n,int k){
+    return n^(1<<k);
+}
+//XOR + leftShift
+//T.C = 1
+//A.S = 1
+
+
+//MARK: removeLastSetBit
+//k>=1
+int removeLastSetBit(int n){
+    return n&(n-1);
+}
+//& + n-1
+//T.C = 1
+//A.S = 1
+
+
+//MARK: checkPowerOfTwo
+//https://www.geeksforgeeks.org/problems/power-of-2-1587115620/0
+int checkPowerOfNaive(int n){
     if(n==0){
         return false;
     }
@@ -202,20 +215,22 @@ int checkPowerOf2Naive(int n){
     }
     return true;
 }
+/*
+ 1.Explicitly handle zero
+ 2.Repeatedly devide by 2 and if n does not devide by 2 then its not a power of two
+ */
 //T.C = theta log n
 //A.S = BigO 1
 
 
-//MARK: checkPowerOf2Efficient
-/*
- power of 2 has only 1 set bit.
- */
+
 int checkPowerOf2Efficient(int n){
     if(n==0){
         return false;
     }
     return ((n&(n-1))==0);
 }
+//Approach - power of 2 has only 1 set bit.
 //T.C = theta 1
 //A.S = BigO  1
 
@@ -475,11 +490,36 @@ int grayToBinary(int n)
 }
 
 
+//MARK: --------STV--------
+
+
+
+
+
+
 //MARK: ----------MainFunction-----------
 
 //int main()
 //{
-//    cout<<multiplicationUnderModulo(793279, 340032);
+//    cout<<CounTotalSetBitsNaive(13);
 //    cout<<endl;
 //    return 0;
 //}
+
+
+string decimalToBinaryBrute(int n){
+    string res = "";
+    while (n!=0) {
+        int lastDigit = n%2;
+        if(lastDigit == 1){
+            res+= '1';
+        }else{
+            res+= '0';
+        }
+        n=n/2;
+    }
+    reverse(res.begin(), res.end());
+    return res;
+}
+//T.C = log n
+//A.S = log n
