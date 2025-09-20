@@ -783,8 +783,7 @@ int singleNumberBetter1(vector<int>& nums) {
     for (int i = 0; i < n; i++) {
         if (hash[nums[i]] == 1) return nums[i];
     }
-    //This line will never execute
-    //if the array contains a single element.
+    //This line will never execute if the array contains a single element.
     return -1;
 }
 //Approach = hashing
@@ -877,7 +876,7 @@ int longestSubarraywithsumKBrute2(vector<int>& nums, int k) {
 //A.S = BigO(1)
 
 
-//This is optimal solution if array is +ve and -ve elements
+//This is optimal solution if array is +ve, -ve, 0 elements
 int longestSubarraywithsumKBetter(vector<int>& nums, int k) {
     int n = nums.size(); // size of the array.
     map<long long, int> preSumMap;
