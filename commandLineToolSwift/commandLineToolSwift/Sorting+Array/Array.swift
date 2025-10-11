@@ -23,8 +23,7 @@
  Majority means more than half, so it can’t be fully canceled. Different elements cancel each other, and the survivor is the candidate. Count again to verify if it’s truly the majority.
  
  * Kadane's Algorithm -:
- Kadane’s Algorithm finds the maximum sum of a contiguous subarray in O(n) time by tracking a running sum, resetting it when negative, and updating the global maximum. If all numbers are negative, it returns the largest element.
- 
+ Kadane’s Algorithm finds the maximum sum of a contiguous subarray,s in O(n) time by tracking a running sum, updating the global maximum and then resetting it when negative. If all numbers are negative, it returns the largest element.
  */
 
 
@@ -114,7 +113,7 @@ func largestElementOptimal(_ nums: [Int]) -> Int {
     guard !nums.isEmpty else {
         fatalError("Array must not be empty")
     }
-    var largestIndex = 0
+    var largestIndex = Int.min
     for i in 1..<nums.count {
         if nums[i] > nums[largestIndex] {
             largestIndex = i
@@ -223,8 +222,9 @@ func removeDuplicatesInSortedArrayBrute(_ nums: inout [Int]) -> Int {
     return uniqueSet.count
 }
 //Approach = set
-//T.C = BigO(n*logk + n) //k is current no elements in the set
-//A.S = BigO(n)
+//k unique elements in array
+//T.C = BigO((n) + (k log k) + O(k))
+//A.S = BigO(k)
 
 
 func removeDuplicatesInSortedArrayOptimal(_ nums: inout [Int]) -> Int {
@@ -491,6 +491,7 @@ func unionOfSortedArrayBrute(_ nums1: [Int], _ nums2: [Int]) {
         resultSet.insert(num)
     }
     // Convert to array and sort (optional if sorted output needed)
+    //O(SLogS)
     let sortedUnion = resultSet.sorted()
     //Avoid this block for time complexity
     for val in sortedUnion {
@@ -511,18 +512,18 @@ func unionOfSortedArrayOptimal(_ nums1: [Int], _ nums2: [Int]) {
     
     while i < n1 && j < n2 {
         if nums1[i] < nums2[j] {
-            if unionArray.isEmpty || unionArray.last! != nums1[i] {
+            if unionArray.last != nums1[i] {
                 unionArray.append(nums1[i])
             }
             i += 1
         } else if nums1[i] > nums2[j] {
-            if unionArray.isEmpty || unionArray.last! != nums2[j] {
+            if unionArray.last != nums2[j] {
                 unionArray.append(nums2[j])
             }
             j += 1
         } else {
             // Both are equal
-            if unionArray.isEmpty || unionArray.last! != nums1[i] {
+            if unionArray.last != nums1[i] {
                 unionArray.append(nums1[i])
             }
             i += 1
@@ -530,13 +531,13 @@ func unionOfSortedArrayOptimal(_ nums1: [Int], _ nums2: [Int]) {
         }
     }
     while i < n1 {
-        if unionArray.isEmpty || unionArray.last! != nums1[i] {
+        if unionArray.last != nums1[i] {
             unionArray.append(nums1[i])
         }
         i += 1
     }
     while j < n2 {
-        if unionArray.isEmpty || unionArray.last! != nums2[j] {
+        if unionArray.last != nums2[j] {
             unionArray.append(nums2[j])
         }
         j += 1
@@ -547,6 +548,9 @@ func unionOfSortedArrayOptimal(_ nums1: [Int], _ nums2: [Int]) {
     }
     print()
 }
+//Approach = two pointer
+// T.C - BigO(n1+n2)
+// A.S - BigO(n1+n2)
 
 
 //MARK: intersectionOfSortedArray
@@ -650,6 +654,7 @@ func missingNumberBetter(_ nums: [Int]) -> Int {
 //A.S = Big0 (n)
 
 
+//missingNumberOptimal2 can be better than missingNumberOptimal1 bcz, array size can be big as 10^5 and sum of elements till 10^5 can be 10^10 which cannot be stored in int.
 func missingNumberOptimal1(_ nums: [Int]) -> Int {
     let n = nums.count
     let expectedSum = n * (n + 1) / 2
@@ -800,7 +805,7 @@ func singleNumberBetter2(_ nums: [Int]) -> Int {
 }
 //Approach = map
 //M = size of the map
-//T.C = BigO(N*logM) + O(M)
+//T.C = BigO(n) + O(M)
 //A.S = BigO(M)
 
 
@@ -916,7 +921,7 @@ func twoSumVarietyOneBrute(_ n: Int, _ arr: [Int], _ target: Int) -> Bool {
     }
     return false
 }
-//Approach = linear
+//Approach = ls
 // T.C - BigO(n^2)
 // A.S - BigO(1)
 
@@ -938,7 +943,7 @@ func twoSumVarietyOneBetter(_ nums: inout [Int], _ target: Int) -> Bool {
     }
     return false
 }
-//Approach = Two Pointer
+//Approach = sort + Two Pointer
 // T.C - BigO(nLogn + n)
 // A.S - BigO(n)
 
@@ -946,17 +951,18 @@ func twoSumVarietyOneBetter(_ nums: inout [Int], _ target: Int) -> Bool {
 //Returns index position if twoSum is present
 //twoSumVarietyTwoOptimal is optimal for twoSumVarietyOne as well.
 func twoSumVarietyTwoOptimal(_ nums: [Int], _ target: Int) -> [Int] {
-    var hashData = [Int: Int]()
-    hashData[nums[0]] = 0
-    for i in 1..<nums.count {
-        if let yIndex = hashData[target-nums[i]] {
-            return [yIndex,i]
+    var hashTable = [Int:Int]()
+    hashTable[nums[0]] = 0
+    for j in 1..<nums.count {
+        let numberToFind = target - nums[j]
+        if let iIndex = hashTable[numberToFind] {
+            return [iIndex,j]
         }
-        hashData[nums[i]] = i;
+        hashTable[nums[j]] = j
     }
     return [-1,-1]
 }
-//Approach = linear+hashing
+//Approach = ls + hashing
 // T.C - BigO(n)
 // A.S - BigO(n)
 
@@ -1124,7 +1130,7 @@ func maximumSubarraySumOptimal(_ nums: [Int]) -> Int {
     }
     return maxi
 }
-//Approach = Kadane's Algorithm - Kadane’s Algorithm finds the maximum sum of a contiguous subarray in O(n) time by tracking a running sum, resetting it when negative, and updating the global maximum. If all numbers are negative, it returns the largest element.
+//Approach = Kadane's Algorithm - Kadane’s Algorithm finds the maximum sum of a contiguous subarray,s in O(n) time by tracking a running sum, updating the global maximum and then resetting sum when negative. If all numbers are negative, it returns the largest element.
 // T.C - BigO(n)
 // A.S - BigO(1)
 
@@ -1147,16 +1153,17 @@ func stockBrute(_ prices: [Int]) -> Int {
 
 
 func stockOptimal(_ prices: [Int]) -> Int {
-    var minBuyingPrice = prices[0]
+    var minBp = prices[0]
     var profit = 0
-    for i in 1..<prices.count {
-        let current = prices[i]
-        profit = max(current-minBuyingPrice,profit)
-        minBuyingPrice = min(current,minBuyingPrice)
+    for i in 1..<prices.count{
+        let currentSp = prices[i]
+        let currentProfit = currentSp - minBp
+        profit = max(currentProfit,profit)
+        minBp = min(currentSp,minBp)
     }
     return profit
 }
-//Approach = linearSearch + remember min(costPrice) for every selling price.
+//Approach = linearSearch + remember min(BuyingPrice) for every selling price.
 // T.C - BigO(n)
 // A.S - BigO(1)
 
@@ -1197,7 +1204,8 @@ func rearrangeArrayElementsBySignOptimal(_ nums: [Int]) -> [Int] {
     var posIndex = 0
     var negIndex = 1
     for num in nums {
-        if(num>=0){
+        let isNumPostiveElement = num>0 ? true : false
+        if(isNumPostiveElement){
             ansArray[posIndex] = num
             posIndex += 2
         }else{
@@ -1213,15 +1221,17 @@ func rearrangeArrayElementsBySignOptimal(_ nums: [Int]) -> [Int] {
 
 
 //MARK: printAllPermutations
+//recursiveSolution
+//https://www.youtube.com/watch?v=YK78FU5Ffjw&t=405s
 //https://leetcode.com/problems/permutations/description/
-func printAllPermutations(_ nums: inout [Int]) -> [[Int]] {
+func printAllPermutations(_ nums: [Int]) -> [[Int]] {
     var ans: [[Int]] = []
     var ds: [Int] = []
     var freq: [Int] = Array(repeating: 0, count: nums.count)
-    recurPermute(&ds, nums, &ans, &freq)
+    recurPermute(nums, &ds, &ans, &freq)
     return ans
 }
-private func recurPermute(_ ds: inout [Int], _ nums: [Int], _ ans: inout [[Int]], _ freq: inout [Int]) {
+private func recurPermute(_ nums: [Int], _ ds: inout [Int], _ ans: inout [[Int]], _ freq: inout [Int]) {
     if ds.count == nums.count {
         ans.append(ds)
         return
@@ -1230,7 +1240,7 @@ private func recurPermute(_ ds: inout [Int], _ nums: [Int], _ ans: inout [[Int]]
         if freq[i] == 0 {
             ds.append(nums[i])
             freq[i] = 1
-            recurPermute(&ds, nums, &ans, &freq)
+            recurPermute(nums, &ds, &ans, &freq)
             freq[i] = 0
             ds.removeLast()
         }
@@ -1243,38 +1253,77 @@ private func recurPermute(_ ds: inout [Int], _ nums: [Int], _ ans: inout [[Int]]
 
 //MARK: nextPermutation
 //https://leetcode.com/problems/next-permutation/description/
-func nextPermutation(_ nums: inout [Int]) {
-    let n = nums.count
-    if(n==1){
-        return
+//This will not work for large nums as n! increases exponentially.
+func nextPermutationBrute(_ nums: inout [Int]) {
+    //Get all possible unique permutations
+    let res = Array(Set(printAllPermutations(nums)))
+    //sort the permutations
+    let sortedPermutations = res.sorted { a, b in
+        for (x, y) in zip(a, b) {
+            if x != y {
+                return x < y
+            }
+        }
+        return false // arrays are equal
     }
-    var index = -1
+    //find the next permutation , if not present then return first
+    for i in 0..<sortedPermutations.count {
+        if i == (sortedPermutations.count - 1) {
+            print(sortedPermutations[0])
+            return
+        }else if nums == sortedPermutations[i] {
+            print(sortedPermutations[i+1])
+            return
+        }
+    }
+}
+//Approach = mentioned in code
+//T.C = O(n!*n)
+//A.S = O(1)
+
+
+func nextPermutationOptimal(_ nums: inout [Int]) {
+    let n = nums.count
+    guard n > 1 else { return }
+    var dip = -1
+    //find dip
     for i in (0...n-2).reversed() {
         if(nums[i]<nums[i+1]){
-            index = i
+            dip = i
             break
         }
     }
-    if(index == -1){
+    //if dip not found,reverse array and return
+    if dip == -1 {
         reverseArrayFromIndex(&nums, 0, n-1)
         return
     }
-    for i in (index...n-1).reversed() {
-        if(nums[i]>nums[index]){
-            nums.swapAt(index, i)
+    //find just greater number than dip ans swap dip with it.
+    for i in (dip+1..<n).reversed() {
+        if nums[i] > nums[dip] {
+            nums.swapAt(i, dip)
             break
         }
     }
-    reverseArrayFromIndex(&nums, index+1, n-1)
+    //reverse array after dip index
+    reverseArrayFromIndex(&nums, dip+1, n-1)
 }
-//Approach = lS + dictionary approach + find dip from back
+//Approach = find dip from back + BS
 //T.C = O(3n)
 //A.S = O(1)
 
 
 //MARK: leadersInArray
 //https://www.geeksforgeeks.org/problems/leaders-in-an-array-1587115620/1
-func leadersInArray(_ nums: inout [Int]) -> [Int] {
+func leadersInArrayBrute(_ nums: inout [Int]) -> [Int] {
+    return [Int]()
+}
+//Approach = lS
+//T.C = O(n^2)
+//A.S = O(1)
+
+
+func leadersInArrayOptimal(_ nums: inout [Int]) -> [Int] {
     let n = nums.count
     var leaders = [Int]()
     if(n==1){
@@ -1293,7 +1342,7 @@ func leadersInArray(_ nums: inout [Int]) -> [Int] {
     return leaders.reversed()
 }
 //Approach = lS
-//T.C = O(n + (n/2))
+//T.C = O(2n)
 //A.S = O(1)
 
 
@@ -1378,19 +1427,18 @@ func longestConsecutiveBetterStv(_ nums: [Int]) -> Int {
 
 func longestConsecutiveOptimal(_ nums: [Int]) -> Int {
     guard nums.count > 0 else { return 0}
+    var longest = 0
     //O(n)
-    let set = Set(nums)
-    var longest = 1
-    var currentCount = 0
+    let uniqueElements = Set(nums)
     //O(2n)
-    for num in set {
-        //check for 1st element
-        if !set.contains(num-1) {
-            currentCount = 1
-            var next = num+1
-            while(set.contains(next)){
+    for currentElement in uniqueElements {
+        //check for 1st element of Consecutive sequence
+        if !uniqueElements.contains(currentElement-1){
+            var currentCount = 1
+            var nextElement = currentElement+1
+            while uniqueElements.contains(nextElement) {
                 currentCount += 1
-                next += 1
+                nextElement += 1
             }
             longest = max(currentCount,longest)
         }
@@ -1433,6 +1481,7 @@ func setZeroesMyBrute(_ matrix: inout [[Int]]) {
 
 
 func setZeroesStvBrute(_ matrix: inout [[Int]]) {
+    //O((n*m)*(n+m))
     for i in 0..<matrix.count {
         for j in 0..<matrix[i].count {
             let current = matrix[i][j]
@@ -1442,6 +1491,7 @@ func setZeroesStvBrute(_ matrix: inout [[Int]]) {
             }
         }
     }
+    //O(n*m)
     for i in 0..<matrix.count {
         for j in 0..<matrix[i].count {
             let current = matrix[i][j]
@@ -1459,7 +1509,7 @@ func setZeroesStvBrute(_ matrix: inout [[Int]]) {
 func setZeroesBetter(_ matrix: inout [[Int]]) {
     var rowArray = Array(repeating: 0, count: matrix.count)
     var colArray = Array(repeating: 0, count: matrix[0].count)
-    
+    //O(n*m)
     for i in 0..<matrix.count {
         for j in 0..<matrix[i].count {
             let current = matrix[i][j]
@@ -1469,6 +1519,7 @@ func setZeroesBetter(_ matrix: inout [[Int]]) {
             }
         }
     }
+    //O(n*m)
     for i in 0..<matrix.count {
         for j in 0..<matrix[i].count {
             if(rowArray[i]==1 || colArray[j]==1){
@@ -1526,6 +1577,7 @@ func setZeroesOptimal(_ matrix: inout [[Int]]) {
 
 
 //MARK: rotateImage
+//prefer rotateImageOptimal as its is easy and rotateImageBrute is bit hard to grab
 //https://leetcode.com/problems/rotate-image/description/
 func rotateImageBrute(_ matrix: inout [[Int]]){
     let n = matrix.count
@@ -1722,4 +1774,19 @@ private func setColWith(_ matrix: inout [[Int]], _ index : Int, _ key: Int) {
         }
     }
 }
+
+
+/*
+ Revision [Easy] :
+ -Easy(23sept)-
+ * rightRotateByDPlaceBrute
+ * practice hashing for syntax learn
+ 
+ Revision [Medium] :
+ setZeroesOptimal //for now doing better solution only
+ subArraySumEqualsKBrute
+ 
+ */
+
+
 

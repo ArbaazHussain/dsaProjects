@@ -41,6 +41,9 @@ string leftRotateStringByD(string s, int d) {
 
     return s;
 }
+//Approach = swap the parts of array
+// T.C - BigO(2n)
+// A.S - BigO(1)
 
 
 //MARK: frequenciesOfCharacter
@@ -262,7 +265,7 @@ bool rotateStringAndCheckMyBrute(string s, string goal) {
     }
     return false;
 }
-//Approach = rotateArray and check
+//Approach = try all possible rotations and check
 //T.C = BigO(n*2n) //n=s.length()
 //A.S = BigO(1)
 
@@ -324,7 +327,7 @@ bool isAnagramOptimal(string s, string t) {
         count[s[i] - 'a']++;
         count[t[i] - 'a']--;
     }
-    
+    //Avoiding TC since there are limited char
     for (int val : count) {
         if (val != 0) {
             return false;

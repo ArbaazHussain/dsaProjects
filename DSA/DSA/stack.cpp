@@ -173,80 +173,80 @@ struct StackUsingLL {
 
 
 //MARK: QueueUsingLL
-class QueueNode
-{
-public:
-    int val;
-    QueueNode *next;
-    QueueNode(int data)
-    {
-        val = data;
-        next = nullptr;
-    }
-};
-QueueNode *Front = nullptr, *Rare = nullptr;
-
-class QueueUsingLL
-{
-public:
-    int size = 0;
-    bool Empty();
-    void Enqueue(int value);
-    void Dequeue();
-    int Peek();
-};
-bool QueueUsingLL ::  Empty()
-{
-    return Front == nullptr;
-}
-int QueueUsingLL :: Peek()
-{
-    if(Empty())
-    {  cout<<"Queue is Empty"<<endl;
-        return -1;
-    }
-    else
-        return Front->val;
-}
-void QueueUsingLL :: Enqueue(int value)
-{
-    QueueNode *Temp;
-    Temp = new QueueNode(value);
-    if (Temp == nullptr)  //When heap exhausted
-        cout<<"Queue is Full"<<endl;
-    else
-    {
-        if (Front == nullptr)
-        {
-            Front = Temp;
-            Rare = Temp;
-        }
-        else
-        {
-            Rare->next = Temp;
-            Rare = Temp;
-        }
-        cout<<"The element pushed is "<<value<<endl;
-        size++;
-    }
-}
-void QueueUsingLL :: Dequeue()
-{
-    if (Front == nullptr)
-        cout<<"Queue is Empty"<<endl;
-    else
-    {
-        cout<<"The element poped is"<<Front->val<<endl;
-        QueueNode *Temp = Front;
-        Front = Front->next;
-        delete Temp;
-        size--;
-    }
-}
+//class QueueNode
+//{
+//public:
+//    int val;
+//    QueueNode *next;
+//    QueueNode(int data)
+//    {
+//        val = data;
+//        next = nullptr;
+//    }
+//};
+//QueueNode *Front = nullptr, *Rare = nullptr;
+//
+//class QueueUsingLL
+//{
+//public:
+//    int size = 0;
+//    bool Empty();
+//    void Enqueue(int value);
+//    void Dequeue();
+//    int Peek();
+//};
+//bool QueueUsingLL ::  Empty()
+//{
+//    return Front == nullptr;
+//}
+//int QueueUsingLL :: Peek()
+//{
+//    if(Empty())
+//    {  cout<<"Queue is Empty"<<endl;
+//        return -1;
+//    }
+//    else
+//        return Front->val;
+//}
+//void QueueUsingLL :: Enqueue(int value)
+//{
+//    QueueNode *Temp;
+//    Temp = new QueueNode(value);
+//    if (Temp == nullptr)  //When heap exhausted
+//        cout<<"Queue is Full"<<endl;
+//    else
+//    {
+//        if (Front == nullptr)
+//        {
+//            Front = Temp;
+//            Rare = Temp;
+//        }
+//        else
+//        {
+//            Rare->next = Temp;
+//            Rare = Temp;
+//        }
+//        cout<<"The element pushed is "<<value<<endl;
+//        size++;
+//    }
+//}
+//void QueueUsingLL :: Dequeue()
+//{
+//    if (Front == nullptr)
+//        cout<<"Queue is Empty"<<endl;
+//    else
+//    {
+//        cout<<"The element poped is"<<Front->val<<endl;
+//        QueueNode *Temp = Front;
+//        Front = Front->next;
+//        delete Temp;
+//        size--;
+//    }
+//}
 
 
 //MARK: main function--------------------------
-int main() {
+//int main() {
     //    StackUsingArray st(2);
     //    st.push(6);
     //    st.push(3);
@@ -289,5 +289,5 @@ int main() {
     //    q.Dequeue();
     //    cout<<"The size of the Queue is "<<q.size<<endl;
     //    cout<<"The Peek element of the Queue is "<<q.Peek()<<endl;
-    return 0;
-}
+//    return 0;
+//}

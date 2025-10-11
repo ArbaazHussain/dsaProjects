@@ -14,17 +14,19 @@ using std::endl;
 
 /*
  *Conceptual Topics*
+ implementLowerBoundOptimal
+ implementUpperBound
+ 
  firstAppearenceStandardBS
  lastAppearenceStandardBS
  
- implementLowerBoundOptimal
- implementUpperBound
  searchinRotatedSortedUniqArrayOptimal
  singleElementInSortedArray
  */
 
 
 //MARK: binarySearch
+//https://www.geeksforgeeks.org/problems/binary-search-1587115620/1
 int binarySearchIterative(vector<int>& nums, int target) {
     int n = nums.size();
     int low = 0;
@@ -43,7 +45,7 @@ int binarySearchIterative(vector<int>& nums, int target) {
     return -1;
 }
 //Approach = BinarySearch
-//T.C = BigO(log base2 n) //n=nums.size()
+//T.C = BigO(log n) //n=nums.size()
 //A.S = BigO(1)
 
 
@@ -61,11 +63,11 @@ int binarySearchRecursive(vector<int>& nums, int low, int high, int target) {
     }
 }
 //Approach = BinarySearch
-//T.C = BigO(log base2 n) //n=nums.size()
-//A.S = BigO(log base2 n)
+//T.C = BigO(log n) //n=nums.size()
+//A.S = BigO(log n)
 
 
-//MARK: implementLowerBoundBrute
+//MARK: implementLowerBound
 //smallest index such that arr[index]>=x
 //https://www.geeksforgeeks.org/problems/implement-lower-bound/1
 int implementLowerBoundBrute(vector<int>& nums, int k) {
@@ -99,12 +101,13 @@ int implementLowerBoundOptimal(vector<int>& arr, int target) {
     return ans;
 }
 //Approach = BinarySearch
-//T.C = BigO(log base2 n) //n=nums.size()
+//T.C = BigO(log n) //n=nums.size()
 //A.S = BigO(1)
 //Default function :lower_bound(arr.begin(), arr.end(), target)
 
 
 //MARK: implementUpperBound
+//https://www.geeksforgeeks.org/problems/implement-upper-bound/1
 //smallest index such that arr[index]>x
 int implementUpperBound(vector<int>& arr, int target) {
     int ans = arr.size();
@@ -122,7 +125,7 @@ int implementUpperBound(vector<int>& arr, int target) {
     return ans;
 }
 //Approach:same as implementLowerBound just replace  if(arr[mid]>=target) with if(arr[mid]>target)
-//T.C = BigO(log base2 n) //n=nums.size()
+//T.C = BigO(log n) //n=nums.size()
 //A.S = BigO(1)
 //Default function :upper_bound(arr.begin(), arr.end(), target)
 
@@ -146,7 +149,7 @@ int searchInsertPositionMy(vector<int>& nums, int target) {
     return low;
 }
 //Approach = StandardBinarySearch and return low
-//T.C = BigO(log base2 n) //n=nums.size()
+//T.C = BigO(log n) //n=nums.size()
 //A.S = BigO(1)
 
 
@@ -174,7 +177,7 @@ int findCeil(vector<int>& arr, int x) {
     return ans;
 }
 //Approach = same algo of implementLowerBoundOptimal
-//T.C = BigO(log base2 n) //n=nums.size()
+//T.C = BigO(log n) //n=nums.size()
 //A.S = BigO(1)
 
 
@@ -197,7 +200,7 @@ int findFloor(vector<int>& arr, int x) {
     return ans;
 }
 //Approach = same type algo of implementLowerBoundOptimal
-//T.C = BigO(log base2 n) //n=nums.size()
+//T.C = BigO(log n) //n=nums.size()
 //A.S = BigO(1)
 
 
@@ -214,7 +217,7 @@ void firstAndLastInSortedArrayLbUb(vector<int>& nums, int target) {
     cout<<lower<< "  "<<upper<<endl;
 }
 //Approach = lowerBound + upperBound
-//T.C = BigO(2(log base2 n)) //n=nums.size()
+//T.C = BigO(2(log n)) //n=nums.size()
 //A.S = BigO(1)
 
 
@@ -264,7 +267,7 @@ void firstAndLastInSortedArrayStanardBS(vector<int>& nums, int target) {
     cout<<firstAppearence<<"  "<<lastAppearence<<endl;
 }
 //Approach = standard BS for first and last occurence.
-//T.C = BigO(2(log base2 n)) //n=nums.size()
+//T.C = BigO(2(log n)) //n=nums.size()
 //A.S = BigO(1)
 
 
@@ -280,7 +283,7 @@ int numberOfOccurrence(vector<int>& arr, int n, int x) {
     }
 }
 //Approach = standard BS for first and last occurence.
-//T.C = BigO(2(log base2 n)) //n=nums.size()
+//T.C = BigO(2(log n)) //n=nums.size()
 //A.S = BigO(1)
 
 
@@ -382,7 +385,7 @@ bool searchinRotatedSortedDubliArrayOptimal(vector<int>& nums, int target) {
     }
     return ans;
 }
-//Approach = standard BS + check for sorted half
+//Approach = standard BS + check for sorted half + handlk
 //T.C = BigO(logn)
 //A.S = BigO(1)
 
@@ -444,6 +447,7 @@ int howManyTimesArrayRotated(vector<int>& nums, int target) {
 
 
 //MARK: singleElementInSortedArray
+//https://leetcode.com/problems/single-element-in-a-sorted-array/
 int singleElementInSortedArrayBrute1(vector<int>& nums) {
     int n=nums.size();
     if(n==1){
@@ -495,13 +499,13 @@ int singleElementInSortedArrayOptimal(vector<int>& nums) {
         if (nums[mid] != nums[mid + 1] && nums[mid] != nums[mid - 1]) {
             return nums[mid];
         }
-        //we are in the left:
+        //check if we are in left half
         if ((mid % 2 == 1 && nums[mid] == nums[mid - 1])
             || (mid % 2 == 0 && nums[mid] == nums[mid + 1])) {
             //eliminate the left half:
             low = mid + 1;
         }
-        //we are in the right:
+        //check if we are in right half
         else {
             //eliminate the right half:
             high = mid - 1;
@@ -533,3 +537,13 @@ int singleElementInSortedArrayOptimal(vector<int>& nums) {
 //    cout<<endl;
 //    return 0;
 //}
+
+/*
+ Revision: 27sept
+ *Conceptual Topics
+ *findCeil
+ *findFloor
+ *searchinRotatedSortedArray-UniqueElements
+ *searchinRotatedSortedArray-DublicateElements
+ 
+ */
