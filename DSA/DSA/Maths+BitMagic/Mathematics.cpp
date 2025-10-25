@@ -339,11 +339,12 @@ int lcmNaive(int a, int b){
     }
     
     int maxNo = max(a,b);
+    int tempMax = maxNo;
     while(true) {
         if (maxNo%a == 0 && maxNo%b == 0){
             return maxNo;
         }
-        maxNo++;
+        maxNo = maxNo + tempMax;
     }
     return maxNo;
 }
@@ -442,7 +443,7 @@ bool isPrimeEfficientMore(int n){
  
  primeFactorStNaiveThree-UniqueElements
  1.Prime factorization school method
- 2.Smallest diviosor(divisor except 1) of a number is always prime number -> Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n
+ 2.Smallest divisor(divisor except 1) of a number is always prime number -> Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n
  3.This solution will iterate less time for some numbers:(n=780 -- 13 iteration).But it will iterate n times for prime numbers,So this is not efficient.
  
  primeFactorStEfficient-UniqueElements
@@ -493,9 +494,9 @@ void primeFactorStNaiveTwo(int n){
 
 //MARK: primeFactorStNaiveThree-UniqueElements
 /*
- Prime factorization school method
-1.Smallest divisor(divisor except 1) of a number is always prime number -> Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n
-2.This solution will iterate less time for some numbers:(n=780 -- 13 iteration).But it will iterate n times for prime numbers,So this is not efficient.
+1.Prime factorization school method
+2.Smallest divisor(divisor except 1) of a number is always prime number -> Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n
+*.This solution will iterate less time for some numbers:(n=780 -- 13 iteration).But it will iterate n times for prime numbers,So this is not efficient.
  */
 void primeFactorStNaiveThree(int n){
     if(n<=1){
@@ -516,9 +517,9 @@ void primeFactorStNaiveThree(int n){
 
 //MARK: primeFactorStEfficient-UniqueElements
 /*
- Prime factorization school method
- 1.Divisors appear in pair = 30: (1,30) (2,15) (3,10) (5,6)
- 2.Smallest diviosor(divisor except 1) of a number is always prime number. -> Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n.
+ 1.Prime factorization school method
+ 2.Divisors appear in pair = 30: (1,30) (2,15) (3,10) (5,6)
+ 3.Smallest diviosor(divisor except 1) of a number is always prime number. -> Here we have not added for prime check for i as because - when we starts with i=2, we completely divide n by 2 and hence furter multiples of i cannot devide n.
  */
 void primeFactorStEfficient(int n){
     if(n<=1){
@@ -540,32 +541,6 @@ void primeFactorStEfficient(int n){
 }
 //T.C = BigO (sqrtN*logn)
 //A.S = BigO 1
-
-
-//MARK: primeFactorMyNaive-NonUniqueElements
-void primeFactorMyNaive(int n){
-    if(n<=1){
-        cout<<n<<" is neither a prime number nor a composite number."<<"\n";
-        return;
-    }
-    int divident = n;
-    int i = 2;
-    while(divident!=1) {
-        if(isPrimeEfficientMore(i)){
-            if(divident%i==0){
-                cout<<i<<"\n";
-                divident = divident/i;
-                i=2;
-            }else{
-                i++;
-            }
-        }else{
-            i++;
-        }
-    }
-}
-//T.C =
-//A.S =
 
 
 //MARK: allDivisorsOfNumberEfficient

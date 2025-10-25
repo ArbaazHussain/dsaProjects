@@ -537,10 +537,10 @@ func peakElementOptimal(_ nums: [Int]) -> Int {
         let nextElement = nums[midIndex+1]
         if(midElement>previousElement && midElement>nextElement){
             return midIndex
-        }else if midElement>previousElement {
+        }else if midElement<nextElement {
             //mid in increasing curve
             low = midIndex + 1
-        }else if midElement>nextElement{
+        }else if midElement<previousElement{
             //mid in decreasing curve
             high = midIndex - 1
         }else{
@@ -553,3 +553,10 @@ func peakElementOptimal(_ nums: [Int]) -> Int {
 //Approach = bs + logic of graph with single and multiple peak
 //T.C = BigO(logn)
 //A.S = BigO(1)
+
+
+/*
+ Rivision:
+ 21Oct:
+ singleElementInSortedArray
+ */
