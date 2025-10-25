@@ -17,7 +17,7 @@ using std::endl;
  *Where it is used?
  ->Stack, queue, browsers.
  
- *Why array is not used in stack?
+ *Why array is not used in queue/stack?
  Although vector is dynamic, it's not ideal for queues due to slow pop_front() (O(n)) and costly resizing. For stacks, it works but frequent resizing during growth involves copying all elements to new memory, which affects performance.
  
  

@@ -7,7 +7,7 @@
 
 /*
  * In Swift, you don’t need to take care of fixed vs dynamic arrays — just use Array, which is dynamic by default.
- 
+
  * In Swift, arrays are always heap-allocated, so arrays of size 1e6 or 1e7 can be created locally without stack overflow.
  
  
@@ -111,7 +111,7 @@ func largestElementBrute(_ nums: [Int]) -> Int {
 
 func largestElementOptimal(_ nums: [Int]) -> Int {
     guard !nums.isEmpty else {
-        fatalError("Array must not be empty")
+        return -1
     }
     var largestIndex = Int.min
     for i in 1..<nums.count {
@@ -271,7 +271,7 @@ func LeftRotateByDPlaceBrute(_ nums: inout [Int], _ k: Int) {
     let n = nums.count
     guard n > 0 else { return }
     
-    var d = k % n
+    let d = k % n
     if d == 0 {
         //Avoid this block for time complexity
         for num in nums {
@@ -354,7 +354,7 @@ func rightRotateByDPlaceBrute(nums: inout [Int], d: Int) {
         print()
         return
     }
-    // Store last d elements in a temporary array
+    // Store last d elements in reverse order in a temporary array
     var tempArray: [Int] = []
     for i in 0..<d {
         let x = nums[(n - 1) - i]
@@ -500,7 +500,7 @@ func unionOfSortedArrayBrute(_ nums1: [Int], _ nums2: [Int]) {
     print()
 }
 //Approach = set
-// T.C - BigO(n1+n2+SLogS) //S = size of the current set
+// T.C - BigO(n1 + n2 + kLogk) //k = size of the current set
 // A.S - BigO(n1+n2)
 
 
@@ -734,7 +734,7 @@ func maxConsecutiveOnesOptimal2Stv(_ nums: [Int]) -> Int {
 
 //MARK: singleNumber
 //https://leetcode.com/problems/single-number/description/
-func singleNumber(_ nums: [Int]) -> Int {
+func singleNumberBrute(_ nums: [Int]) -> Int {
     let n = nums.count
     // Run a loop for selecting elements
     for i in 0..<n {
@@ -758,35 +758,6 @@ func singleNumber(_ nums: [Int]) -> Int {
 //T.C = BigO(n^2)
 //A.S = Big0(1)
 
-
-func singleNumberBetter1(_ nums: [Int]) -> Int {
-    let n = nums.count
-    // Manually find the maximum element
-    var maxVal = nums[0]
-    for i in 0..<n {
-        if nums[i] > maxVal {
-            maxVal = nums[i]
-        }
-    }
-    // Declare hash array of size maxVal + 1 and hash the given array
-    var hash = Array(repeating: 0, count: maxVal + 1)
-    for i in 0..<n {
-        hash[nums[i]] += 1
-    }
-    // Find the single element and return the answer
-    for i in 0..<n {
-        if hash[nums[i]] == 1 {
-            return nums[i]
-        }
-    }
-    // This line will never execute if the array contains a single element
-    return -1
-}
-//Approach = hashing
-//T.C = BigO(3n)
-//A.S = BigO(maxElementInArray+1)
-
-
 func singleNumberBetter2(_ nums: [Int]) -> Int {
     let n = nums.count
     // Declare the hashmap and hash the given array
@@ -803,7 +774,7 @@ func singleNumberBetter2(_ nums: [Int]) -> Int {
     // This line will never execute if the array contains a single element
     return -1
 }
-//Approach = map
+//Approach = hashing
 //M = size of the map
 //T.C = BigO(n) + O(M)
 //A.S = BigO(M)
@@ -825,7 +796,6 @@ func singleNumberOptimal(_ nums: [Int]) -> Int {
 
 //MARK: longestSubarraywithsumK
 //https://www.naukri.com/code360/problems/longest-subarray-with-sum-k_5713505
-//https://leetcode.com/problems/subarray-sum-equals-k/description/
 func longestSubarraywithsumKBrute1(_ nums: [Int], _ k: Int) -> Int {
     let n = nums.count
     var len = 0
@@ -866,6 +836,7 @@ func longestSubarraywithsumKBrute2(_ nums: [Int], _ k: Int) -> Int {
 //A.S = BigO(1)
 
 
+//This is optimal solution if array has -ve,+ve or zero
 func longestSubarraywithsumKBetter(_ nums: [Int], _ k: Int) -> Int {
     let n = nums.count
     var preSumMap = [Int: Int]()   // Dictionary to store prefix sum → index
@@ -902,7 +873,6 @@ func longestSubarraywithsumKBetter(_ nums: [Int], _ k: Int) -> Int {
 func longestSubarraywithsumKOptimal(_ nums: [Int], _ k: Int) -> Int {
     return -1
 }
-
 
 //MARK: ----------Medium----------
 
@@ -998,7 +968,7 @@ func sortArrayOfZeroOneTwoBetter(_ nums: inout [Int]) {
 }
 //Approach = linear+hashing
 // T.C - BigO(2n)
-// A.S - BigO(1)
+// A.S - BigO(1) //0,1,2 will constant space
 
 
 //dutch national flag algorithm
@@ -1078,6 +1048,7 @@ func majorityElementBetter(_ nums: [Int]) -> Int {
 
 
 //Moore’s Voting Algorithm
+//assuming  majorityElement always appear in array else return -> count > 0 ? (lastElement ?? -1) : -1
 func majorityElementOptimal(_ nums: [Int]) -> Int {
     let n = nums.count
     var el : Int?
@@ -1094,9 +1065,9 @@ func majorityElementOptimal(_ nums: [Int]) -> Int {
     }
     return el ?? -1
 }
-//Approach = Moore’s Voting Algorithm -> Majority means more than half. Different elements cancel each other, so it can’t be fully canceled and the survivor is the candidate.
+//Approach = Moore’s Voting Algorithm -> Majority means more than half. Different elements cancel each other, so Majority can’t be fully canceled and the survivor is the candidate.
 // T.C - BigO(n)
-// A.S - BigO(n)
+// A.S - BigO(1)
 
 
 //MARK: maximumSubarraySum
@@ -1130,7 +1101,7 @@ func maximumSubarraySumOptimal(_ nums: [Int]) -> Int {
     }
     return maxi
 }
-//Approach = Kadane's Algorithm - Kadane’s Algorithm finds the maximum sum of a contiguous subarray,s in O(n) time by tracking a running sum, updating the global maximum and then resetting sum when negative. If all numbers are negative, it returns the largest element.
+//Approach = Kadane's Algorithm - Kadane’s Algorithm finds the maximum sum of a contiguous subarray,s in O(n) time by tracking a running sum and updating the global maximum + then resetting sum when negative. If all numbers are negative, it returns the largest element.
 // T.C - BigO(n)
 // A.S - BigO(1)
 
@@ -1308,7 +1279,7 @@ func nextPermutationOptimal(_ nums: inout [Int]) {
     //reverse array after dip index
     reverseArrayFromIndex(&nums, dip+1, n-1)
 }
-//Approach = find dip from back + BS
+//Approach = find dip from back + LS(swap) + reverseArray
 //T.C = O(3n)
 //A.S = O(1)
 
@@ -1334,8 +1305,6 @@ func leadersInArrayOptimal(_ nums: inout [Int]) -> [Int] {
         let current = nums[i]
         if(current>=max){
             leaders.append(current)
-        }
-        if(current>=max){
             max = current
         }
     }
@@ -1366,36 +1335,6 @@ func longestConsecutiveBrute(_ nums: [Int]) -> Int {
 //Approach = lS
 //T.C = O(n^n)
 //A.S = O(1)
-
-
-func longestConsecutiveBetterMy(_ nums: [Int]) -> Int {
-    guard nums.count > 0 else { return 0}
-    var maxRes = 1;
-    var res = 1;
-    let sortedArray = nums.sorted()
-    for i in 1..<sortedArray.count {
-        let current = sortedArray[i]
-        let prev = sortedArray[i-1]
-        let isConsecutive = current<0 ? (prev-current == -1) : (current-prev == 1)
-        if(isConsecutive || (current == prev)){
-            if(current != prev){
-                res += 1
-            }
-        }else{
-            //start of new Consecutive
-            maxRes = max(maxRes,res)
-            res = 0
-            res += 1
-        }
-        if(i==(nums.count-1)){
-            maxRes = max(maxRes,res)
-        }
-    }
-    return maxRes
-}
-//Approach = sort + lS
-//T.C = O(nlogn + n)
-//A.S = O(n)
 
 
 func longestConsecutiveBetterStv(_ nums: [Int]) -> Int {
@@ -1598,7 +1537,7 @@ func rotateImageBrute(_ matrix: inout [[Int]]){
 
 func rotateImageOptimal(_ matrix: inout [[Int]]) {
     let n = matrix.count
-    //transpose the array (col->row)
+    //(n/2) //transpose the array (col->row)
     for i in 0..<n-1{
         for j in i+1..<n {
             let temp = matrix[j][i]
@@ -1606,12 +1545,12 @@ func rotateImageOptimal(_ matrix: inout [[Int]]) {
             matrix[i][j] = temp
         }
     }
-    //reverse every row
+    //(n*(n/2))) //reverse every row
     for i in 0..<matrix.count {
         reverseArrayFromIndex(&matrix[i], 0, matrix[i].count-1)
     }
 }
-//Approach = transpose array(col->row) -> reverse every row
+//Approach = transpose array(col->row)  -> reverse every row
 //T.C = O((n^2) + n*(n/2))
 //A.S = O(1)
 
@@ -1666,6 +1605,7 @@ func spiralMatrix(_ matrix: [[Int]]) -> [Int]  {
 
 //MARK: subArraySumEqualsK
 //https://leetcode.com/problems/subarray-sum-equals-k/description/
+//https://www.youtube.com/watch?v=xvNwoz-ufXA&t=986s
 func subArraySumEqualsKBrute(_ nums: [Int], _ k: Int) -> Int {
     let n = nums.count
     var cnt = 0
@@ -1777,15 +1717,16 @@ private func setColWith(_ matrix: inout [[Int]], _ index : Int, _ key: Int) {
 
 
 /*
- Revision [Easy] :
- -Easy(23sept)-
- * rightRotateByDPlaceBrute
- * practice hashing for syntax learn
+ 23 Oct: [Medium]
+ dutch national flag algorithm
+ Moore’s Voting Algorithm
+ kadane,s algo
  
- Revision [Medium] :
- setZeroesOptimal //for now doing better solution only
- subArraySumEqualsKBrute
- 
+ rearrangeArrayElementsBySign
+ printAllPermutations
+ nextPermutation
+ longestConsecutiveSequence
+ setMatrixZeroes
  */
 
 

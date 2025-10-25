@@ -156,7 +156,7 @@ void deletionNodeDll(Node<int>* node) {
         delete node;
     }
 }
-//T.C = BigO(n)
+//T.C = BigO(1)
 //A.S = BigO(1)
 
 
@@ -270,7 +270,7 @@ Node<int>* reverseOptimal(Node<int>* head) {
 
 //MARK: main function--------------------------
 //int main() {
-//    vector<int> vectorArray1{1,2,3};
+//    vector<int> vectorArray1{1,2,3,4,5};
 //    Node<int>* head = arrayToDll(vectorArray1);
 //    Node<int>* rev = reverseOptimal(head);
 //    traversalOfDll(rev);

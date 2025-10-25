@@ -7,6 +7,22 @@
 
 import Foundation
 
+/*
+ In Swift String there is no random access by index.
+
+ Looping with String.index(offsetBy:) causes O(i) time complexity.
+
+ Converting to Array(str) gives O(1) access and overall O(n) performance.
+
+ For DSA problems, always convert String → [Character], operate, then String(array).
+
+ Use String.Index only when Unicode correctness matters (e.g., real text processing).
+ 
+ func strIndexDemo(s: String) {
+     let firstIndex = s.index(s.startIndex, offsetBy: 0)
+     print(s[firstIndex])
+ }
+ */
 
 //MARK: frequenciesOfCharacter
 func frequenciesOfCharacter(_ str: String) {
@@ -48,6 +64,11 @@ func removeOuterParenthesesBrute(_ s: String) -> String {
     return ans
 }
 //Approach = stack+BS
+/*
+ (if stk.isEmptyt() -> pushToStk+!pushToAns )
+ (if !stk.isEmptyt() -> pushToStk+pushToAns )
+ */
+
 //n=s.count
 //T.C = BigO(n)
 //A.S = BigO(n)
@@ -81,50 +102,48 @@ func removeOuterParenthesesOptimal(_ s: String) -> String {
 //https://www.youtube.com/watch?v=RitppzIdMCo
 func reverseWords(_ s: String) -> String {
     //Avoiding TC for now
-    let str = Array(s)
-    let n = s.count
+    var sArray = s.split(separator: " ")
+    var start = 0
+    var end = sArray.count - 1
     
+    while start < end {
+        sArray.swapAt(start, end)
+        start += 1
+        end -= 1
+    }
+    return sArray.joined(separator: " ")
+}
+//Approach = create array of words -> reverse the array
+//T.C = BigO(n)
+//A.S = BigO(1)
+
+
+func reverseWords1(_ s: String) -> String {
+    var chars = Array(s)
+    let n = chars.count
     var ans = ""
+
+    chars.reverse()
+
     var i = 0
-    while i<n {
-        var currentWord : String = ""
-        while i<n && str[i] != " "{
-            currentWord +=  String(str[i])
+    while i < n {
+        var currentWord = ""
+        while i < n && chars[i] != " " {
+            currentWord.append(chars[i])   //O(1) append to Character buffer
             i += 1
         }
+        // Skip spaces
         i += 1
-        guard !currentWord.isEmpty else { continue }
         if !currentWord.isEmpty {
-            if !ans.isEmpty {
-                ans = currentWord + " " + ans
-            } else {
-                ans = currentWord
-            }
+            if !ans.isEmpty { ans.append(" ") }  // avoids extra string creation
+            ans += String(currentWord.reversed())
         }
     }
     return ans
 }
-//Approach = ls+concate
+//Approach - Reverse string -> reverse every word
 //T.C = BigO(n)
-//A.S = BigO(1)
-
-
-func reverseWordsOptimal(_ s: String) -> String {
-    //Avoiding TC for now
-    var ans = s.split(separator: " ")
-    var start = 0
-    var end = ans.count - 1
-    
-    while start < end {
-        ans.swapAt(start, end)
-        start += 1
-        end -= 1
-    }
-    return ans.joined(separator: " ")
-}
-//Approach = ls+defaultFunctions
-//T.C = BigO(n)
-//A.S = BigO(1)
+//A.S = BigO(n)
 
 
 //MARK: largestOddNumber
@@ -147,8 +166,7 @@ func largestOddNumber(_ num: String) -> String {
         return ""
     }
 }
-
-//Approach = find last odd index
+//Approach = ConvertStringToArray + find last odd index
 //T.C = BigO(n)
 //A.S = BigO(1)
 
@@ -156,34 +174,32 @@ func largestOddNumber(_ num: String) -> String {
 //MARK: Longest Common Prefix
 //https://leetcode.com/problems/longest-common-prefix/description/
 //https://youtu.be/wtOQaovlvhY?si=CZs70Mm9U6Qdp1Jv
-func longestCommonPrefixMyBrute(_ strs: [String]) -> String {
-    //Avoiding TC for now
-    let strsArray = Array(strs)
-    let n = strsArray.count
-    var res = ""
-    let firstStringCount = strsArray[0].count
-    for i in 0..<firstStringCount {
-        let firstStringChar = Array(strsArray[0])[i]
-        var isMatched = true
-        for j in 1..<n {
-            let jStringCount = strsArray[j].count
-            guard jStringCount > i else {
-                isMatched = false
-                break
-            }
-            let jStringChar = Array(strsArray[j])[i]
-            if(firstStringChar != jStringChar){
-                isMatched = false
-                break
+func longestCommonPrefixBrute(_ strs: [String]) -> String {
+    // Edge case: empty input
+    if strs.isEmpty { return "" }
+    
+    // Convert first string to array of characters (reference)
+    let first = Array(strs[0])
+    var prefix = ""
+    
+    // Iterate through each character of the first string
+    for i in 0..<first.count {
+        let ch = first[i]
+        
+        // Compare this character with the same position in all other strings
+        for j in 1..<strs.count {
+            let currentStringArr = Array(strs[j])
+            
+            // If this string is shorter OR character mismatch → stop here
+            if i >= currentStringArr.count || currentStringArr[i] != ch {
+                return prefix
             }
         }
-        if isMatched {
-            res.append(firstStringChar)
-        }else{
-            break
-        }
+        
+        // If all matched → add to prefix
+        prefix.append(ch)
     }
-    return res
+    return prefix
 }
 //Approach = ls+BS
 //T.C = BigO(n^2)
@@ -191,23 +207,29 @@ func longestCommonPrefixMyBrute(_ strs: [String]) -> String {
 
 
 func longestCommonPrefixOptimal(_ strs: [String]) -> String {
-    if strs.isEmpty {return ""}
-    if strs.count == 1 {return strs[0]}
+    let n = strs.count
+    if n == 0 { return "" }
+    if n == 1 { return strs[0] }
     
-    var prefix = ""
-    //O(n log n)
-    let sortedArr = strs.sorted()
-    let first = Array(sortedArr.first!)
-    let last = Array(sortedArr.last!)
+    // Sort the array
+    let sortedStrs = strs.sorted()
     
-    for i in 0..<min(first.count, last.count){
-        if first[i] == last[i]{
-            prefix.append(first[i])
-        }else{
+    // Convert first and last strings into character arrays
+    let firstChars = Array(sortedStrs.first!)
+    let lastChars = Array(sortedStrs.last!)
+    
+    // Find minimum length between them
+    let minLength = min(firstChars.count, lastChars.count)
+    
+    var ans = ""
+    for i in 0..<minLength {
+        if firstChars[i] == lastChars[i] {
+            ans.append(firstChars[i])
+        } else {
             break
         }
     }
-    return prefix
+    return ans
 }
 //Approach = sort + match first and last element
 //m = maximum length of a string
@@ -220,59 +242,62 @@ func longestCommonPrefixOptimal(_ strs: [String]) -> String {
 //https://youtu.be/YVlIJV2XSa8?si=JU0tDPbzAGZsAamr
 //https://leetcode.com/problems/isomorphic-strings/description/
 func isIsomorphic(_ s: String, _ t: String) -> Bool {
-    if(s.count != t.count){
-        return false
-    }
-    var m1 : [Character:Character] = [:]
-    var m2 : [Character:Character] = [:]
-    //Avoiding TC for now
-    let str1 = Array(s)
-    let str2 = Array(t)
-    
-    for i in 0..<str1.count {
-        let firstChar = str1[i]
-        let secondChar = str2[i]
-        if let value = m1[firstChar] , value != secondChar {
-            return false
-        }else if let value = m2[secondChar] , value != firstChar {
-            return false
-        }else{
-            m1[firstChar] = secondChar
-            m2[secondChar] = firstChar
-        }
-    }
-    return true
+    // If lengths don't match → not isomorphic
+      guard s.count == t.count else { return false }
+      // Convert both strings to character arrays for O(1) index access
+      let sChars = Array(s)
+      let tChars = Array(t)
+      
+      var mapST = [Character: Character]()
+      var mapTS = [Character: Character]()
+      
+      for i in 0..<sChars.count {
+          let charS = sChars[i]
+          let charT = tChars[i]
+          
+          if let mapped = mapST[charS], mapped != charT {
+              return false
+          }
+          if let mapped = mapTS[charT], mapped != charS {
+              return false
+          }
+          // Create mapping both ways
+          mapST[charS] = charT
+          mapTS[charT] = charS
+      }
+      return true
 }
-//Approach = ls+singleMap
+//Approach = ls+dualMap
 //T.C = BigO(n)
 //A.S = BigO(1) //as there are limited char in asci.
 
 
 func isIsomorphic1(_ s: String, _ t: String) -> Bool {
-    if(s.count != t.count){
+    if s.count != t.count {
         return false
     }
-    var m1 : [Character:Character] = [:]
-    //Avoiding TC for now
     let str1 = Array(s)
     let str2 = Array(t)
+    
+    var mapST: [Character: Character] = [:] // s → t
+    var mapTS: [Character: Character] = [:] // t → s
     
     for i in 0..<str1.count {
         let firstChar = str1[i]
         let secondChar = str2[i]
-        if let value = m1[firstChar] , value != secondChar {
+        
+        if let mapped = mapST[firstChar], mapped != secondChar {
             return false
-        }else if let (key, _) = m1.first(where: { $0.value == secondChar }) {
-            if key != firstChar {
-                return false
-            }
-        }else{
-            m1[firstChar] = secondChar
         }
+        if let mapped = mapTS[secondChar], mapped != firstChar {
+            return false
+        }
+        mapST[firstChar] = secondChar
+        mapTS[secondChar] = firstChar
     }
     return true
 }
-//Approach = ls+dualMap
+//Approach = ls+SingleMap
 //T.C = BigO(n)
 //A.S = BigO(1) //as there are limited char in asci.
 
@@ -364,10 +389,9 @@ func isAnagramBrute(_ s: String, _ t: String) -> Bool {
     let sortedT = t.sorted()
     return sortedS  == sortedT
 }
-//Approach = sortm = t.count
-//n=s.count ,
-//T.C = BigO(nlogn+mlogm)
-//A.S = BigO(n+m)
+//Approach = sorting
+//T.C = BigO(slogs+tlogt)
+//A.S = BigO(s+t)
 
 
 func isAnagramOptimal(_ s: String, _ t: String) -> Bool {
@@ -398,9 +422,6 @@ func isAnagramOptimal(_ s: String, _ t: String) -> Bool {
 
 
 
-
-
-
 //MARK: Helper Functions
  func reverseCharArray(_ chars: inout [Character], _ start: Int, _ end : Int){
      var start = start
@@ -411,3 +432,21 @@ func isAnagramOptimal(_ s: String, _ t: String) -> Bool {
          end -= 1
      }
 }
+
+func hashTableForRomanToInt() -> [Character:Int]{
+    var hashTable = [Character:Int]()
+    hashTable["I"] = 1
+    hashTable["V"] = 5
+    hashTable["X"] = 10
+    hashTable["L"] = 50
+    hashTable["C"] = 100
+    hashTable["D"] = 500
+    hashTable["M"] = 1000
+    return hashTable
+}
+
+/*
+ Revision:
+ isIsomorphic1
+ */
+

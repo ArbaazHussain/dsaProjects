@@ -7,7 +7,7 @@
 
 /*
  Precision Datatype in Swift =>
- Double > Float > Int64 > Int32 > Int16 > Int8 > Character
+ Double > Float > (Int64>Int32>Int16>Int8) > Character
 
  Notes:
  - Swift does not have `long`, `long long` separately.

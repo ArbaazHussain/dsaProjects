@@ -145,6 +145,7 @@ func searchInsert(_ nums: [Int], _ target: Int) -> Int {
 
 
 //MARK: ceilInAsortedArray
+//https://leetcode.com/problems/search-insert-position/description/
 //implementLowerBoundOptimal
 //Ceil - smallest index such that arr[index]>=x.   [*****<-]
 func ceilInAsortedArray(_ arr: [Int], _ x: Int) -> Int {
@@ -397,6 +398,7 @@ func minimumInRotatedSortedArray(_ nums: [Int], _ target: Int) -> Int {
 
 
 //MARK: howManyTimesArrayRotated
+//https://www.geeksforgeeks.org/problems/rotation4723/1
 func howManyTimesArrayRotated(_ nums: [Int]) -> Int {
     var low = 0
     var high = nums.count-1
@@ -537,10 +539,10 @@ func peakElementOptimal(_ nums: [Int]) -> Int {
         let nextElement = nums[midIndex+1]
         if(midElement>previousElement && midElement>nextElement){
             return midIndex
-        }else if midElement>previousElement {
+        }else if midElement<nextElement {
             //mid in increasing curve
             low = midIndex + 1
-        }else if midElement>nextElement{
+        }else if midElement<previousElement{
             //mid in decreasing curve
             high = midIndex - 1
         }else{
@@ -553,3 +555,10 @@ func peakElementOptimal(_ nums: [Int]) -> Int {
 //Approach = bs + logic of graph with single and multiple peak
 //T.C = BigO(logn)
 //A.S = BigO(1)
+
+
+/*
+ Rivision:
+ 13Nov:
+ singleElementInSortedArray
+ */
