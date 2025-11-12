@@ -451,13 +451,13 @@ func seive(_ n: Int) {
 
 
 //MARK: digitsInFactorial
-func digitsInFactorial(_ n: Int) -> Int{
-    var logValue : Double = 0
-    for i in 1...n {
-        logValue += log10(Double(i))
-    }
-    return Int(floor(logValue + 1))
-}
+//func digitsInFactorial(_ n: Int) -> Int{
+//    var logValue : Double = 0
+//    for int in arr {
+//        logValue += log10(Double(int))
+//    }
+//    return Int(floor(logValue + 1))
+//}
 //T.C = BigO (n)
 //A.S = BigO (1)
 //Approach: floor(log(n!)) + 1
