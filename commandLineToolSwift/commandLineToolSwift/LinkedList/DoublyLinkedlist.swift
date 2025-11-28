@@ -255,8 +255,4 @@ func reverseDLLOptimal(_ head: inout ListNode?) {
 
 
 
-/*
- Revision:
- * DLL (2Oth Oct)
- - reverseDLLOptimal
- */
+

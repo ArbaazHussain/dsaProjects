@@ -445,8 +445,164 @@ func hashTableForRomanToInt() -> [Character:Int]{
     return hashTable
 }
 
+
+
+
+//MARK: Strings Picked----------------------
+
+
+
+//MARK: longestPalindrome
+//https://leetcode.com/problems/longest-palindromic-substring
+//https://youtu.be/uX0-xyPkR2w?si=gFQRECIT8Dq-r2tO
+func longestPalindromeBrute(_ s: String) -> String {
+    let sArray = Array(s)
+    let n = sArray.count
+    var res = ""
+    for i in 0..<n{
+        for j in i..<n{
+            let subArray = Array(sArray[i...j])
+            let isPalindrome = subArray == subArray.reversed()
+            if isPalindrome {
+                if subArray.count > res.count {
+                    res = String(subArray)
+                }
+            }
+        }
+    }
+    return res
+}
+//Approach = generateSubarrays and check
+//T.C = BigO(n^2)
+//A.S = BigO(1)
+
+
+func longestPalindromeOptimal(_ s: String) -> String {
+    if s.count <= 1 {
+        return s
+    }
+    
+    let chars = Array(s)
+    let n = chars.count
+    var LPS = ""
+    
+    for i in 1..<n {
+        // ---- Odd-length palindrome ----
+        var low = i
+        var high = i
+        while low >= 0 && high < n && chars[low] == chars[high] {
+            low -= 1
+            high += 1
+        }
+        
+        let palindrome1 = String(chars[(low + 1)..<high])
+        if palindrome1.count > LPS.count {
+            LPS = palindrome1
+        }
+        
+        // ---- Even-length palindrome ----
+        low = i - 1
+        high = i
+        while low >= 0 && high < n && chars[low] == chars[high] {
+            low -= 1
+            high += 1
+        }
+        
+        let palindrome2 = String(chars[(low + 1)..<high])
+        if palindrome2.count > LPS.count {
+            LPS = palindrome2
+        }
+    }
+    return LPS
+}
+//Approach = start from 1 index and check for odd and even length
+//T.C = BigO(n)
+//A.S = BigO(1)
+
+
+//MARK: groupAnagrams
+//https://leetcode.com/problems/group-anagrams
+//https://youtu.be/C9V66KyZCP8?si=ERNDkJTpzul3GxSG
+func groupAnagramsBrute(_ strs: [String]) -> [[String]] {
+    let n = strs.count
+    var res = [[String]]()
+    var mappedIndex = [Int]()
+    
+    for i in 0..<n{
+        guard !mappedIndex.contains(i) else { continue }
+        var currentRes = [String]()
+        
+        currentRes.append(strs[i])
+        mappedIndex.append(i)
+        
+        for j in 0..<n{
+            guard i != j && !mappedIndex.contains(j) else { continue }
+            let isAnagram = isAnagramOptimal(strs[i], strs[j])
+            if isAnagram {
+                currentRes.append(strs[j])
+                mappedIndex.append(j)
+            }
+        }
+        res.append(currentRes)
+    }
+    return res
+}
+//Approach = ls and check for anagram for each element
+//T.C = BigO(n^n)
+//A.S = BigO(n)
+
+
+func groupAnagramsOptimal(_ strs: [String]) -> [[String]] {
+    var res = [[String]]()
+    var hashTable = [String:[String]]()
+    for i in 0..<strs.count{
+        let currentStr = strs[i]
+        let currentSortedStr = String(strs[i].sorted())
+        if hashTable[currentSortedStr] == nil {
+            hashTable[currentSortedStr] = [currentStr]
+        }else{
+            hashTable[currentSortedStr]?.append(currentStr)
+        }
+    }
+    for (_,values) in hashTable {
+        res.append(values)
+    }
+    return res
+}
+//Approach = sorting + mapping in hashmap
+//T.C = BigO(2n)
+//A.S = BigO(n)
+
+
+//MARK: romanToInt
+//https://leetcode.com/problems/roman-to-integer
+//https://youtu.be/ULNj8zXNeC0?si=6BOVVETKOEU1c0Kr
+//To understand - dry run for 4,6 (Int->Roman)
+func romanToInt(_ s: String) -> Int {
+    let sArray = Array(s)
+    let n = sArray.count
+    let hashTable = hashTableForRomanToInt()
+    
+    var lastRomanInt = hashTable[sArray[n-1]] ?? -1
+    var res = lastRomanInt
+    
+    for i in (0..<n-1).reversed() {
+        let currentRomanInt =  hashTable[sArray[i]] ?? -1
+        if (currentRomanInt >= lastRomanInt) {
+            res += currentRomanInt
+        }else{
+            res -= currentRomanInt
+        }
+        lastRomanInt = currentRomanInt
+    }
+    return res
+}
+//Approach =
+//T.C = BigO(n)
+//A.S = BigO(1)
+
+
 /*
  Revision:
  isIsomorphic1
  */
-

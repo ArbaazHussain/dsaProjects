@@ -321,6 +321,14 @@ func rearrangeArrayElementsBySignOptimal(_ nums: [Int]) -> [Int] {
 
 
 //MARK: printAllPermutations
+/*
+ permutations of [1,2,3] (order matters)
+ Total permutations = 3! = 6
+ [1, 2, 3] [1, 3, 2] [2, 1, 3] [2, 3, 1] [3, 1, 2] [3, 2, 1]
+ 
+ combinations of [1,2,3] (order does NOT matter)
+ [] [1] [2] [3] [1, 2] [1, 3] [2, 3] [1, 2, 3]
+ */
 //recursiveSolution
 //https://www.youtube.com/watch?v=YK78FU5Ffjw&t=405s
 //https://leetcode.com/problems/permutations/description/
@@ -378,8 +386,8 @@ func nextPermutationBrute(_ nums: inout [Int]) {
     }
 }
 //Approach = mentioned in code
-//T.C = O(n!*n)
-//A.S = O(1)
+//T.C = O( (n!*n) + n)
+//A.S = O(n)
 
 
 func nextPermutationOptimal(_ nums: inout [Int]) {
@@ -573,6 +581,7 @@ func setZeroesBetter(_ matrix: inout [[Int]]) {
 //A.S = O(n+m)
 
 
+//for now do only setZeroesBetter as its easy
 func setZeroesOptimal(_ matrix: inout [[Int]]) {
     var colZero = 1
     // step 1: Traverse the matrix and mark 1st row & col accordingly:
@@ -773,4 +782,44 @@ func subArraySumEqualsKOptimal(_ nums: [Int], _ k: Int) -> Int {
 
 
 
+//MARK: Arrays Picked--------------------
 
+
+
+//MARK: trappingRainWater
+//https://leetcode.com/problems/trapping-rain-water
+//https://youtu.be/1_5VuquLbXg?si=kkBFJYE1wBelJr_d
+func trappingRainWater(_ height: [Int]) -> Int {
+    let n = height.count
+    guard n > 1 else { return 0 }
+    var count = 0
+    var leftMax = Int.min
+    var rightMax = Int.min
+    for i in 1..<n-1{
+        let current = height[i]
+        let previous = height[i-1]
+        leftMax = max(previous, leftMax)
+        rightMax = findRightMax(height, till: i+1)
+        
+        if current < leftMax && current < rightMax {
+            let currentWaterCount = min(leftMax, rightMax) - current
+            if currentWaterCount > 0 {
+                count += currentWaterCount
+            }
+        }
+    }
+    return count
+}
+private func findRightMax(_ height: [Int], till index: Int) -> Int{
+    var res = 0
+    for i in stride(from: height.count-1, through: index, by: -1) {
+        let current = height[i]
+        if  current>res{
+            res = current
+        }
+    }
+    return res
+}
+//Approach = currentWaterCount = min(leftMax, rightMax) - currentIndex
+//T.C = BigO(n)
+//A.S = BigO(1)

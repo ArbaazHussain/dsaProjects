@@ -305,3 +305,84 @@ class QueueUsingStacks {
         inputStack.isEmpty
     }
 }
+
+
+
+//MARK: Stk/Queue Picked----------------
+
+
+
+//MARK: isValidParentheses
+//https://leetcode.com/problems/valid-parentheses
+//https://youtu.be/TaWs8tIrnoA?si=6JXuoFsnl5AHUEwl
+func isValidParentheses(_ s: String) -> Bool {
+    var stack: [Character] = []
+    for c in s {
+        if c == "(" {
+            stack.append(")")
+        } else if c == "{" {
+            stack.append("}")
+        } else if c == "[" {
+            stack.append("]")
+        }else{
+            let top = stack.popLast()
+            if c != top{
+                return false
+            }
+        }
+    }
+    return stack.isEmpty
+}
+/*
+ Approach =
+ For every opening bracket,add its relative closing bracket
+ For every closing bracket,just look at the top of stack. If same pop else return false.
+ T.C = BigO(n)
+ A.S = BigO(n)
+ */
+
+
+//MARK: evalRPN
+//https://leetcode.com/problems/evaluate-reverse-polish-notation
+//https://youtu.be/vvnaANhNSes?si=diiVAOlLTIhJuEkQ
+func evalRPN(_ tokens: [String]) -> Int {
+    var numbers = [Int]()
+    for token in tokens {
+        switch token {
+        case "*":
+            let (a, b) = getLastTwoNum(&numbers)
+            numbers.append(a * b)
+        case "/":
+            let (a, b) = getLastTwoNum(&numbers)
+            numbers.append(a / b)
+        case "+":
+            let (a, b) = getLastTwoNum(&numbers)
+            numbers.append(a + b)
+        case "-":
+            let (a, b) = getLastTwoNum(&numbers)
+            numbers.append(a - b)
+        default:
+            numbers.append(Int(token) ?? 0)
+        }
+    }
+    return numbers.last ?? -1
+}
+
+func getLastTwoNum(_ numbers: inout [Int]) -> (a: Int, b: Int) {
+    guard numbers.count > 1 else { return (a: 0, b: 0) }
+    let b = numbers.removeLast()
+    let a = numbers.removeLast()
+    return (a: a, b: b)
+}
+
+
+
+
+/*
+Revision(16Nov):
+ longestPalindromeOptimal
+ romanToInt
+ 
+ reverseList
+ isValidParentheses
+ */

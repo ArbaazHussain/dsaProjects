@@ -440,19 +440,20 @@ func moveZeroesToEndBrute(_ nums: inout [Int]) {
 
 func moveZeroesToEndOptimal(_ nums: inout [Int]) {
     let n = nums.count
-    var j = -1
-    var gotFirstZero = false
-    
+    var firstZeroIndexFound = false
+    var firstZeroIndex = -1
     for i in 0..<n {
-        if nums[i] == 0 && !gotFirstZero {
-            j = i
-            gotFirstZero = true
-            continue
+        if !firstZeroIndexFound && nums[i] == 0 {
+            firstZeroIndex = i
+            firstZeroIndexFound = true
         }
+        if !firstZeroIndexFound { continue }
         
-        if gotFirstZero && nums[i] != 0 {
-            nums.swapAt(j, i)
-            j += 1
+        for j in firstZeroIndex+1..<n {
+            if nums[j] != 0{
+                nums.swapAt(firstZeroIndex, j)
+                firstZeroIndex += 1
+            }
         }
     }
     //Avoid this block for time complexity
@@ -877,33 +878,30 @@ public func linearSearch(_ nums: [Int], _ key: Int) -> Bool {
 
 public func setRowWith(_ matrix: inout [[Int]], _ index : Int, _ key: Int) {
     for i in 0..<matrix[index].count {
-        if(matrix[index][i] != 0){
-            matrix[index][i] = key
-        }
+        matrix[index][i] = key
     }
 }
 public func setColWith(_ matrix: inout [[Int]], _ index : Int, _ key: Int) {
     for i in 0..<matrix.count {
-        if(matrix[i][index] != 0){
-            matrix[i][index] = key
-        }
+        matrix[i][index] = key
     }
 }
 
 
 /*
- 1ST Nov:
+ 22 Nov:
  
- [Easy] - All Done
+ [Easy] - longestSubarraywithsumK
  
  [Medium]
- dutch national flag algorithm
- Moore’s Voting Algorithm
- kadane,s algo (just revise)
- 
+ dutch national flag algorithm (revise approach)
+ nextPermutation(dia approach)
+
  longestConsecutiveBetterStv
+ longestConsecutiveOptimal(revise approach)
  
  setMatrixZeroes
+ rotateImage
  subArraySumEqualsK
  */
 

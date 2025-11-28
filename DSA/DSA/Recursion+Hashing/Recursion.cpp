@@ -45,8 +45,7 @@ void OnetoN(int n)
 
 
 //MARK: OnetoN-TailRecursion
-//pass k as 1
-void OnetoNWithTailRecursion(int n, int k)
+void OnetoNWithTailRecursion(int n, int k) //pass k as 1
 {
     if(n==0){
         return;
@@ -70,7 +69,7 @@ int factorialNonTailRecursive(int n){
 
 
 //MARK: factorial-TailRecursive
-int factorialTailRecursive(int n, int k){
+int factorialTailRecursive(int n, int k){ //pass k as 1
     if (n==0 || n==1){
         return k;
     }

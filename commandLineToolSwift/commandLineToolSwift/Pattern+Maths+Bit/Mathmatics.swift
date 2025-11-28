@@ -233,6 +233,9 @@ func lcmNaive(_ a: Int, _ b: Int) -> Int{
 
 
 //lcmEfficient
+func lcmEfficient(_ a: Int, _ b: Int) -> Int{
+    return (a*b)/gcdNaive(a, b)
+}
 
 
 //MARK: isPrime
@@ -451,13 +454,13 @@ func seive(_ n: Int) {
 
 
 //MARK: digitsInFactorial
-//func digitsInFactorial(_ n: Int) -> Int{
-//    var logValue : Double = 0
-//    for int in arr {
-//        logValue += log10(Double(int))
-//    }
-//    return Int(floor(logValue + 1))
-//}
+func digitsInFactorial(_ n: Int) -> Int{
+    var logValue : Double = 0
+    for i in 1...n {
+        logValue += log10(Double(i))
+    }
+    return Int(floor(logValue + 1))
+}
 //T.C = BigO (n)
 //A.S = BigO (1)
 //Approach: floor(log(n!)) + 1
@@ -471,7 +474,7 @@ func seive(_ n: Int) {
 
 //MARK: hasExactlyThreeDivisors
 func hasExactlyThreeDivisors(_ n: Int) -> Bool {
-    if n < 4 { return false }  // smallest with 3 divisors is 4
+    if n < 4 { return false }  // smallest no with 3 divisors is 4
     let root = Int(Double(n).squareRoot())
     
     // n must be a perfect square
@@ -497,10 +500,9 @@ func hasExactlyThreeDivisors(_ n: Int) -> Bool {
 
 /*
  Revision: 25Oct:
- checkForPalindromeString
- hcf efficient
  prime factors
  seive
+ hasExactlyThreeDivisors
  */
 
 
