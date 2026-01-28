@@ -7,8 +7,25 @@
 
 import Foundation
 
+/*
+ Algorithms:
+ 
+ * dutch national flag algorithm -:
+[0...low-1]    -> 0
+[low...mid-1]  -> 1
+[mid...high]   ->{*}
+[high+1...n-1] -> 2
+ 
+ * Moore’s Voting Algorithm -:
+ Majority means more than half, so it can’t be fully canceled. Different elements cancel each other, and the survivor is the candidate. Count again to verify if it’s truly the majority.
+ 
+ * Kadane's Algorithm -:
+ Kadane’s Algorithm finds the maximum sum of a contiguous subarray,s in O(n) time by tracking a running sum, updating the global maximum AND then resetting it when negative(as if -ve sum forward then submission will always reduce). If all numbers are negative, it returns the largest element.
+ */
+
 //MARK: twoSum
-//Returns (True/False or ExactElements) and not index position if twoSum is present
+//VarietyOne = return true/false
+//VarietyTwo = return true/false
 //https://leetcode.com/problems/two-sum/submissions/1765713683/
 func twoSumVarietyOneBrute(_ n: Int, _ arr: [Int], _ target: Int) -> Bool {
     for i in 0..<n {
@@ -105,6 +122,7 @@ func sortArrayOfZeroOneTwoptimal(_ nums: inout [Int]) {
     var low = 0
     var mid = 0
     var high = nums.count-1;
+    
     while mid<=high {
         if(nums[mid]==0){
             nums.swapAt(low, mid)
@@ -177,7 +195,6 @@ func majorityElementBetter(_ nums: [Int]) -> Int {
 
 
 //Moore’s Voting Algorithm
-
 func majorityElementOptimal(_ nums: [Int]) -> Int {
     var el : Int?
     var cnt = 0
@@ -263,7 +280,7 @@ func stockOptimal(_ prices: [Int]) -> Int {
     }
     return profit
 }
-//Approach = linearSearch + remember min(BuyingPrice) for every selling price.
+//Approach = linearSearch + remember min(costPrice) for every selling price.
 // T.C - BigO(n)
 // A.S - BigO(1)
 
@@ -304,8 +321,7 @@ func rearrangeArrayElementsBySignOptimal(_ nums: [Int]) -> [Int] {
     var posIndex = 0
     var negIndex = 1
     for num in nums {
-        let isNumPostiveElement = num>0 ? true : false
-        if(isNumPostiveElement){
+        if(num>0){
             ansArray[posIndex] = num
             posIndex += 2
         }else{
@@ -361,29 +377,28 @@ private func recurPermute(_ nums: [Int], _ ds: inout [Int], _ ans: inout [[Int]]
 
 //MARK: nextPermutation
 //https://leetcode.com/problems/next-permutation/description/
+//e.g: 2154300 ->
 //This will not work for large nums as n! increases exponentially.
 func nextPermutationBrute(_ nums: inout [Int]) {
+    let tempNums = nums
+    guard nums.count > 1 else { return }
+
     //Get all possible unique permutations
-    let res = Array(Set(printAllPermutations(nums)))
-    //sort the permutations
-    let sortedPermutations = res.sorted { a, b in
-        for (x, y) in zip(a, b) {
-            if x != y {
-                return x < y
+    var allPerm = printAllPermutations(nums)
+    allPerm.sort { $0.lexicographicallyPrecedes($1) }
+    
+    //find the next permutation , if not present then return first
+    for i in 0..<allPerm.count {
+        if(allPerm[i] == tempNums && i<allPerm.count-1){
+            for j in i+1..<allPerm.count  {
+                if(allPerm[i] != allPerm[j]){
+                    nums = allPerm[j]
+                    return
+                }
             }
         }
-        return false // arrays are equal
     }
-    //find the next permutation , if not present then return first
-    for i in 0..<sortedPermutations.count {
-        if i == (sortedPermutations.count - 1) {
-            print(sortedPermutations[0])
-            return
-        }else if nums == sortedPermutations[i] {
-            print(sortedPermutations[i+1])
-            return
-        }
-    }
+    nums = allPerm.first ?? nums
 }
 //Approach = mentioned in code
 //T.C = O( (n!*n) + n)
@@ -528,7 +543,38 @@ func longestConsecutiveOptimal(_ nums: [Int]) -> Int {
 
 //MARK: setMatrixZeroes
 //https://leetcode.com/problems/set-matrix-zeroes/description/
-func setZeroesStvBrute(_ matrix: inout [[Int]]) {
+func setZeroesStvBruteMy(_ matrix: inout [[Int]]) {
+    let row = matrix.count
+    let col = matrix[0].count
+    var zeroIndexAddress = [[Int]]()
+    for row in 0..<row {
+        for col in 0..<col {
+            let current = matrix[row][col]
+            if current == 0 {
+                zeroIndexAddress.append([row,col])
+            }
+        }
+    }
+    for address in zeroIndexAddress {
+        setRowWith(&matrix, address[0], -1)
+        setColWith(&matrix, address[1], -1)
+    }
+    
+    for row in 0..<row {
+        for col in 0..<col {
+            let current = matrix[row][col]
+            if current == -1 {
+                matrix[row][col] = 0
+            }
+        }
+    }
+}
+//Approach = lS
+//T.C = O( 3*(n*m) )
+//A.S = O(n)
+
+
+func setZeroesStvBrute(_ matrix: inout [[Int]]) { //Not working
     //O((n*m)*(n+m))
     for i in 0..<matrix.count {
         for j in 0..<matrix[i].count {
@@ -737,7 +783,7 @@ func subArraySumEqualsKBrute(_ nums: [Int], _ k: Int) -> Int {
 //A.S = O(1)
 
 
-func findAllSubarraysWithGivenSumBetter(_ nums: [Int], _ k: Int) -> Int {
+func subArraySumEqualsKBetter(_ nums: [Int], _ k: Int) -> Int {
     let n = nums.count
     var cnt = 0
     for i in 0..<n { // starting index i
@@ -762,10 +808,14 @@ func subArraySumEqualsKOptimal(_ nums: [Int], _ k: Int) -> Int {
     var preSum = 0
     var cnt = 0
     var hash = [Int:Int]()
-    hash[0] = 1
     for i in 0..<nums.count {
         let currentEl = nums[i]
         preSum +=  currentEl
+        
+        //if we do not add below line then we do not need add -> hash[0] = 1 on above
+        if preSum == k {
+            cnt += 1
+        }
         
         let rem = preSum-k
         if let freq = hash[rem] {
@@ -776,7 +826,7 @@ func subArraySumEqualsKOptimal(_ nums: [Int], _ k: Int) -> Int {
     }
     return cnt
 }
-//Approach = ls
+//Approach = prefixSum + ls
 //T.C = O(n)
 //A.S = O(n)
 
@@ -810,7 +860,7 @@ func trappingRainWater(_ height: [Int]) -> Int {
     }
     return count
 }
-private func findRightMax(_ height: [Int], till index: Int) -> Int{
+func findRightMax(_ height: [Int], till index: Int) -> Int{
     var res = 0
     for i in stride(from: height.count-1, through: index, by: -1) {
         let current = height[i]

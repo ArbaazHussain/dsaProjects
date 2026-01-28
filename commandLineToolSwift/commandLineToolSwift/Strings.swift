@@ -11,18 +11,18 @@ import Foundation
  In Swift String there is no random access by index.
 
  Looping with String.index(offsetBy:) causes O(i) time complexity.
-
- Converting to Array(str) gives O(1) access and overall O(n) performance.
-
- For DSA problems, always convert String → [Character], operate, then String(array).
-
- Use String.Index only when Unicode correctness matters (e.g., real text processing).
- 
  func strIndexDemo(s: String) {
      let firstIndex = s.index(s.startIndex, offsetBy: 0)
      print(s[firstIndex])
  }
+
+ For DSA problems, always convert String → [Character], operate, then String(array).
+ “Although converting a String to an array costs O(n) once, it enables O(1) indexing and avoids repeated O(n) String.Index access, making it more efficient overall for DSA problems.”
+
+ Use String.Index only when Unicode correctness matters (e.g., real text processing).
  */
+
+
 
 //MARK: frequenciesOfCharacter
 func frequenciesOfCharacter(_ str: String) {
@@ -65,8 +65,8 @@ func removeOuterParenthesesBrute(_ s: String) -> String {
 }
 //Approach = stack+BS
 /*
- (if stk.isEmptyt() -> pushToStk+!pushToAns )
- (if !stk.isEmptyt() -> pushToStk+pushToAns )
+ (if stk.isEmpty() -> pushToStk+!pushToAns )
+ (if !stk.isEmpty() -> pushToStk+pushToAns )
  */
 
 //n=s.count
@@ -101,42 +101,45 @@ func removeOuterParenthesesOptimal(_ s: String) -> String {
 //https://leetcode.com/problems/reverse-words-in-a-string/description/
 //https://www.youtube.com/watch?v=RitppzIdMCo
 func reverseWords(_ s: String) -> String {
-    //Avoiding TC for now
+    //create array of words
     var sArray = s.split(separator: " ")
+    //reverse the array of words
     var start = 0
     var end = sArray.count - 1
-    
     while start < end {
         sArray.swapAt(start, end)
         start += 1
         end -= 1
     }
+    //join the reverse the array of words
     return sArray.joined(separator: " ")
 }
 //Approach = create array of words -> reverse the array
-//T.C = BigO(n)
-//A.S = BigO(1)
+//T.C =
+//A.S =
 
 
 func reverseWords1(_ s: String) -> String {
-    var chars = Array(s)
-    let n = chars.count
+    var sArray = Array(s)
+    let n = sArray.count
     var ans = ""
 
-    chars.reverse()
-
+    sArray.reverse()
     var i = 0
     while i < n {
         var currentWord = ""
-        while i < n && chars[i] != " " {
-            currentWord.append(chars[i])   //O(1) append to Character buffer
+        while i < n && sArray[i] != " " {
+            currentWord.append(sArray[i])   //O(1) append to Character buffer
             i += 1
         }
         // Skip spaces
         i += 1
         if !currentWord.isEmpty {
-            if !ans.isEmpty { ans.append(" ") }  // avoids extra string creation
-            ans += String(currentWord.reversed())
+            // avoids extra string creation
+            if !ans.isEmpty{
+                ans.append(" ")
+            }
+            ans.append(contentsOf: currentWord.reversed())
         }
     }
     return ans
@@ -153,18 +156,14 @@ func largestOddNumber(_ num: String) -> String {
     //Avoiding TC for now
     let numArray = Array(num)
     let n = numArray.count
-    var lastOddIndex = -1
+    var lastOddNumberIndex = -1
     for i in stride(from: n-1, through: 0, by: -1){
         if let currentNum = numArray[i].wholeNumberValue , (currentNum%2 != 0) {
-            lastOddIndex = i
+            lastOddNumberIndex = i
             break
         }
     }
-    if lastOddIndex != -1 {
-        return String(numArray[0...lastOddIndex])
-    }else{
-        return ""
-    }
+    return lastOddNumberIndex == -1 ? "" : String(numArray[0...lastOddNumberIndex])
 }
 //Approach = ConvertStringToArray + find last odd index
 //T.C = BigO(n)
@@ -481,7 +480,6 @@ func longestPalindromeOptimal(_ s: String) -> String {
     if s.count <= 1 {
         return s
     }
-    
     let chars = Array(s)
     let n = chars.count
     var LPS = ""
@@ -604,5 +602,5 @@ func romanToInt(_ s: String) -> Int {
 
 /*
  Revision:
- isIsomorphic1
+ Strings Picked
  */

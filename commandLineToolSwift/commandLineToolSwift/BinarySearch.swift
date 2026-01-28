@@ -14,8 +14,8 @@ import Foundation
  
  firstAndLastInSortedArray
  
- searchinRotatedSortedArray-UniqueElements(//check if left/Right is sorted)
- singleElementInSortedArray
+ searchinRotatedSortedArray-UniqueElements //check for sorted half
+ singleElementInSortedArray //check if single Element is on left/right of midElement with off
  */
 
 
@@ -84,7 +84,8 @@ func implementLowerBoundOptimal(_ arr: [Int], _ target: Int) -> Int {
     var high = arr.count - 1
     while low <= high {
         let mid = (low + high) / 2
-        if arr[mid] >= target {
+        let midElement = arr[mid]
+        if midElement >= target {
             ans = mid
             high = mid - 1
         } else {
@@ -107,7 +108,8 @@ func implementUpperBound(_ arr: [Int], _ target: Int) -> Int {
     var high = arr.count - 1
     while low <= high {
         let mid = (low + high) / 2
-        if arr[mid] > target {
+        let midElement = arr[mid]
+        if midElement > target {
             ans = mid
             high = mid - 1
         } else {
@@ -124,45 +126,20 @@ func implementUpperBound(_ arr: [Int], _ target: Int) -> Int {
 //MARK: searchInsertPositionMy
 //https://leetcode.com/problems/search-insert-position/description/
 func searchInsert(_ nums: [Int], _ target: Int) -> Int {
-    var low = 0
-    var high = nums.count - 1
-    var mid = 0
-    while low <= high {
-        mid = (low + high) / 2
-        if nums[mid] == target {
-            return mid
-        } else if target > nums[mid] {
-            low = mid + 1
-        } else {
-            high = mid - 1
-        }
-    }
-    return low // Target
+    let res = implementLowerBoundOptimal(nums, target)
+    return res
 }
-//Approach = StandardBinarySearch and return low
+//Approach = implementLowerBound and return low
 //T.C = BigO(log n) //n=nums.size()
 //A.S = BigO(1)
 
 
 //MARK: ceilInAsortedArray
-//https://leetcode.com/problems/search-insert-position/description/
 //implementLowerBoundOptimal
-//Ceil - smallest index such that arr[index]>=x.   [*****<-]
+//Ceil - smallest index such that arr[index]>=x.
 func ceilInAsortedArray(_ arr: [Int], _ x: Int) -> Int {
-    var low = 0
-    var high = arr.count - 1
-    var ans = -1
-    while low <= high {
-        let mid = (low + high) / 2
-        let midElement = arr[mid]
-        if(midElement>=x){
-            ans = mid
-            high = mid - 1
-        }else{
-            low = mid + 1
-        }
-    }
-    return ans // Target not found
+    //implementLowerBoundOptimal + (default ans = -1)
+    return -1
 }
 //Approach = same algo of implementLowerBoundOptimal
 //T.C = BigO(log n) //n=nums.size()
@@ -178,7 +155,8 @@ func findFloor(_ arr: [Int], _ x: Int) -> Int {
     var high = arr.count - 1
     while low <= high {
         let mid = (low + high) / 2
-        if arr[mid] <= x {
+        let midElement = arr[mid]
+        if midElement <= x {
             ans = mid
             low = mid + 1
         } else {
@@ -559,6 +537,6 @@ func peakElementOptimal(_ nums: [Int]) -> Int {
 
 /*
  Rivision:
- 13Nov:
+ 1jan:
  singleElementInSortedArray
  */

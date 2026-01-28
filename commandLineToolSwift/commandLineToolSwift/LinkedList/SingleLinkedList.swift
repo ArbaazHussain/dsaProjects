@@ -23,8 +23,8 @@ public class ListNode : Hashable{
     public var back : ListNode?
     public var next : ListNode?
     
-    public init(data: Int, back: ListNode? = nil , next: ListNode? = nil) {
-        self.val = data
+    public init(_ val: Int, _ back: ListNode? = nil , _ next: ListNode? = nil) {
+        self.val = val
         self.back = back
         self.next = next
     }
@@ -55,11 +55,11 @@ func arrayToLL(_ nums: [Int]) -> ListNode? {
     if nums.isEmpty {
         return nil
     }
-    let head = ListNode(data: nums[0])
+    let head = ListNode(nums[0])
     var mover = head
 
     for i in 1..<nums.count {
-        let temp = ListNode(data: nums[i])
+        let temp = ListNode(nums[i])
         mover.next = temp
         mover = temp
     }
@@ -133,21 +133,18 @@ func deletionOfTailInLL(_ head: inout ListNode?) {
 
 
 func deletionAtKthElementInLL(_ head: inout ListNode?, _ key: Int) {
-    if key == 1 {
+    if key==1{
         deletionOfHeadInLL(&head)
-        return
     }
-    var currentIndex = 0
-    var temp = head
-    while temp != nil {
-        currentIndex += 1
-        if(key == currentIndex+1){
-            let kThNode = temp?.next
-            temp?.next = temp?.next?.next
-            kThNode?.next = nil
+    var index = 1
+    var mover = head
+    while mover != nil {
+        if index == key-1 {
+            mover?.next = mover?.next?.next
             return
         }
-        temp = temp?.next
+        mover = mover?.next
+        index += 1
     }
 }
 //T.C = BigO(n)
@@ -184,7 +181,7 @@ func deletionOfNode2InLL(_ node: ListNode?) {
 
 //MARK: Insertion
 func insertionAtHeadInLL(_ head: inout ListNode?, _ val: Int) {
-    let newHead = ListNode(data: val, next: head)
+    let newHead = ListNode(val, head)
     head = newHead
 }
 //T.C = BigO(1)
@@ -196,7 +193,7 @@ func insertionAtTailInLL(_ head: inout ListNode?, _ val: Int) {
     while temp?.next != nil {
         temp = temp?.next
     }
-    let newTail = ListNode(data: val)
+    let newTail = ListNode(val)
     temp?.next = newTail
 }
 //T.C = BigO(n)
@@ -213,7 +210,7 @@ func insertionAtKthElementInLL(_ head: inout ListNode?, _ k:Int, _ val:Int) {
     while temp != nil {
         currentIndex += 1
         if(k == currentIndex+1){
-            let newNode = ListNode(data: val,next: temp?.next)
+            let newNode = ListNode(val,temp?.next)
             temp?.next = newNode
             return
         }
@@ -232,7 +229,7 @@ func insertionBeforeNodeInLL(_ head: inout ListNode?, _ k:Int, _ val:Int) {
     var temp = head
     while temp != nil {
         if(temp?.next?.val == k){
-            let newNode = ListNode(data: val,next: temp?.next)
+            let newNode = ListNode(val,temp?.next)
             temp?.next = newNode
             return
         }
@@ -244,8 +241,78 @@ func insertionBeforeNodeInLL(_ head: inout ListNode?, _ k:Int, _ val:Int) {
 //A.S = BigO(1)
 
 
+//MARK: middleOfList
+func middleNodeBrute(_ head: ListNode?) -> ListNode? {
+    // If list is empty or has only one node
+    if head == nil || head?.next == nil {
+        return head
+    }
+    // Count nodes
+    var count = 0
+    var temp = head
+    while temp != nil {
+        count += 1
+        temp = temp?.next
+    }
+    // Middle position (same as C++: count/2 + 1 for 1-based index)
+    var mid = count / 2 + 1
+    temp = head
+    // Traverse to the middle node
+    while temp != nil {
+        mid -= 1
+        if mid == 0 {
+            break
+        }
+        temp = temp?.next
+    }
+    return temp
+}
+//T.C = BigO(n + n/2)
+//A.S = BigO(1)
+
+
+func middleNodeOptimal(_ head: ListNode?) -> ListNode? {
+    var slow = head
+    var fast = head
+    while fast != nil && fast?.next != nil {
+        slow = slow?.next
+        fast = fast?.next?.next
+    }
+    return slow
+}
+//T.C = BigO(n)
+//A.S = BigO(1)
+
+
 //MARK: reverseList
-func reverseSingleLL(_ head: ListNode?) -> ListNode? {
+//https://youtu.be/D2vI2DNJGd8?si=CsuXs9MxRurobDzD
+func reverseSingleLLBrute(_ head: ListNode?) -> ListNode? {
+    guard head != nil else {
+        return head
+    }
+    //Store the elements in stack
+    var mover = head
+    var stack = [Int]()
+    
+    while let current = mover?.val {
+        stack.append(current)
+        mover = mover?.next
+    }
+    //update the ll with element in stack
+    mover = head
+   
+    while let current = stack.popLast(), mover != nil {
+        mover?.val = current
+        mover = mover?.next
+    }
+    return head
+}
+//Approach = stack + ls
+//T.C = BigO(2n)
+//A.S = BigO(n)
+
+
+func reverseSingleOptimal(_ head: ListNode?) -> ListNode? {
     var prev: ListNode? = nil
     var curr = head
     var next: ListNode? = nil
@@ -295,7 +362,7 @@ func hasCycleOptimal(_ head: ListNode?) -> Bool {
     }
     var fast = head
     var slow = head
-    while fast != nil && fast?.next != nil{
+    while fast?.next != nil{
         slow = slow?.next
         fast = fast?.next?.next
         if slow === fast {
@@ -334,8 +401,8 @@ func mergeTwoListsBetter(_ list1: ListNode?, _ list2: ListNode?) -> ListNode? {
         let firstListEl = templist1?.val ?? -1
         let secondListEl = templist2?.val ?? -1
         
-        let firstArrElNode = ListNode(data: firstListEl)
-        let secondArrElNode = ListNode(data: secondListEl)
+        let firstArrElNode = ListNode(firstListEl)
+        let secondArrElNode = ListNode(secondListEl)
         
         if firstListEl < secondListEl {
             appendNewNodeInResult(firstArrElNode, &resultHead, &resultHeadMover)
@@ -351,12 +418,12 @@ func mergeTwoListsBetter(_ list1: ListNode?, _ list2: ListNode?) -> ListNode? {
         }
     }
     while templist1 != nil {
-        let node = ListNode(data: templist1?.val ?? -1)
+        let node = ListNode(templist1?.val ?? -1)
         appendNewNodeInResult(node, &resultHead, &resultHeadMover)
         templist1 = templist1?.next
     }
     while templist2 != nil {
-        let node = ListNode(data: templist2?.val ?? -1)
+        let node = ListNode(templist2?.val ?? -1)
         appendNewNodeInResult(node, &resultHead, &resultHeadMover)
         templist2 = templist2?.next
     }
@@ -463,7 +530,7 @@ func isPalindromeLLOptimal(_ head: ListNode?) -> Bool {
     }
     
     //Reverse second half 0(n/2)
-    let secondHaldReversedHead = reverseSingleLL(slow?.next)
+    let secondHaldReversedHead = reverseSingleOptimal(slow?.next)
     
     //Compare both halves
     var firstPointer = head
@@ -480,7 +547,7 @@ func isPalindromeLLOptimal(_ head: ListNode?) -> Bool {
         secondPointer = secondPointer?.next
     }
     //Restore the list (always restore!) 0(n/2)
-    slow?.next = reverseSingleLL(secondHaldReversedHead)
+    slow?.next = reverseSingleOptimal(secondHaldReversedHead)
     
     return isPalin
 }
@@ -493,4 +560,12 @@ func isPalindromeLLOptimal(_ head: ListNode?) -> Bool {
 /*
  Revision: 20 Oct
  - reverseDLLOptimal
+ 
+ 
+ Revision(SingleLinkedList): 23 jan
+ middleOfList
+ reverseSingleOptimal
+ hasCycleOptimal
+ mergeTwoLists(just revise algo)
+ isPalindromeLLOptimal
  */

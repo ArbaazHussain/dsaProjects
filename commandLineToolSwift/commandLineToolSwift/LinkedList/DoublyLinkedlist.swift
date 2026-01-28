@@ -12,11 +12,11 @@ func arrayToDll(_ nums: [Int]) -> ListNode? {
     if nums.isEmpty {
         return nil
     }
-    let head = ListNode(data: nums[0]) // First node
+    let head = ListNode(nums[0]) // First node
     var prev = head
     
     for i in 1..<nums.count {
-        let temp = ListNode(data: nums[i], back: prev) // Create new node with back pointer to prev
+        let temp = ListNode(nums[i], prev) // Create new node with back pointer to prev
         prev.next = temp // Link prev to new node
         prev = temp // Move prev forward
     }
@@ -139,7 +139,7 @@ func deletionOfNodeInDLL(_ node: ListNode?) {
 
 //MARK: Insertion
 func insertionBeforeHeadDll(_ head: inout ListNode?, _ val: Int) {
-    let newHead = ListNode(data: val,next: head)
+    let newHead = ListNode(val,head)
     head?.back = head
     
     head = newHead
@@ -151,7 +151,7 @@ func insertionBeforeHeadDll(_ head: inout ListNode?, _ val: Int) {
 func insertionBeforeTailDll(_ head: inout ListNode?, _ val: Int) {
     // If only one node exists
     if head?.next == nil{
-        let newNode = ListNode(data: val, next: head)
+        let newNode = ListNode(val, head)
         head = newNode
         return
     }
@@ -161,7 +161,7 @@ func insertionBeforeTailDll(_ head: inout ListNode?, _ val: Int) {
         temp = temp?.next
     }
     let previousNode = temp?.back
-    let newNode = ListNode(data: val, back: previousNode, next: temp)
+    let newNode = ListNode(val, previousNode, temp)
     temp?.back = newNode
     
     //if previousNode exits(The tail is not the head )
@@ -190,7 +190,7 @@ func insertionBeforeKthElementDll(_ head: inout ListNode?, _ k: Int, _ val: Int)
         return
     }
     let previousNode = temp?.back
-    let newNode = ListNode(data: val, back: previousNode, next: temp)
+    let newNode = ListNode(val, previousNode, temp)
     temp?.back = newNode
     
     //if previousNode exits(kth is not the head)
@@ -208,7 +208,7 @@ func insertionBeforeKthElementDll(_ head: inout ListNode?, _ k: Int, _ val: Int)
 //given node is never head of the list
 func insertionBeforeNodeDll(_ node: inout ListNode?, _ val: Int) {
     let previousNode = node?.back
-    let newNode = ListNode(data: val, back: previousNode, next: node)
+    let newNode = ListNode(val, previousNode, node)
     node?.back = newNode
     previousNode?.next = newNode
 }

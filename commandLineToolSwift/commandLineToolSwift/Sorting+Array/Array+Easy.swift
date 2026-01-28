@@ -9,21 +9,6 @@
  * In Swift, you don’t need to take care of fixed vs dynamic arrays — just use Array, which is dynamic by default.
 
  * In Swift, arrays are always heap-allocated, so arrays of size 1e6 or 1e7 can be created locally without stack overflow.
- 
- 
- Algorithms:
- * dutch national flag algorithm -:
-[0...low-1]    -> 0
-[low...mid-1]  -> 1
-[mid...high]   ->{*}
-[high+1...n-1] -> 2
- 
- 
- * Moore’s Voting Algorithm -:
- Majority means more than half, so it can’t be fully canceled. Different elements cancel each other, and the survivor is the candidate. Count again to verify if it’s truly the majority.
- 
- * Kadane's Algorithm -:
- Kadane’s Algorithm finds the maximum sum of a contiguous subarray,s in O(n) time by tracking a running sum, updating the global maximum AND then resetting it when negative(as if -ve sum forward then submission will always reduce). If all numbers are negative, it returns the largest element.
  */
 
 
@@ -113,13 +98,13 @@ func largestElementOptimal(_ nums: [Int]) -> Int {
     guard !nums.isEmpty else {
         return -1
     }
-    var largestIndex = Int.min
-    for i in 1..<nums.count {
-        if nums[i] > nums[largestIndex] {
-            largestIndex = i
+    var largest = Int.min
+    for num in nums {
+        if(num>largest){
+            largest = num
         }
     }
-    return nums[largestIndex]
+    return largest
 }
 //Approach = linear search
 //T.C = BigO(n)
@@ -191,16 +176,46 @@ func secondLargestOptimal(_ nums: [Int]) -> Int {
 
 
 //MARK: isArraySortedInIncreasing
-////https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/description/
-func isArraySortedInIncreasing(_ nums: [Int]) -> Bool {
-    for i in 0..<nums.count-1 {
-        if nums[i] > nums[i+1] {
-            return false
+//https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/description/
+//https://youtu.be/pO3L3zX5DOI?si=AwymrOkYcwiQQW-y
+func isArraySortedAndRotatedBrute(_ nums: [Int]) -> Bool {
+    var nums = nums
+    let sortedArray = nums.sorted()
+    if nums == sortedArray  { return true }
+    for _ in 0..<nums.count {
+        rightRotateByDPlaceOptimal(nums: &nums, d: 1)
+        if nums == sortedArray {
+            return true
         }
     }
-    return true;
+    return false
 }
-//Approach = linear search
+//Approach = linearSearch
+//T.C = BigO(nlogn + n^2n)
+//A.S = BigO(n)
+
+
+func isArraySortedAndRotatedOptimal(_ nums: [Int]) -> Bool {
+    guard nums.count > 1 else { return true }
+    let n = nums.count
+    var dropIndex = -1
+    for i in 0..<n-1{
+        let current = nums[i]
+        let next = nums[i+1]
+        if dropIndex == -1 {
+            if next < current{
+                dropIndex = i+1
+            }
+        }else{
+            if current > next || current > nums[0] {
+                return false
+            }
+        }
+    }
+    if (nums[n-1] > nums[0]) && dropIndex != -1 { return false }
+    return true
+}
+//Approach = linearSearch
 //T.C = BigO(n)
 //A.S = BigO(1)
 
@@ -356,9 +371,8 @@ func rightRotateByDPlaceBrute(nums: inout [Int], d: Int) {
     }
     // Store last d elements in reverse order in a temporary array
     var tempArray: [Int] = []
-    for i in 0..<d {
-        let x = nums[(n - 1) - i]
-        tempArray.append(x)
+    for i in (n-d..<n).reversed() {
+        tempArray.append(nums[i])
     }
     // Shift remaining elements to the right
     var z = 0
@@ -439,21 +453,21 @@ func moveZeroesToEndBrute(_ nums: inout [Int]) {
 
 
 func moveZeroesToEndOptimal(_ nums: inout [Int]) {
-    let n = nums.count
-    var firstZeroIndexFound = false
-    var firstZeroIndex = -1
-    for i in 0..<n {
-        if !firstZeroIndexFound && nums[i] == 0 {
-            firstZeroIndex = i
-            firstZeroIndexFound = true
-        }
-        if !firstZeroIndexFound { continue }
-        
-        for j in firstZeroIndex+1..<n {
-            if nums[j] != 0{
-                nums.swapAt(firstZeroIndex, j)
-                firstZeroIndex += 1
+    //i is used for zero element index
+    var i = 0
+    var gotFirstZero = false
+    //i is used for non-zero element index
+    for j in 0..<nums.count {
+        if !gotFirstZero {
+            if nums[j] == 0 {
+                i = j
+                gotFirstZero = true
             }
+            continue
+        }
+        if nums[j] != 0 {
+            nums.swapAt(i, j)
+            i += 1
         }
     }
     //Avoid this block for time complexity
@@ -889,21 +903,28 @@ public func setColWith(_ matrix: inout [[Int]], _ index : Int, _ key: Int) {
 
 
 /*
- 22 Nov:
+ 21 Dec:
+ [Easy]
+ fully revised (1-month)
  
- [Easy] - longestSubarraywithsumK
+ 15 Jan:
+ 2ndRevise till move zero
  
  [Medium]
- dutch national flag algorithm (revise approach)
+ sortArrayOfZeroOneTwo(dutchNationalFlag Algorithm) - (revise algo)
+ FindTheMajorityElement(Moore’s Voting Algorithm) - (revise algo)
+ maximumSubarraySum(Kadane's Algorithm) - (revise algo)
+ 
  nextPermutation(dia approach)
 
  longestConsecutiveBetterStv
  longestConsecutiveOptimal(revise approach)
  
- setMatrixZeroes
+ setMatrixZeroes(BruteNotWorking, BetterWorking)
  rotateImage
  subArraySumEqualsK
+ trappingRainWater
+ 
+ 15 Jan:
+ all above
  */
-
-
-

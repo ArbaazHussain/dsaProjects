@@ -44,24 +44,6 @@ func basicHashingIntegers(givenArray: [Int], atMax: Int, noOfQuery: Int) {
 
 
 // MARK: - basicHashingIntegersWithMapsOrDictionary
-/*
- - In Swift, Dictionary<Key, Value> is a hash-based collection,similar to C++ unordered_map.
- - Swift Dictionary is unordered by default.
- - If you need ordered behavior (like C++ std::map),
- store values in a Dictionary and sort the keys when iterating.
- - Swift does not provide a built-in ordered map type.
- - Dictionary is the preferred choice, since worst-case O(n) lookups
- are rare and average-case performance is O(1).
- 
- Operation                   | Average Case | Worst Case
- --------------------------------------------------------
- Insert / Update (dict[key]) | O(1)         | O(n)
- Lookup   (dict[key])        | O(1)         | O(n)
- Remove   (dict.removeValue) | O(1)         | O(n)
- Count (dict.count)          | O(1)         | O(1)
- Iteration (for in)          | O(n)         | O(n)
- */
-
 func basicHashingIntegersWithMapsOrDictionary(givenArray: [Int], noOfQuery: Int) {
     var mpp: [Int: Int] = [:]   // Dictionary<Int, Int>
     
