@@ -69,12 +69,12 @@ func twoSumVarietyOneBetter(_ nums: inout [Int], _ target: Int) -> Bool {
 func twoSumVarietyTwoOptimal(_ nums: [Int], _ target: Int) -> [Int] {
     var hashTable = [Int:Int]()
     hashTable[nums[0]] = 0
-    for j in 1..<nums.count {
-        let numberToFind = target - nums[j]
+    for i in 1..<nums.count {
+        let numberToFind = target - nums[i]
         if let iIndex = hashTable[numberToFind] {
-            return [iIndex,j]
+            return [iIndex,i]
         }
-        hashTable[nums[j]] = j
+        hashTable[nums[i]] = i
     }
     return [-1,-1]
 }
@@ -218,7 +218,7 @@ func majorityElementOptimal(_ nums: [Int]) -> Int {
 
 //MARK: maximumSubarraySum
 //https://leetcode.com/problems/maximum-subarray/description/
-func maximumSubarraySumBetter(_ nums: [Int]) -> Int {
+func maximumSubarraySumBrute(_ nums: [Int]) -> Int {
     var maxVal = Int.min
     for i in 0..<nums.count {
         var sum = 0;
@@ -338,7 +338,7 @@ func rearrangeArrayElementsBySignOptimal(_ nums: [Int]) -> [Int] {
 
 //MARK: printAllPermutations
 /*
- permutations of [1,2,3] (order matters)
+ permutations(arrangements) of [1,2,3] (order matters)
  Total permutations = 3! = 6
  [1, 2, 3] [1, 3, 2] [2, 1, 3] [2, 3, 1] [3, 1, 2] [3, 2, 1]
  
@@ -377,7 +377,7 @@ private func recurPermute(_ nums: [Int], _ ds: inout [Int], _ ans: inout [[Int]]
 
 //MARK: nextPermutation
 //https://leetcode.com/problems/next-permutation/description/
-//e.g: 2154300 ->
+//e.g: 2154300 -> 2300145
 //This will not work for large nums as n! increases exponentially.
 func nextPermutationBrute(_ nums: inout [Int]) {
     let tempNums = nums
@@ -542,65 +542,7 @@ func longestConsecutiveOptimal(_ nums: [Int]) -> Int {
 
 
 //MARK: setMatrixZeroes
-//https://leetcode.com/problems/set-matrix-zeroes/description/
-func setZeroesStvBruteMy(_ matrix: inout [[Int]]) {
-    let row = matrix.count
-    let col = matrix[0].count
-    var zeroIndexAddress = [[Int]]()
-    for row in 0..<row {
-        for col in 0..<col {
-            let current = matrix[row][col]
-            if current == 0 {
-                zeroIndexAddress.append([row,col])
-            }
-        }
-    }
-    for address in zeroIndexAddress {
-        setRowWith(&matrix, address[0], -1)
-        setColWith(&matrix, address[1], -1)
-    }
-    
-    for row in 0..<row {
-        for col in 0..<col {
-            let current = matrix[row][col]
-            if current == -1 {
-                matrix[row][col] = 0
-            }
-        }
-    }
-}
-//Approach = lS
-//T.C = O( 3*(n*m) )
-//A.S = O(n)
-
-
-func setZeroesStvBrute(_ matrix: inout [[Int]]) { //Not working
-    //O((n*m)*(n+m))
-    for i in 0..<matrix.count {
-        for j in 0..<matrix[i].count {
-            let current = matrix[i][j]
-            if(current==0){
-                setRowWith(&matrix, i,-1)
-                setColWith(&matrix, j,-1)
-            }
-        }
-    }
-    //O(n*m)
-    for i in 0..<matrix.count {
-        for j in 0..<matrix[i].count {
-            let current = matrix[i][j]
-            if(current == -1){
-                matrix[i][j] = 0
-            }
-        }
-    }
-}
-//Approach = lS
-//T.C = O( ((n*m)*(n+m)) + (n*m)) -> close to n^3
-//A.S = O(1)
-
-
-func setZeroesBetter(_ matrix: inout [[Int]]) {
+func setZeroesBrute(_ matrix: inout [[Int]]) {
     var rowArray = Array(repeating: 0, count: matrix.count)
     var colArray = Array(repeating: 0, count: matrix[0].count)
     //O(n*m)
@@ -715,14 +657,16 @@ func rotateImageOptimal(_ matrix: inout [[Int]]) {
 //https://leetcode.com/problems/spiral-matrix/description/
 func spiralMatrix(_ matrix: [[Int]]) -> [Int]  {
     let n = matrix.count
+    let row = matrix.count
+    let col = matrix[0].count
     var result = [Int]()
     
     var left = 0
-    var right = matrix[0].count-1
-    var bottom = matrix.count-1
+    var right = col - 1
+    var bottom = row - 1
     var top = 0;
     
-    for _ in 0..<n*2 {
+    while top <= bottom && left <= right {
         //right
         if top<=bottom {
             for i in stride(from: left, through: right, by: 1) {

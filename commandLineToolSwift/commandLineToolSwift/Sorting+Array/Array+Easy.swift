@@ -182,7 +182,7 @@ func isArraySortedAndRotatedBrute(_ nums: [Int]) -> Bool {
     var nums = nums
     let sortedArray = nums.sorted()
     if nums == sortedArray  { return true }
-    for _ in 0..<nums.count {
+    for _ in 0..<nums.count-1 {
         rightRotateByDPlaceOptimal(nums: &nums, d: 1)
         if nums == sortedArray {
             return true
@@ -499,15 +499,12 @@ func linearSearch(_ nums: inout [Int], _ k: Int) -> Int {
 func unionOfSortedArrayBrute(_ nums1: [Int], _ nums2: [Int]) -> [Int]{
     var resultSet = Set<Int>()
     // Insert elements from both arrays into the set
-    //O(n1*logk)
     for num in nums1 {
         resultSet.insert(num)
     }
-    //O(n2*logk)
     for num in nums2 {
         resultSet.insert(num)
     }
-    //O(n1+n2)
     var result = [Int]()
     for item in resultSet {
         result.append(item)
@@ -515,7 +512,11 @@ func unionOfSortedArrayBrute(_ nums1: [Int], _ nums2: [Int]) -> [Int]{
     return result
 }
 //Approach = set
-// T.C - BigO((n1*logk) + (n2*logk) + (n1+n2)) //k = size of the current set
+//average case
+// T.C - BigO 2(n1+n2)
+// A.S - BigO 2(n1+n2)
+//worst case
+// T.C - BigO (n1+n2)^2
 // A.S - BigO 2(n1+n2)
 
 
@@ -625,7 +626,7 @@ func intersectionOfSortedArrayOptimal(_ nums1: [Int], _ nums2: [Int]) {
 }
 //Approach = two pointer
 // T.C - BigO(n1+n2)
-// A.S - BigO(n1+n2)
+// A.S - BigO( min(n1+n2) )
 
 
 //MARK: missingNumber
@@ -686,8 +687,8 @@ func missingNumberOptimal1(_ nums: [Int]) -> Int {
 
 func missingNumberOptimal2(_ nums: [Int]) -> Int {
     let n = nums.count
-    var xor1 = 0
-    var xor2 = 0
+    var xor1 = 0 //whole array
+    var xor2 = 0 //given array
     
     for i in 0...n {
         if(i<n){
@@ -706,6 +707,28 @@ func missingNumberOptimal2(_ nums: [Int]) -> Int {
 
 //MARK: maxConsecutiveOnes
 //https://leetcode.com/problems/max-consecutive-ones/description/
+func maxConsecutiveOnesBrute(_ nums: [Int]) -> Int {
+    var result = 0
+    var currentCount = 0
+    for i in 0..<nums.count  {
+        let current = nums[i]
+        guard current == 1 else { continue }
+        currentCount = 1
+        result = max(currentCount, result)
+        for j in i+1..<nums.count{
+            let next = nums[j]
+            if next == 1 {
+                currentCount += 1
+                result = max(currentCount, result)
+            }else{
+                currentCount = 1
+                break
+            }
+        }
+    }
+    return result
+}
+
 func maxConsecutiveOnesOptimalStv(_ nums: [Int]) -> Int {
     var cnt = 0
     var maxi = 0
@@ -788,28 +811,7 @@ func singleNumberOptimal(_ nums: [Int]) -> Int {
 
 //MARK: longestSubarraywithsumK
 //https://www.naukri.com/code360/problems/longest-subarray-with-sum-k_5713505
-func longestSubarraywithsumKBrute1(_ nums: [Int], _ k: Int) -> Int {
-    let n = nums.count
-    var len = 0
-    for i in 0..<n { // starting index
-        for j in i..<n { // ending index
-            var sum: Int64 = 0 // long long in Swift is Int64
-            for K in i...j {
-                sum += Int64(nums[K])
-            }
-            if sum == Int64(k) {
-                len = max(len, j - i + 1)
-            }
-        }
-    }
-    return len
-}
-//Approach = linear
-//T.C = BigO(n^3)
-//A.S = BigO(1)
-
-
-func longestSubarraywithsumKBrute2(_ nums: [Int], _ k: Int) -> Int {
+func longestSubarraywithsumKBrute(_ nums: [Int], _ k: Int) -> Int {
     let n = nums.count
     var len = 0
     for i in 0..<n { // starting index
@@ -817,7 +819,8 @@ func longestSubarraywithsumKBrute2(_ nums: [Int], _ k: Int) -> Int {
         for j in i..<n { // ending index
             s += Int64(nums[j])
             if s == Int64(k) {
-                len = max(len, j - i + 1)
+                let currentLen = j - i + 1
+                len = max(len,currentLen)
             }
         }
     }
@@ -832,26 +835,26 @@ func longestSubarraywithsumKBrute2(_ nums: [Int], _ k: Int) -> Int {
 func longestSubarraywithsumKBetter(_ nums: [Int], _ k: Int) -> Int {
     let n = nums.count
     var preSumMap = [Int: Int]()   // Dictionary to store prefix sum → index
-    var sum = 0
+    var prefixSum = 0
     var maxLen = 0
     
     for i in 0..<n {
         // calculate prefix sum till index i
-        sum += nums[i]
+        prefixSum += nums[i]
         // if the sum == k, update maxLen
-        if sum == k {
+        if prefixSum == k {
             maxLen = max(maxLen, i + 1)
         }
         // calculate remaining part (sum - k)
-        let rem = sum - k
+        let rem = prefixSum - k
         // check if remainder exists in map
         if let prevIndex = preSumMap[rem] {
             let len = i - prevIndex
             maxLen = max(maxLen, len)
         }
         // update the map if sum not already present
-        if preSumMap[sum] == nil {
-            preSumMap[sum] = i
+        if preSumMap[prefixSum] == nil {
+            preSumMap[prefixSum] = i
         }
     }
     return maxLen
@@ -903,28 +906,16 @@ public func setColWith(_ matrix: inout [[Int]], _ index : Int, _ key: Int) {
 
 
 /*
- 21 Dec:
+ *(Easy/Medium)Interval - 1 month
+ *Revise array Only With approach
+ 
+ 4 april: approach + code
  [Easy]
- fully revised (1-month)
- 
- 15 Jan:
- 2ndRevise till move zero
- 
  [Medium]
- sortArrayOfZeroOneTwo(dutchNationalFlag Algorithm) - (revise algo)
- FindTheMajorityElement(Moore’s Voting Algorithm) - (revise algo)
- maximumSubarraySum(Kadane's Algorithm) - (revise algo)
  
- nextPermutation(dia approach)
-
- longestConsecutiveBetterStv
- longestConsecutiveOptimal(revise approach)
- 
- setMatrixZeroes(BruteNotWorking, BetterWorking)
- rotateImage
+ *with code:
+ majorityElementOptimal
+ maximumSubarraySumOptimal
  subArraySumEqualsK
- trappingRainWater
  
- 15 Jan:
- all above
  */

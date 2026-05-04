@@ -148,6 +148,7 @@ func checkForPalindromeString(_ s : String) -> Bool{
     return true
 }
 //Approach = two pointer
+//Better to convert string to arrar for accessing char at O(1), using .index just for demo
 //T.C = BigO(l/2) //(total letter of l)
 //A.S = BigO(1)
 
@@ -166,11 +167,12 @@ func factorial(_ x : Int) -> Int{
 
 
 // MARK: - trailingZeroInFactorial
+//https://youtu.be/wa1aD9Pd3-U?si=t_WULw402ytJOG4d
 //https://leetcode.com/problems/factorial-trailing-zeroes/description/
 func trailingZeroInFactorial(_ x: Int) -> Int{
     var ans = 0
     var i = 5
-    while i<x {
+    while i<=x {
         ans += x/i
         i *= 5
     }
@@ -206,8 +208,8 @@ func gcdNaive(_ a: Int, _ b: Int) -> Int{
     }
     return min
 }
-//T.C = BigO min(a,b)
-//A.S = BigO  1
+//T.C = BigO (min(a,b))
+//A.S = BigO (1)
 
 
 //gcdEuclidIterative
@@ -219,17 +221,17 @@ func lcmNaive(_ a: Int, _ b: Int) -> Int{
     if a == 0 || b == 0 {
         return -1
     }
-    var lcm = max(a,b)
+    var max = max(a,b)
     // Keep increasing lcm until it is divisible by both numbers
     while true {
-        if lcm % a == 0 && lcm % b == 0 {
-            return lcm
+        if max % a == 0 && max % b == 0 {
+            return max
         }
-        lcm += 1
+        max += 1
     }
 }
-//T.C = BigO ()
-//A.S = BigO  1
+//T.C = BigO(a*b - max(a,b))
+//A.S = BigO(1)
 
 
 //lcmEfficient
@@ -243,8 +245,8 @@ func isPrimeNaive(_ x: Int) -> Bool{
     if x<=1{
         return false
     }
-    for _ in 2..<x {
-        if x%2 == 0 {
+    for i in 2..<x {
+        if x % i == 0 {
             return false
         }
     }
@@ -398,14 +400,14 @@ func allDivisorsOfNumberInSortedEfficient(_ n: Int) {
     let limit = Int(Double(n).squareRoot())
     
     //from 1(inclusive) to sqrt(n)(exclusive)
-    for i in stride(from: 1, to: limit, by: 1) {
+    for i in stride(from: 1, through: limit, by: 1) {
         if n % i == 0 {
             print(i)
         }
     }
     //from sqrt(n)(inclusive) to 1(inclusive)
     for i in stride(from: limit, through: 1, by: -1) {
-        if n % i == 0 {
+        if ((n/i) != i)  && (n % i == 0) {
             print(n / i)
         }
     }
@@ -473,6 +475,7 @@ func digitsInFactorial(_ n: Int) -> Int{
 
 
 //MARK: hasExactlyThreeDivisors
+//https://youtu.be/hdFvL1mPXqU?si=TjvHUAC-RJ-ZZX81
 func hasExactlyThreeDivisors(_ n: Int) -> Bool {
     if n < 4 { return false }  // smallest no with 3 divisors is 4
     let root = Int(Double(n).squareRoot())
@@ -499,7 +502,7 @@ func hasExactlyThreeDivisors(_ n: Int) -> Bool {
 
 
 /*
- Revision: 25Oct:
+ Revision: 30Jan:
  prime factors
  seive
  hasExactlyThreeDivisors

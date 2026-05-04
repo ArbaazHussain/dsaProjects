@@ -17,7 +17,7 @@ import Foundation
  }
 
  For DSA problems, always convert String → [Character], operate, then String(array).
- “Although converting a String to an array costs O(n) once, it enables O(1) indexing and avoids repeated O(n) String.Index access, making it more efficient overall for DSA problems.”
+ “Although converting a String to an array costs O(n) once but it enables O(1) indexing and avoids repeated O(n) String.Index access, making it more efficient overall for DSA problems.”
 
  Use String.Index only when Unicode correctness matters (e.g., real text processing).
  */
@@ -63,7 +63,7 @@ func removeOuterParenthesesBrute(_ s: String) -> String {
     }
     return ans
 }
-//Approach = stack+BS
+//Approach = stack+ls
 /*
  (if stk.isEmpty() -> pushToStk+!pushToAns )
  (if !stk.isEmpty() -> pushToStk+pushToAns )
@@ -92,7 +92,7 @@ func removeOuterParenthesesOptimal(_ s: String) -> String {
     }
     return ans
 }
-//Approach = ls+counter(use stack logic)
+//Approach = counter(use stack logic)+ls
 //T.C = BigO(n)
 //A.S = BigO(1)
 
@@ -134,13 +134,11 @@ func reverseWords1(_ s: String) -> String {
         }
         // Skip spaces
         i += 1
-        if !currentWord.isEmpty {
-            // avoids extra string creation
-            if !ans.isEmpty{
-                ans.append(" ")
-            }
-            ans.append(contentsOf: currentWord.reversed())
+        
+        if !ans.isEmpty && !currentWord.isEmpty{
+            ans.append(" ")
         }
+        ans.append(contentsOf: currentWord.reversed())
     }
     return ans
 }
@@ -154,16 +152,16 @@ func reverseWords1(_ s: String) -> String {
 //https://youtu.be/y_7TC98ZO1Y?si=UPzs7Fq_cEDEw_t7
 func largestOddNumber(_ num: String) -> String {
     //Avoiding TC for now
+    let n = num.count
     let numArray = Array(num)
-    let n = numArray.count
-    var lastOddNumberIndex = -1
-    for i in stride(from: n-1, through: 0, by: -1){
-        if let currentNum = numArray[i].wholeNumberValue , (currentNum%2 != 0) {
-            lastOddNumberIndex = i
-            break
+    for i in (0..<n).reversed() {
+        let charInt = numArray[i].wholeNumberValue ?? 0
+        let isOdd = (charInt%2) != 0
+        if isOdd {
+            return String(numArray[0...i])
         }
     }
-    return lastOddNumberIndex == -1 ? "" : String(numArray[0...lastOddNumberIndex])
+    return ""
 }
 //Approach = ConvertStringToArray + find last odd index
 //T.C = BigO(n)
@@ -601,6 +599,10 @@ func romanToInt(_ s: String) -> Int {
 
 
 /*
- Revision:
- Strings Picked
+ Revision 6April:
+ 
+ removeOuterParentheses
+ reverseWords
+ longestPalindrome
+ groupAnagrams
  */

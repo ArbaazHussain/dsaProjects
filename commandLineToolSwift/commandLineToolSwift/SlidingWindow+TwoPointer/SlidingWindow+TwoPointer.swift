@@ -44,8 +44,8 @@ func constantWindow(_ nums: [Int], k: Int) -> Int {
  longestSubarraywithsumK
  subArraySumEqualsK
  
- ✅ Note: Why Sliding Window Works in constantWindow but Not in longestSubarraywithsumK
-
+ 
+ Note: Why Sliding Window Works in constantWindow but Not in longestSubarraywithsumK
  
  ✅ Fixed-size window — Maximum sum of K consecutive elements
  Window size: K (constant).
@@ -142,7 +142,7 @@ func longestSubarrayWithSumLessThanEqualToKOptimal(_ nums: [Int], k: Int) -> Int
 //maximumPointsYouCanObtain from k cards
 //https://youtu.be/pBWCOCS636U?si=y4Gh_Um_rEbCtd9Z
 //https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards
-func maximumPointsYouCanObtain1(_ cardPoints: [Int], _ k: Int) -> Int {
+func maximumPointsYouCanObtain(_ cardPoints: [Int], _ k: Int) -> Int {
     var sum = Int.min
     let n = cardPoints.count
     guard n >= k else { return sum }
@@ -162,34 +162,6 @@ func maximumPointsYouCanObtain1(_ cardPoints: [Int], _ k: Int) -> Int {
         currentSum += cardPoints[j]
         j -= 1
         sum = max(currentSum, sum)
-    }
-    return sum
-}
-//Approach = sw + tp
-// T.C - BigO(2K)
-// A.S - BigO(1)
-
-
-func maximumPointsYouCanObtain2(_ cardPoints: [Int], _ k: Int) -> Int {
-    var sum = Int.min
-    let n = cardPoints.count
-    guard n >= k else { return sum }
-    var lSum = 0
-    var rSum = 0
-    
-    //BigO(k)
-    for i in 0..<k {
-        lSum += cardPoints[i]
-    }
-    sum = max(lSum, sum)
-    
-    var rightIndex = n-1
-    //BigO(k)
-    for i in (0..<k).reversed() {
-        lSum -= cardPoints[i]
-        rSum += cardPoints[rightIndex]
-        rightIndex -= 1
-        sum = max(lSum + rSum, sum)
     }
     return sum
 }
@@ -373,10 +345,7 @@ func fruitsInBasketBetter(_ fruits: [Int]) -> Int {
     while right < n {
         let currentElement = fruits[right]
         hashTable[currentElement , default: 0] += 1
-        if hashTable.count <= 2 {
-            let length = (right-left) + 1
-            maxLen = max(maxLen, length)
-        }else{
+        if hashTable.count > 2{
             while hashTable.count > 2 {
                 let currentLeft = fruits[left]
                 hashTable[currentLeft]? -= 1
@@ -385,6 +354,9 @@ func fruitsInBasketBetter(_ fruits: [Int]) -> Int {
                 }
                 left += 1
             }
+        }else{
+            let length = (right-left) + 1
+            maxLen = max(maxLen, length)
         }
         right += 1
     }
@@ -470,8 +442,7 @@ func longestRepeatingCharacterOptimal(_ s: String, _ k: Int) -> Int {
         hashTable[currentRightChar,default: 0] += 1
         maxFreqInHashTable = max(maxFreqInHashTable,hashTable[currentRightChar] ?? 0)
         
-        //len - maxFreqInHashTable
-        let toBeChange = ((right-left) + 1) - maxFreqInHashTable
+        let toBeChange = ((right-left) + 1) - maxFreqInHashTable //((right-left) + 1) = len
         
         //Shrink left window
         if toBeChange > k {
@@ -489,6 +460,7 @@ func longestRepeatingCharacterOptimal(_ s: String, _ k: Int) -> Int {
     }
     return maxLen
 }
+//Here we have not added else block,bcz left += 1 does not increase the len and keep same as privious, same can be applied in maxConsecutiveOnesIIIBetter
 //Approach = tp + sw + leftShrinkOptimization
 // T.C - BigO(n)
 // A.S - BigO(26)
@@ -520,8 +492,8 @@ func numOfSubarraysWithLessThanEqualToSum(_ nums: [Int], _ goal: Int) -> Int {
             left += 1
         }
         
-        let len = (right-left) + 1
-        res += len
+        let subArrays = (right-left) + 1
+        res += subArrays
         right += 1
     }
     return res
@@ -617,7 +589,7 @@ func numOfSubarraysWithlessThanEqualKOddNumber(_ nums: [Int], _ k: Int) -> Int {
 //https://leetcode.com/problems/number-of-substrings-containing-all-three-characters
 func numberOfSubstringsBrute(_ s: String) -> Int {
     let n = s.count
-    let sArray : [Character] = Array(s)
+    let sArray = Array(s)
     var res = 0
     for i in 0..<n {
         var hashTable = [Character:Int]()
@@ -683,3 +655,12 @@ private func containsAbc(_ table: [Character: Int]) -> Bool {
     let cCount = table["c"] ?? 0
     return aCount + bCount + cCount == 3
 }
+
+/*
+ Revision: 24 Feb
+ *fruitsInBasket
+ *Binary Subarrays With Sum
+ *check why we cannot use exact pattern2 in numOfSubarraysWithlessThanEqualKOddNumber
+ *numberOfSubstringsOptimal
+ 
+ */

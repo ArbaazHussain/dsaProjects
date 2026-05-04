@@ -232,6 +232,7 @@ class MinStack {
         stack.last?.min ?? -1
     }
 }
+//Approach: push elements in stack with recent min
 //T.C = BigO(1)
 //A.S = BigO(n)
 
@@ -336,7 +337,7 @@ func isValidParentheses(_ s: String) -> Bool {
 /*
  Approach =
  For every opening bracket,add its relative closing bracket
- For every closing bracket,just look at the top of stack. If same pop else return false.
+ For every closing bracket,just look at the top of stack. If top and current char are same then continue else return false.
  T.C = BigO(n)
  A.S = BigO(n)
  */
@@ -379,10 +380,6 @@ func getLastTwoNum(_ numbers: inout [Int]) -> (a: Int, b: Int) {
 
 
 /*
-Revision(16Nov):
- longestPalindromeOptimal
- romanToInt
- 
- reverseList
- isValidParentheses
+Revision(1mar):
+ Stk/Queue Picked
  */

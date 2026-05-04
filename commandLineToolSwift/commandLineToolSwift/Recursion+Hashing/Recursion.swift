@@ -20,8 +20,8 @@ func NtoOne(n: Int){
     print(n)
     NtoOne(n: n-1)
 }
-//T.C = theta n
-//A.S = theta n
+//T.C = BigO n
+//A.S = BigO n
 
 
 //MARK: OnetoN
@@ -32,8 +32,8 @@ func OnetoNNonTailRecursive(n: Int) {
     OnetoNNonTailRecursive(n: n-1)
     print(n)
 }
-//T.C = theta n
-//A.S = theta n
+//T.C = BigO n
+//A.S = BigO n
 
 
 func OnetoNWithTailRecursion(n: Int, k: Int) { //pass k as 1
@@ -43,8 +43,8 @@ func OnetoNWithTailRecursion(n: Int, k: Int) { //pass k as 1
     print(k)
     OnetoNWithTailRecursion(n: n-1, k: k+1)
 }
-//T.C = theta n
-//A.S = theta n
+//T.C = BigO n
+//A.S = BigO n
 
 
 //MARK: factorial
@@ -54,19 +54,19 @@ func factorialNonTailRecursive(n: Int) -> Int{
     }
     return  n * factorialNonTailRecursive(n: n-1);
 }
-//T.C = theta n
-//A.S = theta n
+//T.C = BigO n
+//A.S = BigO n
 
 
 
 func factorialTailRecursive(n: Int, k: Int = 1) -> Int{ //pass k as 1
-    if n==0 || n==1{
+    if n<=1 {
         return k;
     }
     return factorialTailRecursive(n: n-1, k: k*n);
 }
-//T.C = theta n
-//A.S = theta n
+//T.C = BigO n
+//A.S = BigO n
 
 
 //MARK: sumOfNaturalNo
@@ -76,8 +76,8 @@ func sumOfNaturalNoNonTailRecursive(n: Int) -> Int {
     }
     return n + sumOfNaturalNoNonTailRecursive(n: n-1)
 }
-//T.C = theta n
-//A.S = theta n
+//T.C = BigO n
+//A.S = BigO n
 
 
 func sumOfNaturalNoTailRecursive(n: Int, k: Int = 0) -> Int { //pass k as 0
@@ -86,8 +86,8 @@ func sumOfNaturalNoTailRecursive(n: Int, k: Int = 0) -> Int { //pass k as 0
     }
     return sumOfNaturalNoTailRecursive(n: n-1, k: n+k)
 }
-//T.C = theta n
-//A.S = theta n
+//T.C = BigO n
+//A.S = BigO n
 
 
 //MARK: checkForPalindromeInterger
@@ -225,6 +225,7 @@ func binaryExponentiationRecursive(a: Int, b: Int) -> Int{
 
 
 /*
- Revision: 19Nov
+ Revision: 3 feb
+ Fibenacchi
  binaryExponentiation
  */

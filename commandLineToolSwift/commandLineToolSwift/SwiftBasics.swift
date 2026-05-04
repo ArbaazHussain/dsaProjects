@@ -30,11 +30,11 @@
  - Swift integers are exact-sized, and overflow will cause runtime error
    (unless you use &+, &-, &* operators for overflow-safe wrapping).
  
- Approximate Ranges:
- Int32       -> -2,147,483,648  to  2,147,483,647
- Int64       -> -9,223,372,036,854,775,808  to  9,223,372,036,854,775,807
- Float       -> ~ ±3.4e38
- Double      -> ~ ±1.7e308
+ Approximate ranges:
+ - Int32  : −2^31 to 2^31 − 1
+ - Int64  : −2^63 to 2^63 − 1
+ - Float  : ~ ±3.4 × 10^38
+ - Double : ~ ±1.7 × 10^308
  
  
  
@@ -67,50 +67,3 @@
   */
 
 */
-
-
-
-
-//MARK: HOF
-extension Array {
-    func myCustomFilter(isIncluded: (Element)->Bool) -> [Element]{
-        var result = [Element]()
-        for item in self {
-            let isIncluded = isIncluded(item)
-            if isIncluded {
-                result.append(item)
-            }
-        }
-        return result
-    }
-    func myCustomMap<T>(transformedElement: (Element)->T) -> [T]{
-        var result = [T]()
-        for item in self {
-            result.append(transformedElement(item))
-        }
-        return result
-    }
-    func myCustomCompactMap<T>(transformedElement: (Element)->(T?)) -> [T]{
-        var result = [T]()
-        for item in self {
-            if let transformedElement = transformedElement(item) {
-                result.append(transformedElement)
-            }
-        }
-        return result
-    }
-    func myCustomFlatMap<T>(transformedElement: (Element)->[T]) -> [T]{
-        var result = [T]()
-        for item in self {
-            let transformedEl = transformedElement(item)
-            result.append(contentsOf: transformedEl)
-        }
-        return result
-    }
-}
-
-//let array = [[1,2,3], [4,5,6]]
-//let a = array.myCustomFlatMap { element in
-//    element
-//}
-//print(a)

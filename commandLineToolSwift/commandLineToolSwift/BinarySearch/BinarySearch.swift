@@ -14,7 +14,7 @@ import Foundation
  
  firstAndLastInSortedArray
  
- searchinRotatedSortedArray-UniqueElements //check for sorted half
+ searchinRotatedSortedArray //check for sorted half
  singleElementInSortedArray //check if single Element is on left/right of midElement with off
  */
 
@@ -77,7 +77,6 @@ func implementLowerBoundBrute(_ nums: [Int], _ k: Int) -> Int {
 //A.S = BigO(1)
 
 
-//smallest index such that arr[index]>=x
 func implementLowerBoundOptimal(_ arr: [Int], _ target: Int) -> Int {
     var ans = arr.count
     var low = 0
@@ -129,7 +128,7 @@ func searchInsert(_ nums: [Int], _ target: Int) -> Int {
     let res = implementLowerBoundOptimal(nums, target)
     return res
 }
-//Approach = implementLowerBound and return low
+//Approach = implementLowerBound
 //T.C = BigO(log n) //n=nums.size()
 //A.S = BigO(1)
 
@@ -255,19 +254,9 @@ func numberOfOccurrence(_ nums: [Int], _ x: Int) -> Int {
 
 //MARK: searchinRotatedSortedArray-UniqueElements
 //https://leetcode.com/problems/search-in-rotated-sorted-array/description/
-func searchInRotatedSortedUniqueArrayBrute(_ nums: [Int], _ target: Int) -> Int {
-    var res = -1
-    for i in 0..<nums.count {
-        if nums[i] == target {
-            res = i
-        }
-    }
-    return res
-}
-//Approach = ls
-//T.C = BigO(n)
-//A.S = BigO(1)
-
+/*
+ Brute = ls
+ */
 
 func searchinRotatedSortedUniqueArrayOptimal(_ nums: [Int], _ target: Int) -> Int {
     var low = 0
@@ -302,18 +291,9 @@ func searchinRotatedSortedUniqueArrayOptimal(_ nums: [Int], _ target: Int) -> In
 
 //MARK: searchinRotatedSortedArray-Dublicates
 //https://leetcode.com/problems/search-in-rotated-sorted-array-ii/description/
-func searchInRotatedSortedDuplicateArrayBrute(_ nums: [Int], _ target: Int) -> Int {
-    var res = -1
-    for i in 0..<nums.count {
-        if nums[i] == target {
-            res = i
-        }
-    }
-    return res
-}
-//Approach = ls
-//T.C = BigO(n)
-//A.S = BigO(1)
+/*
+ Brute = ls
+ */
 
 
 func searchinRotatedSortedDublicateArrayOptimal(_ nums: [Int], _ target: Int) -> Bool {
@@ -536,7 +516,11 @@ func peakElementOptimal(_ nums: [Int]) -> Int {
 
 
 /*
- Rivision:
- 1jan:
- singleElementInSortedArray
+ *(BinarySearch) Interval - 1 month
+ *Revise array Only With approach
+ 
+ 5 april(BinarySearch): approach + code
+ 
+ *with code:
+ searchinRotatedSortedDublicateArrayOptimal
  */
