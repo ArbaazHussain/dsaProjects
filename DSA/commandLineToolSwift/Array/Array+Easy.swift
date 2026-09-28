@@ -906,13 +906,11 @@ public func setColWith(_ matrix: inout [[Int]], _ index : Int, _ key: Int) {
  *(Easy/Medium)Interval - 1 month
  *Revise array Only With approach
  
- 4 april: approach + code
- 16 may : approach
- 
- *with code:
- majorityElementOptimal (1done 10 may)
- printAllPermutations (to be revised)
- maximumSubarraySumOptimal (1done 10 may)
+
+ 20july:
+ majorityElementOptimal
+ maximumSubarraySum
+ printAllPermutations
+ maximumSubarraySumOptimal
  subArraySumEqualsK
- 
  */

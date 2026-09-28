@@ -4,9 +4,7 @@
 //
 //  Created by Arbaaz Hussain on 15/10/25.
 //
-
 import Foundation
-
 //MARK: arrayToDLL
 func arrayToDll(_ nums: [Int]) -> ListNode? {
     if nums.isEmpty {
@@ -24,12 +22,8 @@ func arrayToDll(_ nums: [Int]) -> ListNode? {
 }
 //T.C = BigO(n)
 //A.S = BigO(n)
-
-
 //MARK: traversalOfDLL
 //same as traversalOfLL
-
-
 //MARK: deletionOfHeadInDLL
 func deletionOfHeadInDLL(_ head: inout ListNode?) {
     if head == nil || head?.next == nil {
@@ -43,8 +37,6 @@ func deletionOfHeadInDLL(_ head: inout ListNode?) {
 }
 //T.C = BigO(1)
 //A.S = BigO(1)
-
-
 //MARK: deletionOfTailInDLL
 func deletionOfTailInDLL(_ head: inout ListNode?) {
     // If only one node exists, delete it
@@ -58,11 +50,10 @@ func deletionOfTailInDLL(_ head: inout ListNode?) {
     }
     // temp now points to the second last node
     temp?.next?.back = nil
+    temp?.next = nil
 }
 //T.C = BigO(n)
 //A.S = BigO(1)
-
-
 //MARK: deletionOfKthElementDll
 func deletionOfKthElementDll(_ head: inout ListNode?, _ k: Int) {
     guard k >= 1 else {
@@ -74,27 +65,20 @@ func deletionOfKthElementDll(_ head: inout ListNode?, _ k: Int) {
         deletionOfHeadInDLL(&head)
         return
     }
-    var temp = head
-    var currentIndex = 1
-    // Traverse to the k-th node
-    while temp != nil && currentIndex < k{
-        temp = temp?.next
-        currentIndex += 1
+    var mover = head
+    var count = 1
+    while mover != nil  {
+        if count == k{
+            mover?.back?.next = mover?.next
+            mover?.next?.back = mover?.back
+            break
+        }
+        count += 1
+        mover = mover?.next
     }
-    // If k is greater than the length of the list
-    if temp == nil {
-        print("K is out of bounds")
-        return
-    }
-    let previousNode = temp?.back
-    let nextNode = temp?.next
-    previousNode?.next = nextNode
-    nextNode?.back = previousNode
 }
 //T.C = BigO(n)
 //A.S = BigO(1)
-
-
 //MARK: deletionOfNodeWithKeyInDLL
 func deletionOfNodeWithKeyInDLL(_ head: inout ListNode?, _ key: Int) {
     if key == head?.val{
@@ -118,8 +102,6 @@ func deletionOfNodeWithKeyInDLL(_ head: inout ListNode?, _ key: Int) {
 }
 //T.C = BigO(n)
 //A.S = BigO(1)
-
-
 //MARK: deletionOfNodeInDLL
 //Given node will never be tail
 func deletionOfNodeInDLL(_ node: ListNode?) {
@@ -135,8 +117,6 @@ func deletionOfNodeInDLL(_ node: ListNode?) {
 }
 //T.C = BigO(1)
 //A.S = BigO(1)
-
-
 //MARK: Insertion
 func insertionBeforeHeadDll(_ head: inout ListNode?, _ val: Int) {
     let newHead = ListNode(val,head)
@@ -146,8 +126,6 @@ func insertionBeforeHeadDll(_ head: inout ListNode?, _ val: Int) {
 }
 //T.C = BigO(1)
 //A.S = BigO(1)
-
-
 func insertionBeforeTailDll(_ head: inout ListNode?, _ val: Int) {
     // If only one node exists
     if head?.next == nil{
@@ -174,8 +152,6 @@ func insertionBeforeTailDll(_ head: inout ListNode?, _ val: Int) {
 }
 //T.C = BigO(n)
 //A.S = BigO(1)
-
-
 func insertionBeforeKthElementDll(_ head: inout ListNode?, _ k: Int, _ val: Int) {
     var currentIndex = 1
     var temp = head
@@ -203,8 +179,6 @@ func insertionBeforeKthElementDll(_ head: inout ListNode?, _ k: Int, _ val: Int)
 }
 //T.C = BigO(n)
 //A.S = BigO(1)
-
-
 //given node is never head of the list
 func insertionBeforeNodeDll(_ node: inout ListNode?, _ val: Int) {
     let previousNode = node?.back
@@ -214,8 +188,6 @@ func insertionBeforeNodeDll(_ node: inout ListNode?, _ val: Int) {
 }
 //T.C = BigO(1)
 //A.S = BigO(1)
-
-
 //MARK: reverse
 func reverseDLLBrute(_ head: inout ListNode?) {
     var stack = [Int]()
@@ -232,9 +204,6 @@ func reverseDLLBrute(_ head: inout ListNode?) {
 }
 //T.C = BigO(2n)
 //A.S = BigO(n)
-
-
-//MARK: reverse
 func reverseDLLOptimal(_ head: inout ListNode?) {
     var current = head
     var last : ListNode? = nil
@@ -250,9 +219,4 @@ func reverseDLLOptimal(_ head: inout ListNode?) {
 }
 //T.C = BigO(n)
 //A.S = BigO(n)
-
-
-
-
-
 

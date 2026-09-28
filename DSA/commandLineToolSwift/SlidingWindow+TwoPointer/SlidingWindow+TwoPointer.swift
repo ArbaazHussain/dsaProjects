@@ -657,10 +657,6 @@ private func containsAbc(_ table: [Character: Int]) -> Bool {
 }
 
 /*
- Revision: 24 Feb
- *fruitsInBasket
- *Binary Subarrays With Sum
- *check why we cannot use exact pattern2 in numOfSubarraysWithlessThanEqualKOddNumber
- *numberOfSubstringsOptimal
- 
+ Revision: 3 jul
+ all
  */

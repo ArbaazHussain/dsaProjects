@@ -59,6 +59,7 @@
   Remove   (dict.removeValue) | O(1)         | O(n)
   Count (dict.count)          | O(1)         | O(1)
   Iteration (for in)          | O(n)         | O(n)
+  --------------------------------------------------------
   
   
   SET:
@@ -70,9 +71,6 @@
   | Remove (`set.remove(element)`)              |            **O(1)** |   **O(n)** |
   | Count (`set.count`)                         |            **O(1)** |   **O(1)** |
   | Iteration (`for in set`)                    |            **O(n)** |   **O(n)** |
-  | Union / Intersection / Subtract             |            **O(n)** |   **O(n)** |
-  
-  
   ----------------------------------------------------------------------------------
   
   Collision:

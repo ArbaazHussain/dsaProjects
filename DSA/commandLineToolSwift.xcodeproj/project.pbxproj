@@ -94,7 +94,7 @@
 				F16F5E8D2EBA8E720057C275 /* Sheets.swift */,
 				F13B18D12E7FD963004A84A3 /* Pattern+Maths+Bit */,
 				F13B18D22E7FD98B004A84A3 /* Recursion+Hashing */,
-				F13B18D32E7FD9DB004A84A3 /* Sorting+Array */,
+				F13B18D32E7FD9DB004A84A3 /* Array */,
 				F164F57E2F3A7814003D5567 /* BinarySearch */,
 				F13B18D82E7FDA64004A84A3 /* Strings.swift */,
 				F182115B2E9FAF36000DF0EA /* LinkedList */,
@@ -131,13 +131,13 @@
 			path = "Recursion+Hashing";
 			sourceTree = "<group>";
 		};
-		F13B18D32E7FD9DB004A84A3 /* Sorting+Array */ = {
+		F13B18D32E7FD9DB004A84A3 /* Array */ = {
 			isa = PBXGroup;
 			children = (
 				F13173882E6DA62100847010 /* Array+Easy.swift */,
 				F17FE15C2EAE0054002DA3A7 /* Array+Medium.swift */,
 			);
-			path = "Sorting+Array";
+			path = Array;
 			sourceTree = "<group>";
 		};
 		F163CDC52EBFBD66002D6777 /* Design */ = {
