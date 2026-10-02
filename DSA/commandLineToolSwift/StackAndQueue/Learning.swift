@@ -236,9 +236,12 @@ class MinStack {
 //T.C = BigO(1)
 //A.S = BigO(n)
 
+
+//MARK: StackUsingQueue
+//https://youtu.be/tqQ5fTamIN4?si=mjxUNuDHkWoMBrku
 //https://leetcode.com/problems/implement-stack-using-queues
 //Approach: Use Array to simulate a Queue
-struct MyStack {
+struct StackUsingQueue {
     private var queue = [Int]()  // Use Array to simulate a Queue
     
     mutating func push(_ x: Int) {
@@ -265,9 +268,12 @@ struct MyStack {
 }
 
 
+//MARK: QueueUsingStacks
+//https://youtu.be/tqQ5fTamIN4?si=mjxUNuDHkWoMBrku
 //https://leetcode.com/problems/implement-queue-using-stacks
 /*
-Approach: Use Array to simulate a Queue
+ Approach: Use Array to simulate a Queue
+ Steps:
  inputStack -> outputStack
  data -> inputStack
  outputStack -> inputStack
@@ -308,14 +314,13 @@ class QueueUsingStacks {
 }
 
 
-
-//MARK: Stk/Queue Picked----------------
+//MARK: Picked----------------
 
 
 
 //MARK: isValidParentheses
-//https://leetcode.com/problems/valid-parentheses
 //https://youtu.be/TaWs8tIrnoA?si=6JXuoFsnl5AHUEwl
+//https://leetcode.com/problems/valid-parentheses
 func isValidParentheses(_ s: String) -> Bool {
     var stack: [Character] = []
     for c in s {
@@ -351,16 +356,16 @@ func evalRPN(_ tokens: [String]) -> Int {
     for token in tokens {
         switch token {
         case "*":
-            let (a, b) = getLastTwoNum(&numbers)
+            let (a, b) = fetchAndRemoveLastTwoNumFromArr(&numbers)
             numbers.append(a * b)
         case "/":
-            let (a, b) = getLastTwoNum(&numbers)
+            let (a, b) = fetchAndRemoveLastTwoNumFromArr(&numbers)
             numbers.append(a / b)
         case "+":
-            let (a, b) = getLastTwoNum(&numbers)
+            let (a, b) = fetchAndRemoveLastTwoNumFromArr(&numbers)
             numbers.append(a + b)
         case "-":
-            let (a, b) = getLastTwoNum(&numbers)
+            let (a, b) = fetchAndRemoveLastTwoNumFromArr(&numbers)
             numbers.append(a - b)
         default:
             numbers.append(Int(token) ?? 0)
@@ -369,7 +374,9 @@ func evalRPN(_ tokens: [String]) -> Int {
     return numbers.last ?? -1
 }
 
-func getLastTwoNum(_ numbers: inout [Int]) -> (a: Int, b: Int) {
+
+//MARK: Helper functions
+func fetchAndRemoveLastTwoNumFromArr(_ numbers: inout [Int]) -> (a: Int, b: Int) {
     guard numbers.count > 1 else { return (a: 0, b: 0) }
     let b = numbers.removeLast()
     let a = numbers.removeLast()
@@ -377,9 +384,15 @@ func getLastTwoNum(_ numbers: inout [Int]) -> (a: Int, b: Int) {
 }
 
 
-
-
-/*
-Revision(1mar):
- Stk/Queue Picked
- */
+// Helper function to return precedence of operators
+func prec(_ c: Character) -> Int {
+    if c == "^" {
+        return 3
+    } else if c == "/" || c == "*" {
+        return 2
+    } else if c == "+" || c == "-" {
+        return 1
+    } else {
+        return -1
+    }
+}

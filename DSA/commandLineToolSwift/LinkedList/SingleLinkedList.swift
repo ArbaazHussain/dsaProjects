@@ -33,6 +33,7 @@ public class ListNode : Hashable{
         hasher.combine(ObjectIdentifier(self))  // unique object identity
     }
 }
+
 public class GenericLLNode<T>{
     public var value : T
     public var back : GenericLLNode?
@@ -44,6 +45,7 @@ public class GenericLLNode<T>{
         self.next = next
     }
 }
+
 //MARK: arrayToLL
 func arrayToLL(_ nums: [Int]) -> ListNode? {
     if nums.isEmpty {
@@ -60,6 +62,8 @@ func arrayToLL(_ nums: [Int]) -> ListNode? {
 }
 //T.C = BigO(n)
 //A.S = BigO(n)
+
+
 //MARK: traversalOfLL
 func traversalOfLL(_ head: ListNode?) {
     var temp = head
@@ -70,6 +74,8 @@ func traversalOfLL(_ head: ListNode?) {
 }
 //T.C = BigO(n)
 //A.S = BigO(1)
+
+
 //MARK: lenthOfLL
 func lenthOfLL(_ head: ListNode?) -> Int{
     var count = 0
@@ -82,6 +88,8 @@ func lenthOfLL(_ head: ListNode?) -> Int{
 }
 //T.C = BigO(n)
 //A.S = BigO(1)
+
+
 //MARK: searchInLL
 func searchInLL(_ head: ListNode?, _ key: Int) -> Bool{
     var temp = head
@@ -95,12 +103,15 @@ func searchInLL(_ head: ListNode?, _ key: Int) -> Bool{
 }
 //T.C = BigO(n)
 //A.S = BigO(1)
+
+
 //MARK: deletion
 func deletionOfHeadInLL(_ head: inout ListNode?) {
     head = head?.next
 }
 //T.C = BigO(1)
 //A.S = BigO(1)
+
 func deletionOfTailInLL(_ head: inout ListNode?) {
     if head?.next == nil{
         head = nil
@@ -113,6 +124,7 @@ func deletionOfTailInLL(_ head: inout ListNode?) {
 }
 //T.C = BigO(n)
 //A.S = BigO(1)
+
 func deletionAtKthElementInLL(_ head: inout ListNode?, _ key: Int) {
     if key==1{
         deletionOfHeadInLL(&head)
@@ -130,6 +142,7 @@ func deletionAtKthElementInLL(_ head: inout ListNode?, _ key: Int) {
 }
 //T.C = BigO(n)
 //A.S = BigO(1)
+
 func deletionOfNode1InLL(_ head: inout ListNode?, _ key: Int) {
     if key == head?.val {
         deletionOfHeadInLL(&head)
@@ -145,6 +158,7 @@ func deletionOfNode1InLL(_ head: inout ListNode?, _ key: Int) {
 }
 //T.C = BigO(n)
 //A.S = BigO(1)
+
 //https://leetcode.com/problems/delete-node-in-a-linked-list/description/
 func deletionOfNode2InLL(_ node: ListNode?) {
     guard let node else { return }
@@ -154,6 +168,8 @@ func deletionOfNode2InLL(_ node: ListNode?) {
 }
 //T.C = BigO(1)
 //A.S = BigO(1)
+
+
 //MARK: Insertion
 func insertionAtHeadInLL(_ head: inout ListNode?, _ val: Int) {
     let newHead = ListNode(val, head)
@@ -161,6 +177,7 @@ func insertionAtHeadInLL(_ head: inout ListNode?, _ val: Int) {
 }
 //T.C = BigO(1)
 //A.S = BigO(1)
+
 func insertionAtTailInLL(_ head: inout ListNode?, _ val: Int) {
     var temp = head
     while temp?.next != nil {
@@ -171,6 +188,7 @@ func insertionAtTailInLL(_ head: inout ListNode?, _ val: Int) {
 }
 //T.C = BigO(n)
 //A.S = BigO(1)
+
 func insertionAtKthElementInLL(_ head: inout ListNode?, _ k:Int, _ val:Int) {
     if k == 1{
         insertionAtHeadInLL(&head, val)
@@ -190,6 +208,7 @@ func insertionAtKthElementInLL(_ head: inout ListNode?, _ k:Int, _ val:Int) {
 }
 //T.C = BigO(n)
 //A.S = BigO(1)
+
 func insertionBeforeNodeInLL(_ head: inout ListNode?, _ k:Int, _ val:Int) {
     if(head?.val == k){
         insertionAtHeadInLL(&head, val)
@@ -208,8 +227,15 @@ func insertionBeforeNodeInLL(_ head: inout ListNode?, _ k:Int, _ val:Int) {
 //val = toBeInserted , k = InsertBeforeThisElement
 //T.C = BigO(n)
 //A.S = BigO(1)
+
+
 //MARK: Medium--------------------
+
+
+
 //MARK: middleOfList
+//https://youtu.be/7LjQ57RqgEc?si=y70W-3BMryUSDlHU
+//https://leetcode.com/problems/middle-of-the-linked-list/
 func middleNodeBrute(_ head: ListNode?) -> ListNode? {
     // If list is empty or has only one node
     if head == nil || head?.next == nil {
@@ -237,6 +263,7 @@ func middleNodeBrute(_ head: ListNode?) -> ListNode? {
 }
 //T.C = BigO(n + n/2)
 //A.S = BigO(1)
+
 func middleNodeOptimal(_ head: ListNode?,
                        prefer: MiddlePreference = .right) -> ListNode? {
     var slow = head
@@ -252,8 +279,11 @@ func middleNodeOptimal(_ head: ListNode?,
 }
 //T.C = BigO(n)
 //A.S = BigO(1)
+
+
 //MARK: reverseList
-//https://youtu.be/D2vI2DNJGd8?si=CsuXs9MxRurobDzD
+//https://youtu.be/D2vI2DNJGd8?si=6yElcpqiI212PSHJ
+//https://leetcode.com/problems/reverse-linked-list/
 func reverseSingleLLBrute(_ head: ListNode?) -> ListNode? {
     guard head != nil else {
         return head
@@ -278,6 +308,7 @@ func reverseSingleLLBrute(_ head: ListNode?) -> ListNode? {
 //Approach = stack + ls
 //T.C = BigO(2n)
 //A.S = BigO(n)
+
 func reverseSingleLLOptimal(_ head: ListNode?) -> ListNode? {
     var prev: ListNode? = nil
     var curr = head
@@ -294,15 +325,18 @@ func reverseSingleLLOptimal(_ head: ListNode?) -> ListNode? {
 //Approach = Two Pointer
 //T.C = BigO(n)
 //A.S = BigO(1)
+
 func reverseSingleLLRecursive(_ head: ListNode?) -> ListNode? {
     return head
 }
 //Approach = recursion
 //T.C = BigO()
 //A.S = BigO()
+
+
 //MARK: LinkedListCycle-isCycle
-//https://leetcode.com/problems/linked-list-cycle
 //https://youtu.be/wiOo4DC5GGA?si=qJfPsBESsOhql_Xx
+//https://leetcode.com/problems/linked-list-cycle
 func llHasCycle(_ head: ListNode?) -> Bool {
     var visited = Set<ListNode>()
     var temp = head
@@ -318,6 +352,7 @@ func llHasCycle(_ head: ListNode?) -> Bool {
 //Approach = set
 //T.C = BigO(n)
 //A.S = BigO(n)
+
 func hasCycleOptimal(_ head: ListNode?) -> Bool {
     if head?.next == nil{
         return false
@@ -336,43 +371,8 @@ func hasCycleOptimal(_ head: ListNode?) -> Bool {
 //Approach = Floyd’s Cycle(Tortoise and Hare /slow+fast pointer)
 //T.C = BigO(n)
 //A.S = BigO(1)
-//MARK: LinkedListCycle2-cycleStartingPoint
-//https://leetcode.com/problems/linked-list-cycle-ii/description/
-func linkedListCycle2Brute(_ head: ListNode?) -> ListNode? {
-    var visited = Set<ObjectIdentifier>()
-    var current = head
-    while let node = current {
-        let nodeId = ObjectIdentifier(node)
-        if visited.contains(nodeId) {
-            return node
-        }
-        visited.insert(nodeId)
-        current = node.next
-    }
-    return nil
-}
-//Approach = set
-//T.C = BigO(n)
-//A.S = BigO(n)
-func linkedListCycle2Optimal(_ head: ListNode?) -> ListNode? {
-    //O(n)
-    var commonCollisionPointNode = commonCollisionPointNodeInCycle(head)?.node
-    if commonCollisionPointNode == nil {
-        return nil
-    }
-    var startNode = head
-    while commonCollisionPointNode != nil {
-        if startNode === commonCollisionPointNode {
-            return startNode
-        }
-        startNode = startNode?.next
-        commonCollisionPointNode = commonCollisionPointNode?.next
-    }
-    return nil
-}
-//Approach = commonCollisionPointNodeInCycle
-//T.C = BigO(2n)
-//A.S = BigO(1)
+
+
 //MARK: commonCollisionPointNodeInCycle
 func commonCollisionPointNodeInCycle(_ head: ListNode?,
                                      startIndex: Int = 1) -> (node:ListNode?,index:Int)? {
@@ -396,7 +396,48 @@ func commonCollisionPointNodeInCycle(_ head: ListNode?,
 //Approach = Floyd’s Cycle(Tortoise and Hare /slow+fast pointer)
 //T.C = BigO(n)
 //A.S = BigO(1)
+
+
+//MARK: LinkedListCycle2-cycleStartingPoint
+//https://youtu.be/2Kd0KKmmHFc?si=7UreDPRjRvapeVB0
+//https://leetcode.com/problems/linked-list-cycle-ii/description/
+func linkedListCycle2Brute(_ head: ListNode?) -> ListNode? {
+    var visited = Set<ObjectIdentifier>()
+    var current = head
+    while let node = current {
+        let nodeId = ObjectIdentifier(node)
+        if visited.contains(nodeId) {
+            return node
+        }
+        visited.insert(nodeId)
+        current = node.next
+    }
+    return nil
+}
+//Approach = set
+//T.C = BigO(n)
+//A.S = BigO(n)
+
+func linkedListCycle2Optimal(_ head: ListNode?) -> ListNode? {
+    //O(n)
+    var collisionNode = commonCollisionPointNodeInCycle(head)?.node
+    if collisionNode == nil {
+        return nil
+    }
+    var startNode = head
+    while startNode !== collisionNode {
+        startNode = startNode?.next
+        collisionNode = collisionNode?.next
+    }
+    return startNode
+}
+//Approach = commonCollisionPointNodeInCycle
+//T.C = BigO(2n)
+//A.S = BigO(1)
+
+
 //MARK: lengthOfTheCycle
+//https://youtu.be/I4g1qbkTPus?si=KptLKT1B1OCriREi
 func lengthOfCycleBrute(_ head: ListNode?) -> Int {
     var visitedNodes: [ObjectIdentifier: Int] = [:]
     var mover = head
@@ -415,6 +456,7 @@ func lengthOfCycleBrute(_ head: ListNode?) -> Int {
 //Approach = set
 //T.C = BigO(n)
 //A.S = BigO(n)
+
 func lengthOfCycleOptimal(_ head: ListNode?) -> Int {
     //O(n)
     let commonCollisionPointNode = commonCollisionPointNodeInCycle(head)
@@ -433,9 +475,11 @@ func lengthOfCycleOptimal(_ head: ListNode?) -> Int {
 //Approach = commonCollisionPointNodeInCycle
 //T.C = BigO(2n)
 //A.S = BigO(1)
+
+
 //MARK: isPalindromeLL
-//https://leetcode.com/problems/palindrome-linked-list
 //https://youtu.be/lRY_G-u_8jk?si=aJzn2-dK7onnLOhI
+//https://leetcode.com/problems/palindrome-linked-list
 func isPalindromeLLBrute(_ head: ListNode?) -> Bool {
     var llElements = [Int]()
     var tempHead = head
@@ -450,6 +494,7 @@ func isPalindromeLLBrute(_ head: ListNode?) -> Bool {
 //Approach = store the elements, reverse the elements and check
 //T.C = BigO(2n)
 //A.S = BigO(n)
+
 func isPalindromeLLOptimal(_ head: ListNode?) -> Bool {
     guard head != nil && head?.next != nil else { return true }
     var slow = head
@@ -486,7 +531,11 @@ func isPalindromeLLOptimal(_ head: ListNode?) -> Bool {
 //Approach = reverse 2nd half with (Floyd’s Cycle Detection Algorithm (Tortoise and Hare /slow+fast pointer))
 //T.C = BigO(2n)
 //A.S = BigO(1)
+
+
 //MARK: oddEvenLinkedList
+//https://youtu.be/qf6qp7GzD5Q?si=CCVhndFKTAsT0Lty
+//https://leetcode.com/problems/odd-even-linked-list
 func oddEvenListBrute(_ head: ListNode?) -> ListNode? {
     var oddPoint = head
     var oddValues = [Int]()
@@ -516,6 +565,7 @@ func oddEvenListBrute(_ head: ListNode?) -> ListNode? {
 //Approach = extract values then add in exiting nodes.
 //T.C = BigO(2n)
 //A.S = BigO(n)
+
 func oddEvenListOptimal(_ head: ListNode?) -> ListNode? {
     // 1. Corrected Names: head is Odd (1st node), head.next is Even (2nd node)
     let oddHead = head
@@ -541,7 +591,11 @@ func oddEvenListOptimal(_ head: ListNode?) -> ListNode? {
 //Approach = change next pointers
 //T.C = BigO(n)
 //A.S = BigO(1)
+
+
 //MARK: removeNthFromEnd
+//https://youtu.be/3kMKYQ2wNIU?si=DtFDnPU7z9HMz_GM
+//https://leetcode.com/problems/remove-nth-node-from-end-of-list
 func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
     var mover = head
     var count = 0
@@ -565,6 +619,7 @@ func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
 //Approach = change next pointers
 //T.C = BigO(2n)
 //A.S = BigO(1)
+
 func removeNthFromEndOptimal(_ head: ListNode?, _ n: Int) -> ListNode? {
     var fast = head
     var slow = head
@@ -582,10 +637,14 @@ func removeNthFromEndOptimal(_ head: ListNode?, _ n: Int) -> ListNode? {
     slow?.next = slow?.next?.next
     return head
 }
-//Approach = (Measuring Tape) Approach"
+//Approach = (Measuring Tape) Approach
 //T.C = BigO(n)
 //A.S = BigO(1)
+
+
 //MARK: deleteMiddleNode
+//https://youtu.be/ePpV-_pfOeI?si=9AEFPE2-ZrVCxxVb
+//https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list
 func deleteMiddleBrute(_ head: ListNode?) -> ListNode? {
     if head?.next == nil{
         return nil
@@ -611,6 +670,7 @@ func deleteMiddleBrute(_ head: ListNode?) -> ListNode? {
 //Approach - find total nodes ...
 //T.C = BigO(n + n/2)
 //A.S = BigO(1)
+
 func deleteMiddleOptimal(_ head: ListNode?) -> ListNode? {
     if head?.next == nil {
         return nil
@@ -628,7 +688,11 @@ func deleteMiddleOptimal(_ head: ListNode?) -> ListNode? {
 //Approach - slow/fast pointer + skip a first slow iteration
 //T.C = BigO(n + n/2)
 //A.S = BigO(1)
+
+
 //MARK: SortList
+//https://youtu.be/8ocB7a_c-Cc?si=kgH6mUk2zjA8CBK3
+//https://leetcode.com/problems/sort-list
 func sortListBrute(_ head: ListNode?) -> ListNode? {
     var mover = head
     var values = [Int]()
@@ -649,6 +713,7 @@ func sortListBrute(_ head: ListNode?) -> ListNode? {
 //Approach:
 //T.C = BigO(2n + nlogn)
 //A.S = BigO(n)
+
 func sortListOptimal(_ head: ListNode?) -> ListNode? {
     // Base case: empty or single node
     guard let head = head, head.next != nil else {
@@ -673,7 +738,10 @@ func sortListOptimal(_ head: ListNode?) -> ListNode? {
 //Approach:
 //T.C = BigO(nlog * n)
 //A.S = BigO(n)
+
+
 //MARK: SortColors(0,1,2)
+//https://youtu.be/gRII7LhdJWc?si=7vQskNhG0oN9iu4p
 func sortColorsBrute(_ head: ListNode?) -> ListNode? {
     var mover = head
     var hashArray = Array(repeating: 0, count: 3)
@@ -694,6 +762,7 @@ func sortColorsBrute(_ head: ListNode?) -> ListNode? {
 //Approach:
 //T.C = BigO(2n)
 //A.S = BigO(1)
+
 func sortColorsOptimal(_ head: ListNode?) -> ListNode? {
     // 1. Create Dummy Nodes to anchor the start of each pile
     let zeroDummy = ListNode(-1)
@@ -740,6 +809,8 @@ func sortColorsOptimal(_ head: ListNode?) -> ListNode? {
 
 
 //MARK: IntersectionOfTwoLL
+//https://youtu.be/0DYoPz2Tpt4?si=ywb11Yk_utV0pl5y
+//https://leetcode.com/problems/intersection-of-two-linked-lists
 func getIntersectionNodeBrute(_ headA: ListNode?, _ headB: ListNode?) -> ListNode? {
     var hashTable = Set<ObjectIdentifier>()
     var mover = headA
@@ -761,6 +832,7 @@ func getIntersectionNodeBrute(_ headA: ListNode?, _ headB: ListNode?) -> ListNod
 //Approach = hashing
 //T.C = BigO(n+m)
 //A.S = BigO(n)
+
 func getIntersectionNodeOptimal1(_ headA: ListNode?, _ headB: ListNode?) -> ListNode? {
     let count1 = lenthOfLL(headA)
     let count2 = lenthOfLL(headB)
@@ -785,6 +857,7 @@ func getIntersectionNodeOptimal1(_ headA: ListNode?, _ headB: ListNode?) -> List
 //Approach = two pointer
 //T.C = BigO(n+m)+(n-d)+(n)  =  BigO(n+m)
 //A.S = BigO(1)
+
 func getIntersectionNodeOptimal2(_ headA: ListNode?, _ headB: ListNode?) -> ListNode? {
     var runner1 = headA
     var runner2 = headB
@@ -800,7 +873,10 @@ func getIntersectionNodeOptimal2(_ headA: ListNode?, _ headB: ListNode?) -> List
 //Approach: Relay Race (Two Pointers)
 //T.C = BigO(max(n,m) - (n-m))  =  BigO(n+m)
 //A.S = BigO(1)
+
+
 //MARK: addOneToLL
+//https://youtu.be/aXQWhbvT3w0?si=ksXmqQdKttdYrORt
 //https://www.geeksforgeeks.org/problems/add-1-to-a-number-represented-as-linked-list/1
 func addOneToLlIterative(_ head: ListNode?) -> ListNode? {
     let reversedLL = reverseSingleLLOptimal(head)
@@ -830,13 +906,18 @@ func addOneToLlIterative(_ head: ListNode?) -> ListNode? {
 //Approach: reverse + addition(carryForward)
 //T.C = BigO(n)
 //A.S = BigO(1)
+
 func addOneToLlRecursive(_ head: ListNode?) -> ListNode? {
     return nil
 }
 //Approach: Recursive
 //T.C = BigO()
 //A.S = BigO()
+
+
 //MARK: addOneToLL
+//https://youtu.be/LBVsXSMOIk4?si=0-WwlN6Sx7zOM2VC
+//https://leetcode.com/problems/add-two-numbers
 func addTwoNumbersOptimal(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
     var mover1 = l1
     var mover2 = l2
@@ -888,6 +969,7 @@ func addTwoNumbersOptimal(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
 //Approach =
 //T.C = BigO(max(n+m))
 //A.S = BigO(max(n+m))
+
 func addTwoNumbersOptimalClean(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
     var mover1 = l1
     var mover2 = l2
@@ -912,10 +994,16 @@ func addTwoNumbersOptimalClean(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
 //Approach =
 //T.C = BigO(max(n+m))
 //A.S = BigO(max(n+m))
+
+
+
 //MARK: Picked--------------------
+
+
+
 //MARK: mergeTwoLists
-//https://leetcode.com/problems/merge-two-sorted-lists
 //https://youtu.be/jXu-H7XuClE?si=p2uN8q__oub1FTtD
+//https://leetcode.com/problems/merge-two-sorted-lists
 func mergeTwoListsBrute(_ list1: ListNode?, _ list2: ListNode?) -> ListNode? {
     /*
      1. append elements of list1 and list2 in array (2n)
@@ -930,41 +1018,43 @@ func mergeTwoListsBrute(_ list1: ListNode?, _ list2: ListNode?) -> ListNode? {
 func mergeTwoListsBetter(_ list1: ListNode?, _ list2: ListNode?) -> ListNode? {
     var resultHead : ListNode?
     var resultHeadMover: ListNode?
-    var templist1 = list1
-    var templist2 = list2
-    while templist1 != nil && templist2 != nil {
-        let firstListEl = templist1?.val ?? -1
-        let secondListEl = templist2?.val ?? -1
+    var list1Mover = list1
+    var list2Mover = list2
+    while list1Mover != nil && list2Mover != nil {
+        let firstListEl = list1Mover?.val ?? -1
+        let secondListEl = list2Mover?.val ?? -1
         
         let firstArrElNode = ListNode(firstListEl)
         let secondArrElNode = ListNode(secondListEl)
         
         if firstListEl < secondListEl {
             appendNewNodeInResult(firstArrElNode, &resultHead, &resultHeadMover)
-            templist1 = templist1?.next
+            list1Mover = list1Mover?.next
         }else if firstListEl > secondListEl {
             appendNewNodeInResult(secondArrElNode, &resultHead, &resultHeadMover)
-            templist2 = templist2?.next
+            list2Mover = list2Mover?.next
         }else{
             appendNewNodeInResult(firstArrElNode, &resultHead, &resultHeadMover)
-            templist1 = templist1?.next
+            list1Mover = list1Mover?.next
             appendNewNodeInResult(secondArrElNode, &resultHead, &resultHeadMover)
-            templist2 = templist2?.next
+            list2Mover = list2Mover?.next
         }
     }
-    while templist1 != nil {
-        let node = ListNode(templist1?.val ?? -1)
+    while list1Mover != nil {
+        let node = ListNode(list1Mover?.val ?? -1)
         appendNewNodeInResult(node, &resultHead, &resultHeadMover)
-        templist1 = templist1?.next
+        list1Mover = list1Mover?.next
     }
-    while templist2 != nil {
-        let node = ListNode(templist2?.val ?? -1)
+    while list2Mover != nil {
+        let node = ListNode(list2Mover?.val ?? -1)
         appendNewNodeInResult(node, &resultHead, &resultHeadMover)
-        templist2 = templist2?.next
+        list2Mover = list2Mover?.next
     }
     return resultHead
 }
-func appendNewNodeInResult(_ newNode: ListNode, _ resultHead: inout ListNode?, _ resultHeadMover: inout ListNode?){
+func appendNewNodeInResult(_ newNode: ListNode,
+                           _ resultHead: inout ListNode?,
+                           _ resultHeadMover: inout ListNode?){
     if resultHead == nil {
         resultHead = newNode
         resultHeadMover = resultHead
@@ -979,43 +1069,45 @@ func appendNewNodeInResult(_ newNode: ListNode, _ resultHead: inout ListNode?, _
 func mergeTwoListsOptimal(_ list1: ListNode?, _ list2: ListNode?) -> ListNode? {
     var resultHead : ListNode?
     var resultHeadMover: ListNode?
-    var templist1 = list1
-    var templist2 = list2
-    while templist1 != nil && templist2 != nil {
-        let firstListEl = templist1?.val ?? -1
-        let secondListEl = templist2?.val ?? -1
+    var list1Mover = list1
+    var list2Mover = list2
+    while list1Mover != nil && list2Mover != nil {
+        let firstListEl = list1Mover?.val ?? -1
+        let secondListEl = list2Mover?.val ?? -1
         
         if firstListEl < secondListEl {
-            let next = templist1?.next
-            appendNewNodeInResult1(templist1!, &resultHead, &resultHeadMover)
-            templist1 = next
+            let next = list1Mover?.next
+            appendNewNodeInResult1(list1Mover!, &resultHead, &resultHeadMover)
+            list1Mover = next
         }else if firstListEl > secondListEl {
-            let next = templist2?.next
-            appendNewNodeInResult1(templist2!, &resultHead, &resultHeadMover)
-            templist2 = next
+            let next = list2Mover?.next
+            appendNewNodeInResult1(list2Mover!, &resultHead, &resultHeadMover)
+            list2Mover = next
         }
         else{
-            let templist1Next = templist1?.next
-            let templist2Next = templist2?.next
-            appendNewNodeInResult1(templist1!, &resultHead, &resultHeadMover)
-            templist1 = templist1Next
-            appendNewNodeInResult1(templist2!, &resultHead, &resultHeadMover)
-            templist2 = templist2Next
+            let templist1Next = list1Mover?.next
+            let templist2Next = list2Mover?.next
+            appendNewNodeInResult1(list1Mover!, &resultHead, &resultHeadMover)
+            list1Mover = templist1Next
+            appendNewNodeInResult1(list2Mover!, &resultHead, &resultHeadMover)
+            list2Mover = templist2Next
         }
     }
-    while templist1 != nil {
-        let next = templist1?.next
-        appendNewNodeInResult1(templist1!, &resultHead, &resultHeadMover)
-        templist1 = next
+    while list1Mover != nil {
+        let next = list1Mover?.next
+        appendNewNodeInResult1(list1Mover!, &resultHead, &resultHeadMover)
+        list1Mover = next
     }
-    while templist2 != nil {
-        let next2 = templist2?.next
-        appendNewNodeInResult1(templist2!, &resultHead, &resultHeadMover)
-        templist2 = next2
+    while list2Mover != nil {
+        let next2 = list2Mover?.next
+        appendNewNodeInResult1(list2Mover!, &resultHead, &resultHeadMover)
+        list2Mover = next2
     }
     return resultHead
 }
-func appendNewNodeInResult1(_ newNode: ListNode, _ resultHead: inout ListNode?, _ resultHeadMover: inout ListNode?){
+func appendNewNodeInResult1(_ newNode: ListNode,
+                            _ resultHead: inout ListNode?,
+                            _ resultHeadMover: inout ListNode?){
     newNode.next = nil  // detach
     if resultHead == nil {
         resultHead = newNode
@@ -1084,5 +1176,5 @@ enum MiddlePreference {
     case right
 }
 /*
- completed: 10 Aug
+2 oct
  */

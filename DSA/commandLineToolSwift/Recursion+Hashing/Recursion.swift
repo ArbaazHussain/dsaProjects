@@ -443,8 +443,41 @@ func printingSubsequences(_ str: [String],
     // 3. "DON'T PICK" BRANCH
     printingSubsequences(str, index + 1, pickedRes)
 }
-//T.C = O(2^N)
-//A.S = O(N)
+ /*
+  T.C = O(2^N)
+  A.S = O(N)
+  =============================================================================
+  THE CORE BACKTRACKING PATTERN: SUBSEQUENCES
+  Input: arr = [1, 2, 3]
+  
+  THE 4-STEP RULE AT EVERY NODE:
+  1. Pick it (Go Left)
+  2. Hit Base Case or Recurse
+  3. Backtrack (Undo the Pick - move back up)
+  4. Don't Pick it (Go Right)
+  =============================================================================
+
+                                          [ ]                                 (idx = 0, eval '1')
+                                       /       \
+                            1. PICK 1 /         \ 4. DON'T PICK 1
+                                     /           \
+                      [1]                                     [ ]             (idx = 1, eval '2')
+                   /       \                               /       \
+        1. PICK 2 /         \ 4. DP 2           1. PICK 2 /         \ 4. DP 2
+                 /           \                           /           \
+            [1,2]                 [1]                 [2]                 [ ] (idx = 2, eval '3')
+           /     \               /   \               /   \               /   \
+       P3 /   DP3 \          P3 / DP3 \          P3 / DP3 \          P3 / DP3 \
+         /         \           /       \           /       \           /       \
+     [1,2,3]     [1,2]       [1,3]     [1]       [2,3]     [2]         [3]     [ ]
+     (Base)      (Base)      (Base)   (Base)     (Base)   (Base)      (Base)  (Base)
+  
+                                                                              (idx = 3)
+  =============================================================================
+ */
+
+
+
 //MARK: Count-SubsequencesWhr...
 //https://youtu.be/eQCS_v3bw0Q?si=RXWaXKElg2hGYwqP
 func printingSubsequencesWhrSumIsK(_ arr: [Int], _ k: Int) {
@@ -715,3 +748,72 @@ func subsets2(_ nums: [Int]) -> [[Int]] {
 }
 //T.C = O(2^N)
 //A.S = O(N)
+
+
+//MARK: printAllPermutations
+/*
+ permutations(arrangements) of [1,2,3] (order matters)
+ Total permutations = 3! = 6
+ [1, 2, 3] [1, 3, 2] [2, 1, 3] [2, 3, 1] [3, 1, 2] [3, 2, 1]
+ 
+ combinations of [1,2,3] (order does NOT matter)
+ [] [1] [2] [3] [1, 2] [1, 3] [2, 3] [1, 2, 3]
+ */
+//https://www.youtube.com/watch?v=YK78FU5Ffjw&t=405s
+//https://leetcode.com/problems/permutations/description/
+func printAllPermutations(_ nums: [Int]) -> [[Int]] {
+    var ans: [[Int]] = []
+    var ds: [Int] = []
+    var freq: [Int] = Array(repeating: 0, count: nums.count)
+    recurPermute(nums, &ds, &ans, &freq)
+    return ans
+}
+private func recurPermute(_ nums: [Int],
+                          _ ds: inout [Int],
+                          _ ans: inout [[Int]],
+                          _ freq: inout [Int]) {
+    if ds.count == nums.count {
+        ans.append(ds)
+        return
+    }
+    for i in 0..<nums.count {
+        if freq[i] == 0 {
+            ds.append(nums[i])
+            freq[i] = 1
+            recurPermute(nums, &ds, &ans, &freq)
+            freq[i] = 0
+            ds.removeLast()
+        }
+    }
+}
+/*
+ //Approach = recursion
+ //T.C = O(n!*n)
+ //A.S = O(n)
+ =============================================================================
+ RECURSION TREE: PERMUTATIONS (Visited Array / freq Pattern)
+ Input: nums = [1, 2, 3]
+
+ Rule: At EVERY node, a loop runs from i = 0 to 2.
+ It only branches if freq[i] == 0 (meaning the number is unused).
+ =============================================================================
+ 
+                              [ ]
+                           /   |   \
+                         /     |     \
+                 i=0(Pick 1) i=1(Pick 2) i=2(Pick 3)
+                     /         |         \
+                  [1]         [2]         [3]
+                 /   \       /   \       /   \
+               i=1   i=2   i=0   i=2   i=0   i=1
+              (2)    (3)   (1)   (3)   (1)   (2)
+              /       \     /       \     /       \
+          [1,2]     [1,3] [2,1]   [2,3] [3,1]    [3,2]
+            |         |     |       |     |        |
+           i=2       i=1   i=2     i=0   i=1      i=0
+           (3)       (2)   (3)     (1)   (2)      (1)
+            |         |     |       |     |        |
+        [1,2,3]   [1,3,2] [2,1,3] [2,3,1][3,1,2] [3,2,1]
+         (Save)    (Save)  (Save)  (Save) (Save)  (Save)
+ =============================================================================
+*/

@@ -24,6 +24,7 @@ import Foundation
  */
 
 //MARK: twoSum
+//https://youtu.be/UXDSeD9mN-k
 //VarietyOne = return true/false
 //VarietyTwo = return true/false
 //https://leetcode.com/problems/two-sum/submissions/1765713683/
@@ -84,6 +85,7 @@ func twoSumVarietyTwoOptimal(_ nums: [Int], _ target: Int) -> [Int] {
 
 
 //MARK: sortArrayOfZeroOneTwo
+//https://youtu.be/tp8JIuCXBaU
 //https://leetcode.com/problems/sort-colors/description/
 func sortArrayOfZeroOneBrute(_ nums: inout [Int]) {
     nums.sort()
@@ -153,6 +155,7 @@ func sortArrayOfZeroOneTwoptimal(_ nums: inout [Int]) {
 
 
 //MARK: FindTheMajorityElement
+//https://youtu.be/nP_ns3uSh80?si=PgX8IKDJn6_gdyRf
 //https://leetcode.com/problems/majority-element/description/
 func majorityElementBrute(_ nums: [Int]) -> Int {
     let n = nums.count
@@ -217,6 +220,7 @@ func majorityElementOptimal(_ nums: [Int]) -> Int {
 
 
 //MARK: maximumSubarraySum
+//https://youtu.be/AHZpyENo7k4?si=IojpNIxNWsS1F9mK
 //https://leetcode.com/problems/maximum-subarray/description/
 func maximumSubarraySumBrute(_ nums: [Int]) -> Int {
     var maxVal = Int.min
@@ -253,6 +257,7 @@ func maximumSubarraySumOptimal(_ nums: [Int]) -> Int {
 
 
 //MARK: stockBuyAndSell
+//https://youtu.be/excAOvwF_Wk?si=R0GlmTF4IkGQ601A
 //https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/
 func stockBrute(_ prices: [Int]) -> Int {
     var maxProfit = 0
@@ -286,6 +291,7 @@ func stockOptimal(_ prices: [Int]) -> Int {
 
 
 //MARK: rearrangeArrayElementsBySign
+//https://youtu.be/h4aBagy4Uok?si=xiowSin350VeUSUF
 //https://leetcode.com/problems/rearrange-array-elements-by-sign/description/
 func rearrangeArrayElementsBySignBrute(_ nums: [Int]) -> [Int] {
     let n = nums.count
@@ -336,46 +342,9 @@ func rearrangeArrayElementsBySignOptimal(_ nums: [Int]) -> [Int] {
 // A.S - BigO(n)
 
 
-//MARK: printAllPermutations
-/*
- permutations(arrangements) of [1,2,3] (order matters)
- Total permutations = 3! = 6
- [1, 2, 3] [1, 3, 2] [2, 1, 3] [2, 3, 1] [3, 1, 2] [3, 2, 1]
- 
- combinations of [1,2,3] (order does NOT matter)
- [] [1] [2] [3] [1, 2] [1, 3] [2, 3] [1, 2, 3]
- */
-//recursiveSolution
-//https://www.youtube.com/watch?v=YK78FU5Ffjw&t=405s
-//https://leetcode.com/problems/permutations/description/
-func printAllPermutations(_ nums: [Int]) -> [[Int]] {
-    var ans: [[Int]] = []
-    var ds: [Int] = []
-    var freq: [Int] = Array(repeating: 0, count: nums.count)
-    recurPermute(nums, &ds, &ans, &freq)
-    return ans
-}
-private func recurPermute(_ nums: [Int], _ ds: inout [Int], _ ans: inout [[Int]], _ freq: inout [Int]) {
-    if ds.count == nums.count {
-        ans.append(ds)
-        return
-    }
-    for i in 0..<nums.count {
-        if freq[i] == 0 {
-            ds.append(nums[i])
-            freq[i] = 1
-            recurPermute(nums, &ds, &ans, &freq)
-            freq[i] = 0
-            ds.removeLast()
-        }
-    }
-}
-//Approach = recursion
-//T.C = O(n!*n)
-//A.S = O(n)
-   
-
 //MARK: nextPermutation
+//Refer to printAllPermutations before this
+//https://youtu.be/JDOXKqF60RQ?si=0vlOxU_t4ZCbwFK7
 //https://leetcode.com/problems/next-permutation/description/
 //e.g: 2154300 -> 2300145
 //This will not work for large nums as n! increases exponentially.
@@ -437,6 +406,7 @@ func nextPermutationOptimal(_ nums: inout [Int]) {
 
 
 //MARK: leadersInArray
+//https://youtu.be/cHrH9CQ8pmY?si=pvrfOPnfQmeW0L3q
 //https://www.geeksforgeeks.org/problems/leaders-in-an-array-1587115620/1
 func leadersInArrayBrute(_ nums: inout [Int]) -> [Int] {
     return [Int]()
@@ -468,6 +438,7 @@ func leadersInArrayOptimal(_ nums: inout [Int]) -> [Int] {
 
 
 //MARK: longestConsecutiveSequence
+//https://youtu.be/oO5uLE7EUlM?si=yP-UkxxYrmksXdvL
 //https://leetcode.com/problems/longest-consecutive-sequence/description/
 func longestConsecutiveBrute(_ nums: [Int]) -> Int {
     let n = nums.count
@@ -542,6 +513,7 @@ func longestConsecutiveOptimal(_ nums: [Int]) -> Int {
 
 
 //MARK: setMatrixZeroes
+//https://youtu.be/N0MgLvceX7M?si=WUGSmiiUt5x8MxVE
 //https://leetcode.com/problems/set-matrix-zeroes/
 func setZeroesBrute(_ matrix: inout [[Int]]) {
     var rowArray = Array(repeating: 0, count: matrix.count)
@@ -616,6 +588,7 @@ func setZeroesOptimal(_ matrix: inout [[Int]]) {
 
 //MARK: rotateImage
 //prefer rotateImageOptimal as its is easy and rotateImageBrute is bit hard to grab
+//https://youtu.be/Z0R2u6gd3GU?si=FCjXrgPce5fDwDW2
 //https://leetcode.com/problems/rotate-image/description/
 func rotateImageBrute(_ matrix: inout [[Int]]){
     let n = matrix.count
@@ -655,6 +628,7 @@ func rotateImageOptimal(_ matrix: inout [[Int]]) {
 
 
 //MARK: spiralMatrix
+//https://youtu.be/3Zv-s9UUrFM?si=OZDN34tdjHkiA-Rp
 //https://leetcode.com/problems/spiral-matrix/description/
 func spiralMatrix(_ matrix: [[Int]]) -> [Int]  {
     let row = matrix.count
@@ -668,19 +642,17 @@ func spiralMatrix(_ matrix: [[Int]]) -> [Int]  {
     
     while top <= bottom && left <= right {
         //right
-        if top<=bottom {
-            for i in stride(from: left, through: right, by: 1) {
-                result.append(matrix[top][i])
-            }
-            top += 1
+        for i in stride(from: left, through: right, by: 1) {
+            result.append(matrix[top][i])
         }
+        top += 1
+        
         //bottom
-        if(left<=right) {
-            for i in stride(from: top, through: bottom, by: 1) {
-                result.append(matrix[i][right])
-            }
-            right -= 1
+        for i in stride(from: top, through: bottom, by: 1) {
+            result.append(matrix[i][right])
         }
+        right -= 1
+        
         //left
         if top<=bottom {
             for i in stride(from: right, through: left, by: -1) {
@@ -688,6 +660,7 @@ func spiralMatrix(_ matrix: [[Int]]) -> [Int]  {
             }
             bottom -= 1
         }
+        
         //top
         if left<=right {
             for i in stride(from: bottom, through: top, by: -1) {
@@ -704,8 +677,8 @@ func spiralMatrix(_ matrix: [[Int]]) -> [Int]  {
 
 
 //MARK: subArraySumEqualsK
-//https://leetcode.com/problems/subarray-sum-equals-k/description/
 //https://www.youtube.com/watch?v=xvNwoz-ufXA&t=986s
+//https://leetcode.com/problems/subarray-sum-equals-k/description/
 func subArraySumEqualsKBrute(_ nums: [Int], _ k: Int) -> Int {
     let n = nums.count
     var cnt = 0
@@ -781,8 +754,8 @@ func subArraySumEqualsKOptimal(_ nums: [Int], _ k: Int) -> Int {
 
 
 //MARK: trappingRainWater
-//https://leetcode.com/problems/trapping-rain-water
 //https://youtu.be/1_5VuquLbXg?si=kkBFJYE1wBelJr_d
+//https://leetcode.com/problems/trapping-rain-water
 func trappingRainWater(_ height: [Int]) -> Int {
     let n = height.count
     guard n > 1 else { return 0 }

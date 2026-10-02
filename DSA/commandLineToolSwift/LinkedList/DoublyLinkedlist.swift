@@ -22,8 +22,12 @@ func arrayToDll(_ nums: [Int]) -> ListNode? {
 }
 //T.C = BigO(n)
 //A.S = BigO(n)
+
+
 //MARK: traversalOfDLL
 //same as traversalOfLL
+
+
 //MARK: deletionOfHeadInDLL
 func deletionOfHeadInDLL(_ head: inout ListNode?) {
     if head == nil || head?.next == nil {
@@ -37,6 +41,8 @@ func deletionOfHeadInDLL(_ head: inout ListNode?) {
 }
 //T.C = BigO(1)
 //A.S = BigO(1)
+
+
 //MARK: deletionOfTailInDLL
 func deletionOfTailInDLL(_ head: inout ListNode?) {
     // If only one node exists, delete it
@@ -54,6 +60,8 @@ func deletionOfTailInDLL(_ head: inout ListNode?) {
 }
 //T.C = BigO(n)
 //A.S = BigO(1)
+
+
 //MARK: deletionOfKthElementDll
 func deletionOfKthElementDll(_ head: inout ListNode?, _ k: Int) {
     guard k >= 1 else {
@@ -79,6 +87,8 @@ func deletionOfKthElementDll(_ head: inout ListNode?, _ k: Int) {
 }
 //T.C = BigO(n)
 //A.S = BigO(1)
+
+
 //MARK: deletionOfNodeWithKeyInDLL
 func deletionOfNodeWithKeyInDLL(_ head: inout ListNode?, _ key: Int) {
     if key == head?.val{
@@ -102,6 +112,8 @@ func deletionOfNodeWithKeyInDLL(_ head: inout ListNode?, _ key: Int) {
 }
 //T.C = BigO(n)
 //A.S = BigO(1)
+
+
 //MARK: deletionOfNodeInDLL
 //Given node will never be tail
 func deletionOfNodeInDLL(_ node: ListNode?) {
@@ -117,6 +129,8 @@ func deletionOfNodeInDLL(_ node: ListNode?) {
 }
 //T.C = BigO(1)
 //A.S = BigO(1)
+
+
 //MARK: Insertion
 func insertionBeforeHeadDll(_ head: inout ListNode?, _ val: Int) {
     let newHead = ListNode(val,head)
@@ -126,6 +140,7 @@ func insertionBeforeHeadDll(_ head: inout ListNode?, _ val: Int) {
 }
 //T.C = BigO(1)
 //A.S = BigO(1)
+
 func insertionBeforeTailDll(_ head: inout ListNode?, _ val: Int) {
     // If only one node exists
     if head?.next == nil{
@@ -152,6 +167,7 @@ func insertionBeforeTailDll(_ head: inout ListNode?, _ val: Int) {
 }
 //T.C = BigO(n)
 //A.S = BigO(1)
+
 func insertionBeforeKthElementDll(_ head: inout ListNode?, _ k: Int, _ val: Int) {
     var currentIndex = 1
     var temp = head
@@ -180,6 +196,7 @@ func insertionBeforeKthElementDll(_ head: inout ListNode?, _ k: Int, _ val: Int)
 //T.C = BigO(n)
 //A.S = BigO(1)
 //given node is never head of the list
+
 func insertionBeforeNodeDll(_ node: inout ListNode?, _ val: Int) {
     let previousNode = node?.back
     let newNode = ListNode(val, previousNode, node)
@@ -188,7 +205,10 @@ func insertionBeforeNodeDll(_ node: inout ListNode?, _ val: Int) {
 }
 //T.C = BigO(1)
 //A.S = BigO(1)
+
+
 //MARK: reverse
+//https://leetcode.com/problems/reverse-linked-list
 func reverseDLLBrute(_ head: inout ListNode?) {
     var stack = [Int]()
     var temp = head
@@ -204,19 +224,27 @@ func reverseDLLBrute(_ head: inout ListNode?) {
 }
 //T.C = BigO(2n)
 //A.S = BigO(n)
+
 func reverseDLLOptimal(_ head: inout ListNode?) {
-    var current = head
-    var last : ListNode? = nil
-    while current != nil {
-        //swap
-        last = current?.back
-        current?.back = current?.next
-        current?.next = last
-        //move to next node
-        current = current?.back
+    var curr = head
+    var newHead: ListNode? = nil
+    
+    while curr != nil {
+        // 1. Swap the next and back pointers for the current node
+        let temp = curr?.back
+        curr?.back = curr?.next
+        curr?.next = temp
+        
+        // 2. Keep track of the last processed node (this will become the new head)
+        newHead = curr
+        
+        // 3. Move to the next node in the original list
+        // (Because we just swapped them, the original 'next' is now living in 'back'!)
+        curr = curr?.back
     }
-    head = last?.back
+    
+    head = newHead
 }
 //T.C = BigO(n)
-//A.S = BigO(n)
+//A.S = BigO(1)
 

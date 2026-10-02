@@ -24,6 +24,7 @@
  
  Operators        | Precedence   | Associativity
  ---------------------------------------------------
+ ^                | Highest
  () (parentheses) | Highest      | Left to right
  * / %            | High         | Left to right
  + -              | Medium       | Left to right

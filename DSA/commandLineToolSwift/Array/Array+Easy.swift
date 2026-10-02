@@ -104,6 +104,7 @@ func largestElementOptimal(_ nums: [Int]) -> Int {
 
 
 //MARK: secondLargest
+//https://www.youtube.com/watch?v=37E9ckMDdTk&t=810s
 func secondLargestBrute(_ nums: [Int]) -> Int {
     let n = nums.count
     guard nums.count >= 2 else { return -1 }
@@ -214,6 +215,7 @@ func isArraySortedAndRotatedOptimal(_ nums: [Int]) -> Bool {
 
 
 //MARK: removeDuplicatesInSortedArray
+//https://youtu.be/37E9ckMDdTk?si=vw6DPoeybceTiemD
 //https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/
 func removeDuplicatesInSortedArrayBrute(_ nums: inout [Int]) -> Int {
     var uniqueSet = Set<Int>()
@@ -254,6 +256,7 @@ func removeDuplicatesInSortedArrayOptimal(_ nums: inout [Int]) -> Int {
 
 
 //MARK: LeftRotateByOnePlace
+//https://youtu.be/wvcQg43_V8U?si=bArEX1P_Sapm-aGV
 func leftRotateByOnePlace(_ nums: inout [Int]) {
     let n = nums.count
     guard n > 1 else { return }
@@ -275,6 +278,7 @@ func leftRotateByOnePlace(_ nums: inout [Int]) {
 
 
 //MARK: LeftRotateByDPlace
+//https://youtu.be/wvcQg43_V8U?si=bArEX1P_Sapm-aGV
 func LeftRotateByDPlaceBrute(_ nums: inout [Int], _ k: Int) {
     let n = nums.count
     guard n > 0 else { return }
@@ -347,6 +351,7 @@ func LeftRotateByDPlaceOptimal(_ nums: inout [Int], _ d: Int) {
 
 
 //MARK: rightRotateByDPlace
+//https://youtu.be/wvcQg43_V8U?t=1633
 //https://leetcode.com/problems/rotate-array/description/
 func rightRotateByDPlaceBrute(nums: inout [Int], d: Int) {
     let n = nums.count
@@ -415,6 +420,7 @@ func rightRotateByDPlaceOptimal(nums: inout [Int], d: Int) {
 
 
 //MARK: moveZeroesToEnd
+//https://youtu.be/wvcQg43_V8U?si=XKPh2EnA-tdqkfNC
 //https://leetcode.com/problems/move-zeroes/description/
 func moveZeroesToEndBrute(_ nums: inout [Int]) {
     let n = nums.count
@@ -489,6 +495,7 @@ func linearSearch(_ nums: inout [Int], _ k: Int) -> Int {
 
 
 //MARK: unionOfSortedArray
+//https://youtu.be/wvcQg43_V8U?t=2584
 func unionOfSortedArrayBrute(_ nums1: [Int], _ nums2: [Int]) -> [Int]{
     var resultSet = Set<Int>()
     // Insert elements from both arrays into the set
@@ -563,6 +570,7 @@ func unionOfSortedArrayOptimal(_ nums1: [Int], _ nums2: [Int]) {
 
 
 //MARK: intersectionOfSortedArray
+//https://youtu.be/wvcQg43_V8U?t=2584
 //https://www.naukri.com/code360/problems/intersection-of-2-arrays_1082149
 func intersectionOfSortedArrayBrute(_ nums1: [Int], _ nums2: [Int]) {
     var intersectionArray: [Int] = []
@@ -623,6 +631,7 @@ func intersectionOfSortedArrayOptimal(_ nums1: [Int], _ nums2: [Int]) {
 
 
 //MARK: missingNumber
+//https://youtu.be/bYWLJb3vCWY?si=j6kc2aaVlYCmCYfk
 //https://leetcode.com/problems/missing-number/description/
 func missingNumberBrute(_ nums: [Int]) -> Int {
     let n = nums.count
@@ -699,6 +708,7 @@ func missingNumberOptimal2(_ nums: [Int]) -> Int {
 
 
 //MARK: maxConsecutiveOnes
+//https://youtu.be/bYWLJb3vCWY?si=j6kc2aaVlYCmCYfk
 //https://leetcode.com/problems/max-consecutive-ones/description/
 func maxConsecutiveOnesBrute(_ nums: [Int]) -> Int {
     var result = 0
@@ -745,6 +755,7 @@ func maxConsecutiveOnesOptimalStv(_ nums: [Int]) -> Int {
 
 
 //MARK: singleNumber
+//https://youtu.be/bYWLJb3vCWY?si=j6kc2aaVlYCmCYfk
 //https://leetcode.com/problems/single-number/description/
 func singleNumberBrute(_ nums: [Int]) -> Int {
     let n = nums.count
@@ -807,6 +818,7 @@ func singleNumberOptimal(_ nums: [Int]) -> Int {
 
 
 //MARK: longestSubarraywithsumK
+//https://youtu.be/frf7qxiN2qU?si=3I6Ly0cXsOawLMb8
 //https://www.naukri.com/code360/problems/longest-subarray-with-sum-k_5713505
 func longestSubarraywithsumKBrute(_ nums: [Int], _ k: Int) -> Int {
     let n = nums.count
@@ -907,10 +919,8 @@ public func setColWith(_ matrix: inout [[Int]], _ index : Int, _ key: Int) {
  *Revise array Only With approach
  
 
- 20july:
+ 1Ooct:
  majorityElementOptimal
- maximumSubarraySum
  printAllPermutations
- maximumSubarraySumOptimal
  subArraySumEqualsK
  */
