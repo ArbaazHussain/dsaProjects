@@ -8,7 +8,7 @@
 import Foundation
 
 /*
- *Conceptual Topics*
+ *Core Pattern*
  implementLowerBound
  implementUpperBound
  

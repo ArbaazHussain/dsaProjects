@@ -1,378 +1,64 @@
 //
-//  Recursion.swift
+//  SubsequencesPattern.swift
 //  commandLineToolSwift
 //
-//  Created by Arbaaz Hussain on 19/11/25.
+//  Created by Arbaaz Hussain on 04/10/26.
 //
+
 import Foundation
-//MARK: -------Recursion---------
-/*
-The idea of Recursion is always to use the solution of the subproblems, and then use these solutions to solve the overall solutions.
-=============================================================================
-SUBARRAY vs SUBSEQUENCE vs COMBINATION (Subset)
- Example Array: [3, 1, 2]
- 
- 1. SUBARRAY (Contiguous)
-    - Rule: Elements must sit directly next to each other in memory.
-    - Skipping: NOT allowed.
-    - Order: Strict left-to-right.
-    - Valid:   [3, 1] or [1, 2]
-    - Invalid: [3, 2] (Skipped the 1)
- 
- 2. SUBSEQUENCE (Non-contiguous)
-    - Rule: Can skip elements, but must keep original left-to-right order.
-    - Skipping: Allowed.
-    - Order: Strict left-to-right.
-    - Valid:   [3, 2] (Skipped the 1, but kept order)
-    - Invalid: [1, 3] (Cannot go backward to get the 3)
- 
- 3. COMBINATION / SUBSET (Order Agnostic)
-    - Rule: Pure membership. Location and sequence do not matter at all.
-    - Skipping: Allowed.
-    - Order: Ignored.
-    - Valid: [3, 1] and [1, 3] are considered the exact same combination.
-    - DSA Tip: Usually requires sorting the array first to avoid duplicates.
- 
- In In code, they are practically the same.In theory, they are slightly different.
- -----------------------------------------------------------------------------
- QUICK COMPARISON TABLE
- -----------------------------------------------------------------------------
- TERM          | SKIPPING ALLOWED? | ORDER STRICT? | VALID   | INVALID
- -----------------------------------------------------------------------------
- Subarray      | No                | Yes           | [3, 1]  | [3, 2] (skipped)
- Subsequence   | Yes               | Yes           | [3, 2]  | [1, 3] (backward)
- Combination   | Yes               | No            | [1, 3]* | N/A (order ignored)
- 
- *Note: For combinations, [1, 3] and [3, 1] are exactly the same thing.
- =============================================================================
-*/
-let M = 1_000_000_007
-//MARK: -------LearnBasicRcz---------
-//MARK: NtoOne
-func NtoOne(n: Int){
-    if n<=0 {
-        return
-    }
-    print(n)
-    NtoOne(n: n-1)
-}
-//T.C = BigO n
-//A.S = BigO n
-//MARK: OnetoN
-func OnetoNNonTailRecursive(n: Int) {
-    if n<=0 {
-        return
-    }
-    OnetoNNonTailRecursive(n: n-1)
-    print(n)
-}
-//T.C = BigO n
-//A.S = BigO n
-func OnetoNWithTailRecursion(n: Int, k: Int = 1) {
-    if n<=0 {
-        return
-    }
-    print(k)
-    OnetoNWithTailRecursion(n: n-1, k: k+1)
-}
-//T.C = BigO n
-//A.S = BigO n
-//MARK: sumOfDigits
-func sumOfDigitsGFGRecursionNonTailRecursive(n: Int) -> Int{
-    if n<=0 {
-        return 0
-    }
-    let lastDigit = n%10
-    let nwithoutLastDigit = n/10
-    return lastDigit + sumOfDigitsGFGRecursionNonTailRecursive(n: nwithoutLastDigit)
-}
-//d = total digits of S
-//R.R = T(d) = T(d-1) + C
-//T.C = BigO (d)
-//A.S = BigO (d)
-func sumOfDigitsGFGRecursionTailRecursive(n: Int, k: Int = 0) -> Int{
-    if n<=0 {
-        return k
-    }
-    let lastDigit = n%10
-    let nwithoutLastDigit = n/10
-    return sumOfDigitsGFGRecursionTailRecursive(n: nwithoutLastDigit,
-                                                k: k+lastDigit)
-}
-//d = total digits of S
-//R.R = T(d) = T(d-1) + C
-//T.C = BigO (d)
-//A.S = BigO (d)
-//MARK: sumOfNaturalNo
-func sumOfNaturalNoNonTailRecursive(n: Int) -> Int {
-    if n<=0{
-        return 0
-    }
-    return n + sumOfNaturalNoNonTailRecursive(n: n-1)
-}
-//T.C = BigO n
-//A.S = BigO n
-func sumOfNaturalNoTailRecursive(n: Int, k: Int = 0) -> Int {
-    if n<=0{
-        return k
-    }
-    return sumOfNaturalNoTailRecursive(n: n-1, k: n+k)
-}
-//T.C = BigO n
-//A.S = BigO n
-//MARK: factorial
-func factorialNonTailRecursive(n: Int) -> Int{
-    if (n<=0){
-        return 1;
-    }
-    return  n * factorialNonTailRecursive(n: n-1);
-}
-//T.C = BigO n
-//A.S = BigO n
-func factorialTailRecursive(n: Int, k: Int = 1) -> Int{
-    if n<=1 {
-        return k;
-    }
-    return factorialTailRecursive(n: n-1, k: k*n);
-}
-//T.C = BigO n
-//A.S = BigO n
-//MARK: reverseArray
-func reverseArray(_ arr: inout [Int]) {
-    reverseArrayRecursion(&arr, 0, arr.count - 1)
-}
-private func reverseArrayRecursion(_ arr: inout [Int], _ start: Int, _ end: Int) {
-    if start >= end {
-        return
-    }
-    arr.swapAt(start, end)
-    reverseArrayRecursion(&arr, start + 1, end - 1)
-}
-//Approach:swap first and last el
-//T.C = BigO n
-//A.S = BigO n
-//MARK: checkForPalindromeInterger
-func checkForPalindromeIntergerRecursion(n: Int) -> Bool {
-    if n < 0 {
-        return false
-    }
-    return checkForPalindromeIntergerRecursion(n: n, rev: 0, tempN: n)
-}
-private func checkForPalindromeIntergerRecursion(n: Int, rev: Int, tempN: Int) -> Bool {
-    if tempN==0 {
-        return n == rev
-    }
-    let lastDigit = tempN%10
-    let rev = (rev*10) + lastDigit
-    return checkForPalindromeIntergerRecursion(n: n, rev: rev, tempN: tempN/10)
-}
-//d = total digits of n
-//Approach = reverse d
-//R.R = T(D) = T(D-1) + C
-//T.C = BigO d
-//A.S = BigO d
-//MARK: checkForPalindromeString
-func checkForPalindromeStringRecursionNaive(_ s: String) -> Bool {
-    var sTemp = s
-    return checkForPalindromeStringRecursionNaive(s, &sTemp)
-}
-private func checkForPalindromeStringRecursionNaive(_ s: String, _ sTemp: inout String) -> Bool {
-    // Base cases
-    if sTemp.count <= 1 {
-        return true
-    }
-    // Compare first and last characters
-    let first = sTemp.first!
-    let last = sTemp.last!
-    if first != last {
-        return false
-    }
-    // Remove first and last characters and recurse
-    sTemp.removeFirst()
-    sTemp.removeLast()
-    return checkForPalindromeStringRecursionNaive(s, &sTemp)
-}
-//d = no of digits
-//Approach = check and remove first/last char
-//T.C = BigO (d*d)
-//A.S = BigO (d)
-func checkForPalindromeStringRecursionEfficient(_ s: String) -> Bool {
-    let chars = Array(s)       // convert once
-    return checkForPalindromeStringRecursionEfficient(chars, 0, chars.count - 1)
-}
-private func checkForPalindromeStringRecursionEfficient(_ chars: [Character], _ start: Int, _ end: Int) -> Bool {
-    if start >= end {
-        return true
-    }
-    if chars[start] != chars[end] {
-        return false
-    }
-    return checkForPalindromeStringRecursionEfficient(chars, start + 1, end - 1)
-}
-//d = total digits of n
-//Approach = check first/last char
-//T.C = BigO (d+d/2) = (d)
-//A.S = BigO (1)
-//MARK: Fibenacchi
-//Input Requirement n
-func fibenacchiMyRecursive(_ n: Int,
-                           _ a: Int = 0,
-                           _ b: Int = 1,
-                           _ i: Int = 2) -> Int {
-    if n < 0 {
-        return -1
-    }
-    if n == 0 || n == 1 {
-        return n
-    }
-    var a = a
-    var b = b
-    let c = a + b
-    a = b
-    b = c
-    
-    if n == i {
-        return c
-    }
-    return fibenacchiMyRecursive(n, a, b, i + 1)
-}
-func fibenacchiCBRecursive(_ n: Int) -> Int {
-    if n < 0 {
-        return -1
-    }
-    if n == 0 || n == 1 {
-        return n
-    }
-    let smallInput = fibenacchiCBRecursive(n-1)
-    let largeInput = fibenacchiCBRecursive(n-2)
-    return smallInput + largeInput
-}
-//MARK: -------GetStrongHold---------
-//MARK: StringtoInteger(atoi)
-//https://youtu.be/ne_Ki_sdRSk?si=JpNtCYPMEAY0vOnq
-//https://leetcode.com/problems/string-to-integer-atoi
-func myAtoiIterative(_ s: String) -> Int {
-    let sArray = Array(s)
-    let n = sArray.count
-    var index = 0
-    var sign = 1
-    var res = 0
-    
-    let intMax = Int(Int32.max) // 2147483647
-    let intMin = Int(Int32.min) // -2147483648
-    
-    // STEP 1: Skip leading spaces
-    while index < n && sArray[index] == " " {
-        index += 1
-    }
-    
-    // STEP 2: Check for a single sign
-    if index < n && (sArray[index] == "+" || sArray[index] == "-") {
-        sign = sArray[index] == "-" ? -1 : 1
-        index += 1
-    }
-    
-    // STEP 3: Process digits and clamp
-    while index < n, let digit = sArray[index].wholeNumberValue {
-        
-        if res > intMax / 10 || (res == intMax / 10 && digit > 7) {
-            return sign == 1 ? intMax : intMin
-        }
-        
-        res = (res * 10) + digit
-        index += 1
-    }
-    
-    // The sign integer elegantly handles the math here
-    return res * sign
-}
-func myAtoiRecursive(_ s: String) -> Int {
-    let chars = Array(s)
-    let n = chars.count
-    var index = 0
-    var sign = 1
-    
-    // ==========================================
-    // 1. ITERATIVE SETUP (Industry Standard)
-    // ==========================================
-    // Skip spaces
-    while index < n && chars[index] == " " {
-        index += 1
-    }
-    
-    // Check sign
-    if index < n && (chars[index] == "+" || chars[index] == "-") {
-        sign = chars[index] == "-" ? -1 : 1
-        index += 1
-    }
-    
-    let intMax = Int(Int32.max)
-    let intMin = Int(Int32.min)
-    
-    // ==========================================
-    // 2. PURE RECURSIVE DIGIT PARSER
-    // ==========================================
-    func parseDigits(_ i: Int, _ res: Int) -> Int {
-        // Base Case 1: Reached the end of the string
-        if i == n { return res * sign }
-        
-        // Base Case 2: Hit a non-digit character (returns current accumulated result)
-        guard let digit = chars[i].wholeNumberValue else {
-            return res * sign
-        }
-        
-        // Base Case 3: The exact clamp check
-        if res > intMax / 10 || (res == intMax / 10 && digit > 7) {
-            return sign == 1 ? intMax : intMin
-        }
-        
-        // Recursive Step: Do the math and move to the next index
-        let newRes = (res * 10) + digit
-        return parseDigits(i + 1, newRes)
-    }
-    
-    // Start the recursion from wherever the setup left off
-    return parseDigits(index, 0)
-}
-//MARK: binaryExponentiation || powerRecursive
-//https://youtu.be/J63JPxqmyzg?si=dQBdQBrGUX0OEUp4
-//https://leetcode.com/problems/powx-n?__cf_chl_rt_tk=dA3Vyz0CxAhPKLBccY3xpODFy9Li5xKptJHTrASJSYw-1786525687-1.0.1.1-dSuPGrRAgCbKICCcuk3W.uDdjc.sI3x4giUsdotrgYk
-/*
- If n is even -> F(x,n) = F(x,n/2) * F(x,n/2)
- if n is odd  -> F(x,n) = F(x,n/2) * F(x,n/2) * x
- */
-func binaryExponentiationRecursive(a: Int, b: Int) -> Int{
-    if b==0{
-        return 1
-    }
-    let recCall = binaryExponentiationRecursive(a: a, b: b/2)
-    let squared = (recCall * recCall) % M
-    
-    if b%2 == 0 {
-        return squared
-    }else{
-        return (a * squared) % M
-    }
-}
-//MARK: CountGoodNumbers
-//https://youtu.be/rYLRgdj0n4s?si=biEr-BmKkAkQNMMZ
-//https://leetcode.com/problems/count-good-numbers
-func countGoodNumbersIterative(_ n: Int) -> Int {
-    let evenIndex = (n+1)/2
-    let oddIndex = n/2
-    
-    let total = (binaryExponentiationRecursive(a: 5, b: evenIndex) * binaryExponentiationRecursive(a: 4, b: oddIndex)) % M
-    return total
-}
+
+
 //MARK: -------SubsequencesPattern---------
 /*
  Core Problems:
+ 
  powerSet
  printingSubsequences
  countSubsequencesWhrSumIsK
  CombinationSum1
- CombinationSum2
+ * CombinationSum2
+ 
  */
+/*
+ =============================================================================
+ SUBARRAY vs SUBSEQUENCE vs COMBINATION (Subset)
+  Example Array: [3, 1, 2]
+  
+  1. SUBARRAY (Contiguous)
+     - Rule: Elements must sit directly next to each other in memory.
+     - Skipping: NOT allowed.
+     - Order: Strict left-to-right.
+     - Valid:   [3, 1] or [1, 2]
+     - Invalid: [3, 2] (Skipped the 1)
+  
+  2. SUBSEQUENCE (Non-contiguous)
+     - Rule: Can skip elements, but must keep original left-to-right order.
+     - Skipping: Allowed.
+     - Order: Strict left-to-right.
+     - Valid:   [3, 2] (Skipped the 1, but kept order)
+     - Invalid: [1, 3] (Cannot go backward to get the 3)
+  
+  3. COMBINATION / SUBSET (Order Agnostic)
+     - Rule: Pure membership. Location and sequence do not matter at all.
+     - Skipping: Allowed.
+     - Order: Ignored.
+     - Valid: [3, 1] and [1, 3] are considered the exact same combination.
+     - DSA Tip: Usually requires sorting the array first to avoid duplicates.
+  
+  In In code, they are practically the same.In theory, they are slightly different.
+  -----------------------------------------------------------------------------
+  QUICK COMPARISON TABLE
+  -----------------------------------------------------------------------------
+  TERM          | SKIPPING ALLOWED? | ORDER STRICT? | VALID   | INVALID
+  -----------------------------------------------------------------------------
+  Subarray      | No                | Yes           | [3, 1]  | [3, 2] (skipped)
+  Subsequence   | Yes               | Yes           | [3, 2]  | [1, 3] (backward)
+  Combination   | Yes               | No            | [1, 3]* | N/A (order ignored)
+  
+  *Note: For combinations, [1, 3] and [3, 1] are exactly the same thing.
+  =============================================================================
+ */
+
 //MARK: Power Set
 //https://www.youtube.com/watch?v=b7AYbpM5YrE&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=68
 func powerSetIterative(_ s: String) -> [String] {
@@ -396,37 +82,14 @@ func powerSetIterative(_ s: String) -> [String] {
     }
     return result
 }
-//T.C = O(N * 2^N)
+//T.C = O(2^N * N)
 //A.S = O(N)
-func powerSetRecursive(_ s: String) -> [String] {
-    let arrS = Array(s)
-    var result = [String]()
-    func recurse(_ index: Int, _ currentStr: String) {
-        // BASE CASE: End of string, save it and stop
-        if index >= arrS.count {
-            result.append(currentStr)
-            return
-        }
-        var pickedStr = currentStr
-        
-        // 1. "PICK" BRANCH
-        pickedStr.append(arrS[index])
-        recurse(index + 1, pickedStr)
-        
-        // 2. BACKTRACK (Undo the pick)
-        pickedStr.removeLast()
-        
-        // 3. "DON'T PICK" BRANCH
-        recurse(index + 1, pickedStr)
-    }
-    recurse(0, "")
-    return result
-}
-//T.C = O(2^N)
-//A.S = O(N)
+
+
 //MARK: PrintingSubsequences
+//https://youtu.be/p4bP_FIXGWw?si=l0iIw5hXpVbKVzpu
 //https://www.youtube.com/watch?v=AxNNVECce8c&list=LL&index=3
-func printingSubsequences(_ str: [String],
+func printingSubsequences1(_ str: [String],
                           _ index: Int = 0,
                           _ res: [String] = []) {
     // BASE CASE
@@ -437,11 +100,11 @@ func printingSubsequences(_ str: [String],
     var pickedRes = res
     // 1. "PICK" BRANCH
     pickedRes.append(str[index])
-    printingSubsequences(str, index + 1, pickedRes)
+    printingSubsequences1(str, index + 1, pickedRes)
     // 2. BACKTRACK (Undo the pick)
     pickedRes.removeLast()
     // 3. "DON'T PICK" BRANCH
-    printingSubsequences(str, index + 1, pickedRes)
+    printingSubsequences1(str, index + 1, pickedRes)
 }
  /*
   T.C = O(2^N)
@@ -475,24 +138,96 @@ func printingSubsequences(_ str: [String],
                                                                               (idx = 3)
   =============================================================================
  */
+func printingSubsequences2(_ str: [String]) -> [[String]] {
+    var result = [[String]]()
+    func recurse(_ index: Int,
+                 _ res: [String]){
+        // BASE CASE
+        if index >= str.count {
+            result.append(res)
+            return
+        }
+        var pickedRes = res
+        // 1. "PICK" BRANCH
+        pickedRes.append(str[index])
+        recurse(index+1, pickedRes)
+        // 2. BACKTRACK (Undo the pick)
+        pickedRes.removeLast()
+        // 3. "DON'T PICK" BRANCH
+        recurse(index+1, pickedRes)
+    }
+    recurse(0, [])
+    return result
+}
+// T.C = O(2^N)
+// A.S = O(N)
 
+func printingSubsequences3(_ str: [String],
+                     _ index: Int = 0,
+                     _ res: [String] = []) -> [[String]] {
+    
+    // BASE CASE: Return an array containing this specific subsequence
+    if index >= str.count {
+        return [res]
+    }
+    
+    var pickedRes = res
+    
+    // 1. "PICK" BRANCH
+    pickedRes.append(str[index])
+    let pickedSubsequences = printingSubsequences3(str, index + 1, pickedRes)
+    
+    // 2. BACKTRACK (Undo the pick)
+    pickedRes.removeLast()
+    
+    // 3. "DON'T PICK" BRANCH
+    let notPickedSubsequences = printingSubsequences3(str, index + 1, pickedRes)
+    
+    // Combine the results from both branches and return them up the chain
+    return pickedSubsequences + notPickedSubsequences
+}
+// T.C = O(2^N)
+// A.S = O(N)
+/*
+ FINAL RETURNED ARRAY
+               [ ["A","B","C"], ["A","B"], ["A","C"], ["A"], ["B","C"], ["B"], ["C"], [] ]
+                                                   ▲
+                                                   │ (Root adds Left + Right)
+                                                   │
+                             ┌─────────────────────┴─────────────────────┐
+                             │                                           │
+        [ ["A","B","C"], ["A","B"], ["A","C"], ["A"] ]      [ ["B","C"], ["B"], ["C"], [] ]
+                             ▲                                           ▲
+                             │ (Adds Left + Right)                       │ (Adds Left + Right)
+                             │                                           │
+               ┌─────────────┴─────────────┐               ┌─────────────┴─────────────┐
+               │                           │               │                           │
+  [ ["A","B","C"], ["A","B"] ]   [ ["A","C"], ["A"] ]  [ ["B","C"], ["B"] ]      [ ["C"], [] ]
+               ▲                           ▲               ▲                           ▲
+               │ (Adds L+R)                │ (Adds L+R)    │ (Adds L+R)                │ (Adds L+R)
+        ┌──────┴──────┐             ┌──────┴──────┐ ┌──────┴──────┐             ┌──────┴──────┐
+        │             │             │             │ │             │             │             │
+ [["A","B","C"]] [["A","B"]]   [["A","C"]]     [["A"]]     [["B","C"]] [["B"]]       [["C"]]    [[]]
+    (Base Case)   (Base Case)   (Base Case) (Base Case)    (Base Case)(Base Case)  (Base Case)(Base Case)
+ */
 
 
 //MARK: Count-SubsequencesWhr...
+//https://youtu.be/QQ9Tn2i269I?si=4u76suXf8GKZiJvm
 //https://youtu.be/eQCS_v3bw0Q?si=RXWaXKElg2hGYwqP
+//https://leetcode.com/problems/combination-sum
 func printingSubsequencesWhrSumIsK(_ arr: [Int], _ k: Int) {
     func recurse(_ index: Int, _ resArr: [Int], _ resSum: Int) {
-        // OPTIMIZATION 1: We hit the target early!
-        if resSum == k {
-            print(resArr)
-            return
-        }
-        // OPTIMIZATION 2: We exceeded the target!
+        // OPTIMIZATION: Prune the tree (ONLY works if all numbers are positive!)
         if resSum > k {
             return
         }
-        // BASE CASE: We ran out of numbers without hitting the target
+        // BASE CASE: We reached the end of the array
         if index >= arr.count {
+            // Check if the completed path hits our target
+            if resSum == k {
+                print(resArr)
+            }
             return
         }
         var pickedResArr = resArr
@@ -502,7 +237,6 @@ func printingSubsequencesWhrSumIsK(_ arr: [Int], _ k: Int) {
         pickedResArr.append(arr[index])
         pickedResSum += arr[index]
         
-        // We only pass what actually changes! (index, array, sum)
         recurse(index + 1, pickedResArr, pickedResSum)
         
         // 2. BACKTRACK (Undo the pick)
@@ -512,24 +246,65 @@ func printingSubsequencesWhrSumIsK(_ arr: [Int], _ k: Int) {
         // 3. "DON'T PICK" BRANCH
         recurse(index + 1, pickedResArr, pickedResSum)
     }
-    // Kick off the recursion starting at index 0 with an empty array and 0 sum
+    // Kick off the recursion
     recurse(0, [], 0)
 }
-//T.C = O(2^N)
-//A.S = O(N)
+// T.C = O(2^N)
+// A.S = O(N)
+
+func getSubsequencesWhrSumIsK(_ arr: [Int], _ k: Int) -> [[Int]] {
+    func recurse(_ index: Int, _ resArr: [Int], _ resSum: Int) -> [[Int]] {
+        // OPTIMIZATION: Prune the tree (ONLY works if all numbers are positive!)
+        if resSum > k {
+            return []
+        }
+        // BASE CASE: We reached the end of the array
+        if index >= arr.count {
+            // Check if the completed path hits our target
+            if resSum == k {
+                return [resArr]
+            }
+            return []
+        }
+        var pickedResArr = resArr
+        var pickedResSum = resSum
+        
+        // 1. "PICK" BRANCH
+        pickedResArr.append(arr[index])
+        pickedResSum += arr[index]
+        
+        let res1 = recurse(index + 1, pickedResArr, pickedResSum)
+        
+        // 2. BACKTRACK (Undo the pick)
+        pickedResArr.removeLast()
+        pickedResSum -= arr[index]
+        
+        // 3. "DON'T PICK" BRANCH
+        let res2 = recurse(index + 1, pickedResArr, pickedResSum)
+        
+        return res1 + res2
+    }
+    // Kick off the recursion
+    let res = recurse(0, [], 0)
+    return res
+}
+// T.C = O(2^N)
+// A.S = O(N)
+
 func printingJustOneSubsequencesWhrSumIsK(_ arr: [Int], _ k: Int) -> Bool {
     func recurse(_ index: Int, _ resDs: [Int], _ resSum: Int) -> Bool {
-        // OPTIMIZATION 1: We hit the target early!
-        if resSum == k {
-            print(resDs)
-            return true
-        }
-        // OPTIMIZATION 2: We exceeded the target!
+        
+        // OPTIMIZATION: Prune the tree (ONLY works if all numbers are positive!)
         if resSum > k {
             return false
         }
-        // BASE CASE: Read arr.count and k directly from the parent
+        
+        // BASE CASE: We reached the end of the array
         if index >= arr.count {
+            if resSum == k {
+                print(resDs)
+                return true // Tell the parent we found it!
+            }
             return false
         }
         
@@ -540,10 +315,8 @@ func printingJustOneSubsequencesWhrSumIsK(_ arr: [Int], _ k: Int) -> Bool {
         pickedResDs.append(arr[index])
         pickedResSum += arr[index]
         
-        // Notice how much cleaner this call is now!
         if recurse(index + 1, pickedResDs, pickedResSum) {
-            // If the left branch found the answer, STOP and tell the parent "true"!
-            return true
+            return true // Stop completely if left branch found it
         }
         
         // 2. BACKTRACK (Undo the pick)
@@ -552,27 +325,29 @@ func printingJustOneSubsequencesWhrSumIsK(_ arr: [Int], _ k: Int) -> Bool {
         
         // 3. "DON'T PICK" BRANCH
         if recurse(index + 1, pickedResDs, pickedResSum) {
-            return true
+            return true // Stop completely if right branch found it
         }
-        return false
+        
+        return false // Neither branch found it
     }
-    // Kick off the recursion and return its final boolean result to the main program
+    
+    // Kick off the recursion
     return recurse(0, [], 0)
 }
-//T.C = O(2^N)
-//A.S = O(N)
+// T.C = O(2^N)
+// A.S = O(N)
+
 func countSubsequencesWhrSumIsK(_ arr: [Int], _ k: Int) -> Int {
     func recurse(_ index: Int, _ resSum: Int) -> Int {
-        // OPTIMIZATION 1: We hit the target early!
-        if resSum == k {
-            return 1 // We found 1 valid subsequence!
-        }
-        // OPTIMIZATION 2: We exceeded the target!
+        // OPTIMIZATION: Prune the tree (ONLY works if all numbers are positive!)
         if resSum > k {
             return 0
         }
-        // BASE CASE: Read arr.count and k directly from the parent
+        // BASE CASE: We reached the end of the array
         if index >= arr.count {
+            if resSum == k {
+                return 1 // We found 1 valid subsequence!
+            }
             return 0     // We found 0 valid subsequences.
         }
         // 1. "PICK" BRANCH
@@ -588,10 +363,11 @@ func countSubsequencesWhrSumIsK(_ arr: [Int], _ k: Int) -> Int {
     // Kick off the recursion starting at index 0 with a 0 sum
     return recurse(0, 0)
 }
-//T.C = O(2^N)
-//A.S = O(N)
+// T.C = O(2^N)
+// A.S = O(N)
+
+
 //MARK: CombinationSum1
-//https://youtu.be/QQ9Tn2i269I?si=4u76suXf8GKZiJvm
 //https://www.youtube.com/watch?v=OyZFFqQtu98&list=PLgUwDviBIf0rGlzIn_7rsaR2FQ5e6ZOL9&index=11&t=18s
 //https://leetcode.com/problems/combination-sum
 func combinationSum1(_ candidates: [Int], _ target: Int) -> [[Int]] {
@@ -684,17 +460,19 @@ func combinationSum2(_ candidates: [Int], _ target: Int) -> [[Int]] {
 //this can be also done using SET and without sorting as a bruteforce solution.
 //T.C = O(2^N)
 //A.S = O(N)
+
+
 //MARK: subsetSums1
 //https://www.youtube.com/watch?v=rYkfBRtMJr8&list=PLgUwDviBIf0rGlzIn_7rsaR2FQ5e6ZOL9&index=13&t=10s
 func subsetSums1(_ nums: [Int]) -> [Int] {
     var result = [Int]()
-    func recurse(_ index: Int, _ currentStr: Int){
+    func recurse(_ index: Int, _ currentSum: Int){
         // BASE CASE: End of string, save it and stop
         if index >= nums.count{
-            result.append(currentStr)
+            result.append(currentSum)
             return
         }
-        var currentStr = currentStr
+        var currentStr = currentSum
         
         // 1. "PICK" BRANCH
         currentStr += nums[index]
@@ -711,6 +489,8 @@ func subsetSums1(_ nums: [Int]) -> [Int] {
 }
 //T.C = O(2^N)
 //A.S = O(N)
+
+
 //MARK: subsets2
 //https://youtu.be/RIn3gOkbhQE?si=CsidffeeKgKf6qxx
 //https://leetcode.com/problems/subsets-ii
@@ -748,6 +528,41 @@ func subsets2(_ nums: [Int]) -> [[Int]] {
 }
 //T.C = O(2^N)
 //A.S = O(N)
+
+
+//MARK: CombinationSum3
+//https://leetcode.com/problems/combination-sum-iii
+func combinationSum3(_ k: Int, _ n: Int) -> [[Int]]  {
+    var arr = [Int]()
+    for i in 1...9 {
+        arr.append(i)
+    }
+    func recurse(_ index: Int,
+                 _ currArr: [Int],
+                 _ currSum: Int) -> [[Int]] {
+        if currArr.count == k && currSum == n {
+            return [currArr]
+        }
+        if currSum > n || currArr.count > k ||  index >= arr.count {
+            return []
+        }
+                
+        var pickedRes = currArr
+        var pickedResSum = currSum
+        // 1. "PICK" BRANCH
+        pickedRes.append(arr[index])
+        pickedResSum += arr[index]
+        let res1 = recurse(index+1, pickedRes, pickedResSum)
+        
+        // 2. BACKTRACK (Undo the pick)
+        pickedRes.removeLast()
+        pickedResSum -= arr[index]
+        let res2 = recurse(index+1, pickedRes, pickedResSum)
+        
+        return res1 + res2
+    }
+    return recurse(0, [], 0)
+}
 
 
 //MARK: printAllPermutations

@@ -5,6 +5,8 @@
 //  Created by Arbaaz Hussain on 07/09/25.
 //
 
+let M = 1_000_000_007
+
 /*
  Precision Datatype in Swift =>
  Double > Float > (Int64>Int32>Int16>Int8) > Character
