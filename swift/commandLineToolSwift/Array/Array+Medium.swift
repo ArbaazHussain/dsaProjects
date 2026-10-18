@@ -749,7 +749,7 @@ func subArraySumEqualsKOptimal(_ nums: [Int], _ k: Int) -> Int {
 
 
 
-//MARK: Arrays Picked--------------------
+//MARK: 50 DSA Sheet--------------------
 
 
 
@@ -790,3 +790,348 @@ func findRightMax(_ height: [Int], till index: Int) -> Int{
 //Approach = currentWaterCount = min(leftMax, rightMax) - currentIndex
 //T.C = BigO(n)
 //A.S = BigO(1)
+
+
+//MARK: Stiver75 Sheet--------------------
+
+
+
+//MARK: threeSum
+//https://youtu.be/DhFh8Kw7ymk?si=Wv8kMRG3xe58VE6V
+//https://leetcode.com/problems/3sum
+
+func threeSumBrute(_ nums: [Int]) -> [[Int]] {
+    let n = nums.count
+    // Three different indices are required.
+    if n < 3 {
+        return []
+    }
+    // In Swift, Arrays with Hashable elements are automatically Hashable,
+    // so we can store [Int] directly in a Set to handle duplicates.
+    var uniqueTriplets = Set<[Int]>()
+    
+    /*
+     * Check every combination of three
+     * different indices exactly once.
+     */
+    for first in 0..<(n - 2) {
+        for second in (first + 1)..<(n - 1) {
+            for third in (second + 1)..<n {
+                // Swift's Int is 64-bit on 64-bit platforms,
+                // preventing standard integer overflow here.
+                let sum = nums[first] + nums[second] + nums[third]
+                
+                // A zero sum gives a valid triplet.
+                if sum == 0 {
+                    var triplet = [
+                        nums[first],
+                        nums[second],
+                        nums[third]
+                    ]
+                    /*
+                     * Sorting gives duplicate triplets
+                     * the same arrangement.
+                     */
+                    triplet.sort()
+                    uniqueTriplets.insert(triplet)
+                }
+            }
+        }
+    }
+    // Convert the Set back to an Array of Arrays
+    return Array(uniqueTriplets)
+}
+//Approach = linear
+//where K represents the number of unique triplets stored for duplicate removal
+//T.C = O(n^3)
+//A.S = O(k)
+
+
+func threeSumBruteMy(_ nums: [Int]) -> [[Int]] {
+    var uniqueElements = Set<[Int]>()
+    func recurse(_ index: Int, _ resArr: [Int], _ resSum: Int) -> [[Int]] {
+        if resArr.count > 3 {
+            return []
+        }
+        // BASE CASE: We reached the end of the array
+        if index >= nums.count {
+            // Check if the completed path hits our target
+            if resSum == 0 && resArr.count == 3{
+                let sortedResArr = resArr.sorted()
+                if !uniqueElements.contains(sortedResArr) {
+                    uniqueElements.insert(sortedResArr)
+                    return [resArr]
+                }
+                uniqueElements.insert(sortedResArr)
+                return []
+            }
+            return []
+        }
+        var pickedResArr = resArr
+        var pickedResSum = resSum
+        
+        // 1. "PICK" BRANCH
+        pickedResArr.append(nums[index])
+        pickedResSum += nums[index]
+        
+        let res1 = recurse(index + 1, pickedResArr, pickedResSum)
+        
+        // 2. BACKTRACK (Undo the pick)
+        pickedResArr.removeLast()
+        pickedResSum -= nums[index]
+        
+        // 3. "DON'T PICK" BRANCH
+        let res2 = recurse(index + 1, pickedResArr, pickedResSum)
+        
+        return res1 + res2
+    }
+    // Kick off the recursion
+    let res = recurse(0, [], 0)
+    return res
+}
+//Approach = backtracking(pick and dontPick)
+//T.C = O(n^2)
+//A.S = O(N)
+
+
+func threeSumBetter(_ nums: [Int]) -> [[Int]] {
+    let n = nums.count
+    // Three different indices are required.
+    if n < 3 {
+        return []
+    }
+    var uniqueTriplets = Set<[Int]>()
+    for first in 0..<(n - 2) {
+        // Swift's Set provides O(1) lookups similar to unordered_set in C++
+        var seenValues = Set<Int>()
+        /*
+         * The set stores values already visited
+         * for the current fixed element.
+         */
+        for second in (first + 1)..<n {
+            // Swift's Int is 64-bit, so casting to long long is unnecessary to prevent overflow
+            let thirdValue = -(nums[first] + nums[second])
+            
+            /*
+             * An earlier matching value completes
+             * the required zero-sum triplet.
+             */
+            if seenValues.contains(thirdValue) {
+                var triplet = [
+                    nums[first],
+                    nums[second],
+                    thirdValue
+                ]
+                
+                triplet.sort()
+                uniqueTriplets.insert(triplet)
+            }
+            /*
+             * Insert after lookup so the current
+             * index cannot be reused.
+             */
+            seenValues.insert(nums[second])
+        }
+    }
+    return Array(uniqueTriplets)
+}
+//Approach = linear + hashing
+//where K represents the number of unique triplets stored for duplicate removal
+//T.C = O(n^2)
+//A.S = O(k)
+
+
+func threeSumOptimal(_ nums: [Int]) -> [[Int]] {
+    let n = nums.count
+    var answer = [[Int]]()
+    // Three different indices are required.
+    if n < 3 {
+        return answer
+    }
+    // Swift function parameters are constants (let),
+    // so we sort a local copy of the array.
+    let sortedNums = nums.sorted()
+    
+    for fixed in 0..<(n - 2) {
+        /*
+         * Skip the same fixed value to avoid
+         * generating duplicate triplets.
+         */
+        if fixed > 0 && sortedNums[fixed] == sortedNums[fixed - 1] {
+            continue
+        }
+        var left = fixed + 1
+        var right = n - 1
+        
+        while left < right {
+            // Swift's Int is 64-bit natively, so no explicit casting is needed
+            let sum = sortedNums[fixed] + sortedNums[left] + sortedNums[right]
+            
+            // A smaller sum needs a larger left value.
+            if sum < 0 {
+                left += 1
+            }
+            // A larger sum needs a smaller right value.
+            else if sum > 0 {
+                right -= 1
+            }
+            else {
+                answer.append([
+                    sortedNums[fixed],
+                    sortedNums[left],
+                    sortedNums[right]
+                ])
+                
+                left += 1
+                right -= 1
+                
+                /*
+                 * Skip repeated values so the same
+                 * triplet is not added again.
+                 */
+                while left < right && sortedNums[left] == sortedNums[left - 1] {
+                    left += 1
+                }
+                
+                while left < right && sortedNums[right] == sortedNums[right + 1] {
+                    right -= 1
+                }
+            }
+        }
+    }
+    return answer
+}
+//Approach = two pointer
+//T.C = O(n)
+//A.S = O(k)
+
+
+//MARK: MajorityElementII
+//https://youtu.be/Q6L5SoS-fTo?si=rPkuYjQoE5BQeNTV
+//https://youtu.be/vwZj1K0e9U8?si=BOepuHGX5whI-3zN
+//https://leetcode.com/problems/majority-element-ii
+func majorityElement2Brute(_ nums: [Int]) -> [Int] {
+    return [Int]()
+}
+//Approach = linearSearch
+//T.C = O(n^2)
+//A.S = O(1)
+
+func majorityElement2Better(_ nums: [Int]) -> [Int] {
+    let threshold = nums.count / 3
+    var frequency = [Int: Int]()
+    var answer = [Int]()
+    
+    // Store the final frequency of every distinct value.
+    for value in nums {
+        frequency[value, default: 0] += 1
+    }
+    
+    for (value, count) in frequency {
+        // Store the value when its final frequency crosses the threshold.
+        if count > threshold {
+            answer.append(value)
+        }
+        // At most two distinct values can satisfy the condition.
+        if answer.count == 2 {
+            break
+        }
+    }
+    return answer
+}
+//Approach = hashing
+//T.C = O(2n)
+//A.S = O(n)
+
+func majorityElement2Optimal(_ nums: [Int]) -> [Int] {
+    var el1 : Int?
+    var cnt1 = 0
+    var el2: Int?
+    var cnt2 = 0
+    for num in nums {
+        if(cnt1==0 && num != el2){
+            el1 = num
+            cnt1 = 1
+        }else if(cnt2==0 && num != el1){
+            el2 = num
+            cnt2 = 1
+        }else if(num == el1) {
+            cnt1 += 1
+        }else if (num == el2){
+            cnt2 += 1
+        }else{
+            cnt1 -= 1
+            cnt2 -= 1
+        }
+    }
+    var el1Freq = 0
+    var el2Freq = 0
+    for num in nums {
+        if num == el1 {
+            el1Freq += 1
+        }
+        if num == el2 {
+            el2Freq += 1
+        }
+    }
+    let threshold = nums.count / 3
+    var res = [Int]()
+    if el1Freq > threshold {
+        res.append(el1 ?? -1)
+    }
+    if el2Freq > threshold {
+        res.append(el2 ?? -1)
+    }
+    return res
+}
+/*
+Approach = Boyer-Moore-voting algorithm
+ If you cancel out elements in groups of three distinct numbers, any number that appears more than $n/3$ times cannot be completely erased. It is mathematically guaranteed to be left standing at the end.That is why you need exactly two candidate slots: to hold the first two distinct numbers so you can wait for a third different number to arrive and trigger the mutual destruction.
+
+T.C = O(2n)
+A.S = O(n)
+*/
+
+
+//MARK: MaximumProductSubarray
+//https://youtu.be/Y6B-7ZctiW8?si=b7DGgmkU46kwsmoa
+//https://youtu.be/hnswaLJvr6g?si=xrZ_HyQW8Q80PFkY
+//https://leetcode.com/problems/maximum-product-subarray
+func maximumProductSubarrayBrute(_ nums: [Int]) -> Int {
+    var maxVal = Int.min
+    for i in 0..<nums.count {
+        var sum = 1;
+        for j in i..<nums.count{
+            sum *= nums[j]
+            maxVal = max(sum, maxVal)
+        }
+    }
+    return maxVal
+}
+//Approach = linear search
+// T.C - BigO(n^2)
+// A.S - BigO(1)
+
+func maximumProductSubarraySumOptimal(_ nums: [Int]) -> Int {
+    let n = nums.count
+    var maxi = Int.min
+    var pre = 1
+    var suf = 1
+    for i in 0..<n {
+        let current = nums[i]
+        if pre == 0{
+            pre = 1
+        }
+        if suf == 0{
+            suf = 1
+        }
+        pre *= current
+        suf *= nums[n-i-1]
+        let maxOfBoth = max(pre, suf)
+        maxi = max(maxi, maxOfBoth)
+    }
+    return maxi
+}
+//Approach = count no of even/odd no of negative numbers + (prefixsum/suffixSum)
+// T.C - BigO(n)
+// A.S - BigO(1)

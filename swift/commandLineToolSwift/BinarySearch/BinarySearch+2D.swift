@@ -9,6 +9,7 @@ import Foundation
 
 
 //MARK: rowsWithMaximumOnes
+//https://youtu.be/SCz-1TtYxDI?si=4RFXZs_KM_QYoKeL
 func rowsWithMaximumOnesBrute(arr: [[Int]]) -> Int{
     var maxRes : (row: Int, count : Int) = (-1,-1)
     for i in 0..<arr.count {
@@ -47,6 +48,9 @@ func rowsWithMaximumOnesOptimal(arr: [[Int]]) -> Int{
 //A.S = BigO(1)
 
 
+//MARK: SearchIn2D-MATRIX
+//https://youtu.be/ZYpYur0znng?si=gOH5d9ZgEdRgxhup
+//https://leetcode.com/problems/search-a-2d-matrix
 func searchMatrixBrute(_ matrix: [[Int]], _ target: Int) -> Bool {
     return false
 }
@@ -56,6 +60,18 @@ func searchMatrixBrute(_ matrix: [[Int]], _ target: Int) -> Bool {
 
 
 func searchMatrixBetter(_ matrix: [[Int]], _ target: Int) -> Bool {
+    for arr in matrix {
+        let res = binarySearchIterative(arr, target)
+        return (res == -1) ? false : true
+    }
+    return false
+}
+//Approach = bs
+//T.C = BigO()
+//A.S = BigO(1)
+
+
+func searchMatrixOptimal(_ matrix: [[Int]], _ target: Int) -> Bool {
     let row = matrix.count
     let col = matrix[0].count
     var i = 0
@@ -74,12 +90,4 @@ func searchMatrixBetter(_ matrix: [[Int]], _ target: Int) -> Bool {
 }
 //Approach = traverse from topRight
 //T.C = BigO(n*log(m))
-//A.S = BigO(1)
-
-
-func searchMatrixOptimal(_ matrix: [[Int]], _ target: Int) -> Bool {
-    return false
-}
-//Approach = bs
-//T.C = BigO()
 //A.S = BigO(1)

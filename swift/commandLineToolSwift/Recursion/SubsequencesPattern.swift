@@ -44,8 +44,15 @@ import Foundation
      - Order: Ignored.
      - Valid: [3, 1] and [1, 3] are considered the exact same combination.
      - DSA Tip: Usually requires sorting the array first to avoid duplicates.
+ 
+  4. PERMUTATION (All Possible Arrangements)
+    - Rule: Rearranging all items into every possible sequence.
+    - Skipping: Not Allowed (result.count == arr.count)
+    - Order: Ignored (Highly fluid) (every rearrangement creates a brand new permutation)
+    - Valid: [1, 2, 3]
+    - Invalid: [3, 1] (Illegal! Missing the element 2).
   
-  In In code, they are practically the same.In theory, they are slightly different.
+  In In code SUBSEQUENCE and COMBINATION/SUBSET they are practically the same.In theory, they are slightly different.[3, 1] and [1, 3] are considered the exact same combination.
   -----------------------------------------------------------------------------
   QUICK COMPARISON TABLE
   -----------------------------------------------------------------------------
@@ -89,9 +96,9 @@ func powerSetIterative(_ s: String) -> [String] {
 //MARK: PrintingSubsequences
 //https://youtu.be/p4bP_FIXGWw?si=l0iIw5hXpVbKVzpu
 //https://www.youtube.com/watch?v=AxNNVECce8c&list=LL&index=3
-func printingSubsequences1(_ str: [String],
+func printingSubsequences1<T>(_ str: [T],
                           _ index: Int = 0,
-                          _ res: [String] = []) {
+                          _ res: [T] = []) {
     // BASE CASE
     if index >= str.count {
         print(res)

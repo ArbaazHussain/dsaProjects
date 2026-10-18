@@ -7,16 +7,17 @@
 
 import Foundation
 
-//MARK: 50 DSA
+//MARK: 50 DSA Sheet
 //https://www.linkedin.com/posts/bhavesh-arora-11b0a319b_50-dsa-interview-solutions-activity-7383342580555640832-iHIT?utm_source=share&utm_medium=member_desktop&rcm=ACoAACtueYQBQjvjsxKhHmnttrcRg2bAVe_sFlg
 
-//Array
+
 /*
+//Array
  twoSum
- Maximum Subarray (Kadane’s Algorithm)
- Move Zeroes
+ Kadane's Algorithm || maximumSubarraySum
+ moveZeroesToEnd
  Rotate Array
- Trapping Rain Water
+ trappingRainWater
  
 
 
@@ -32,6 +33,20 @@ import Foundation
 //LL
  reverse
  llHasCycle
+ */
+
+
+//MARK: Stiver75 Sheet
+//https://takeuforward.org/prep-hub/strivers-75-sheet?page=sheet&open=2205
+/*
+//Array
+ Kadane's Algorithm || maximumSubarraySum
+ longestConsecutiveSequence
+ subArraySumEqualsK
+ 
+ nextPermutation
+ 
+ 
  */
 
 

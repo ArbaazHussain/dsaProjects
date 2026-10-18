@@ -21,6 +21,7 @@ import Foundation
 
 //MARK: binarySearch
 //https://www.geeksforgeeks.org/problems/binary-search-1587115620/1
+//https://youtu.be/MHf6awe89xw?si=Hw9GeYiW7gSksSPH
 func binarySearchIterative(_ nums: [Int], _ target: Int) -> Int {
     var low = 0
     var high = nums.count - 1
@@ -62,6 +63,7 @@ func binarySearchRecursive(_ nums: [Int], low: Int, high: Int, target: Int) -> I
 
 //MARK: implementLowerBound
 //smallest index such that arr[index]>=x
+//https://youtu.be/6zhGS79oQ4k?si=w3_eVFmn6QO-Aa--
 //https://www.geeksforgeeks.org/problems/implement-lower-bound/1
 func implementLowerBoundBrute(_ nums: [Int], _ k: Int) -> Int {
     let n = nums.count
@@ -99,8 +101,9 @@ func implementLowerBoundOptimal(_ arr: [Int], _ target: Int) -> Int {
 
 
 //MARK: implementUpperBound
-//https://www.geeksforgeeks.org/problems/implement-upper-bound/1
 //smallest index such that arr[index]>x
+//https://youtu.be/6zhGS79oQ4k?si=h5p2pWmXtcItipkX
+//https://www.geeksforgeeks.org/problems/implement-upper-bound/1
 func implementUpperBound(_ arr: [Int], _ target: Int) -> Int {
     var ans = arr.count
     var low = 0
@@ -123,6 +126,7 @@ func implementUpperBound(_ arr: [Int], _ target: Int) -> Int {
 
 
 //MARK: searchInsertPositionMy
+//https://youtu.be/6zhGS79oQ4k?si=VXsrKf74pwFY-Tk8
 //https://leetcode.com/problems/search-insert-position/description/
 func searchInsert(_ nums: [Int], _ target: Int) -> Int {
     let res = implementLowerBoundOptimal(nums, target)
@@ -136,6 +140,7 @@ func searchInsert(_ nums: [Int], _ target: Int) -> Int {
 //MARK: ceilInAsortedArray
 //implementLowerBoundOptimal
 //Ceil - smallest index such that arr[index]>=x.
+//https://youtu.be/6zhGS79oQ4k?si=VXsrKf74pwFY-Tk8
 func ceilInAsortedArray(_ arr: [Int], _ x: Int) -> Int {
     //implementLowerBoundOptimal + (default ans = -1)
     return -1
@@ -147,6 +152,7 @@ func ceilInAsortedArray(_ arr: [Int], _ x: Int) -> Int {
 
 //MARK: findFloor
 //Ceil - largest index such that arr[index]<=x.    [->*****]
+//https://youtu.be/6zhGS79oQ4k?si=VXsrKf74pwFY-Tk8
 //https://www.geeksforgeeks.org/problems/floor-in-a-sorted-array-1587115620/1
 func findFloor(_ arr: [Int], _ x: Int) -> Int {
     var ans = -1
@@ -171,6 +177,7 @@ func findFloor(_ arr: [Int], _ x: Int) -> Int {
 
 
 //MARK: firstAndLastInSortedArray
+//https://youtu.be/hjR1IYVx9lY?si=nRFU89OupLIF8p5d
 //https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/
 func firstAndLastInSortedArrayLbUb(_ nums: [Int], _ target: Int) -> [Int] {
     let lower = implementLowerBoundOptimal(nums, target)
@@ -238,6 +245,7 @@ func lastAppearenceStandardBS(_ nums: [Int], _ target: Int) -> Int {
 
 
 //MARK: numberOfOccurrence
+//https://youtu.be/hjR1IYVx9lY?si=y0Zx40wUUnMUjWCB
 //https://www.naukri.com/code360/problems/occurrence-of-x-in-a-sorted-array_630456
 func numberOfOccurrence(_ nums: [Int], _ x: Int) -> Int {
     let firstOccurrence = firstAppearenceStandardBS(nums, x)
@@ -253,6 +261,7 @@ func numberOfOccurrence(_ nums: [Int], _ x: Int) -> Int {
 
 
 //MARK: searchinRotatedSortedArray-UniqueElements
+//https://youtu.be/r3pMQ8-Ad5s?si=r04IXir4UuzDdH92
 //https://leetcode.com/problems/search-in-rotated-sorted-array/description/
 /*
  Brute = ls
@@ -290,6 +299,7 @@ func searchinRotatedSortedUniqueArrayOptimal(_ nums: [Int], _ target: Int) -> In
 
 
 //MARK: searchinRotatedSortedArray-Dublicates
+//https://youtu.be/w2G2W8l__pc?si=Y9nrzlzfVAX5MbrP
 //https://leetcode.com/problems/search-in-rotated-sorted-array-ii/description/
 /*
  Brute = ls
@@ -331,6 +341,7 @@ func searchinRotatedSortedDublicateArrayOptimal(_ nums: [Int], _ target: Int) ->
 
 
 //MARK: minimumInRotatedSortedArray
+//https://youtu.be/nhEMDKMB44g?si=g0dIvhEyO-RpheEL
 //https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/
 func minimumInRotatedSortedArray(_ nums: [Int], _ target: Int) -> Int {
     var ans = Int.max
@@ -356,6 +367,7 @@ func minimumInRotatedSortedArray(_ nums: [Int], _ target: Int) -> Int {
 
 
 //MARK: howManyTimesArrayRotated
+//https://youtu.be/jtSiWTPLwd0?si=0fGLTbll92sMtBi9
 //https://www.geeksforgeeks.org/problems/rotation4723/1
 func howManyTimesArrayRotated(_ nums: [Int]) -> Int {
     var low = 0
@@ -388,6 +400,7 @@ func howManyTimesArrayRotated(_ nums: [Int]) -> Int {
 
 
 //MARK: singleElementInSortedArray
+//https://youtu.be/AZOmHuHadxQ?si=C463WMl-viouYD1e
 //https://leetcode.com/problems/single-element-in-a-sorted-array/
 func singleElementInSortedArrayBrute1(_ nums: [Int]) -> Int {
     let n = nums.count
@@ -455,6 +468,7 @@ func singleElementInSortedArrayOptimal(_ nums: [Int]) -> Int {
 
 
 //MARK: peakElement
+//https://youtu.be/cXxmbemS6XM?si=NkIqRnAdzt-x1VZJ
 //https://leetcode.com/problems/find-peak-element/description/
 func peakElementBrute(_ nums: [Int]) -> Int {
     let n = nums.count
@@ -519,8 +533,5 @@ func peakElementOptimal(_ nums: [Int]) -> Int {
  *(BinarySearch) Interval - 1 month
  *Revise array Only With approach
  
- 5 april(BinarySearch): approach + code
- 
- *with code:
- searchinRotatedSortedDublicateArrayOptimal
+ 18 oct(BinarySearch): approach + code
  */
